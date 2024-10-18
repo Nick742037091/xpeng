@@ -27,11 +27,11 @@ function RightButtons() {
       <Link
         href="/test-drive"
         className="text-white border border-white rounded-[4px] px-[16px] py-[8px] 
-        flex items-center justify-center"
+        flex items-center justify-center leading-[1.1] btn-hover"
       >
         预约试驾
       </Link>
-      <AiOutlineGlobal style={{ color: 'white', fontSize: 24 }} />
+      <AiOutlineGlobal className="cursor-pointer text-white text-[24px]" />
       <Link href="/login" className="text-white">
         登录
       </Link>

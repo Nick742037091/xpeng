@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import './globals.css'
+import './globals.scss'
 
 export const metadata: Metadata = {
   title: '小鹏汽车丨未来出行探索者',
