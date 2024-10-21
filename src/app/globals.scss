@@ -67,9 +67,10 @@
 
 :root {
   font-size: 14px;
+  color: #000;
 }
 
-// 添加该样式按钮，需要1px边框
+// 为按钮添加从左向右填充绿色的悬浮效果，添加该样式的按钮，需要1px边框
 .btn-hover {
   @apply relative overflow-hidden;
   &::after {
