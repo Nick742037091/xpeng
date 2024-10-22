@@ -1,15 +1,24 @@
-.navItem {
-  @apply text-white mx-[28px] cursor-pointer relative h-[56px] flex items-center;
-  &:hover {
-    color: hsla(0, 0%, 100%, 0.6);
+.bgLight {
+  @apply bg-white text-black;
+  .navItem:hover {
+    color: rgba(0, 0, 0, 0.6);
   }
+}
+.bgTransparent {
+  @apply bg-transparent text-white;
+  .navItem:hover {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+.navItem {
+  @apply mx-[28px] cursor-pointer relative h-[56px] flex items-center;
   &:hover::after {
     content: '';
     @apply bg-[#a4ce4c] w-full h-[1px] absolute bottom-[10px] left-0;
   }
 }
 
-.carModel {
+.carModelNav {
   @apply relative;
 
   @keyframes carAnimationEnter {
@@ -17,13 +26,13 @@
       @apply right-[-104px] opacity-0;
     }
     100% {
-      @apply right-[-56px] opacity-100;
+      @apply right-[-50px] opacity-100;
     }
   }
 
   @keyframes carAnimationLeave {
     0% {
-      @apply right-[-56px] opacity-100;
+      @apply right-[-50px] opacity-100;
     }
     100% {
       @apply right-[100%] opacity-0;
@@ -31,22 +40,32 @@
   }
 
   .carAnimation {
-    // 左右边缘增加模糊效果
-    &::before,
-    &::after {
-      content: '';
-      @apply absolute top-0 bottom-0 w-[10px] z-10;
-    }
-    &::before {
-      @apply left-0;
-      background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    }
-    &::after {
-      @apply right-0;
-      background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    &.bgLight {
+      // 左右边缘增加模糊效果
+      &::before,
+      &::after {
+        content: '';
+        @apply absolute top-0 bottom-0 w-[10px] z-10;
+      }
+      &::before {
+        @apply left-0;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 0)
+        );
+      }
+      &::after {
+        @apply right-0;
+        background: linear-gradient(
+          to left,
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 0)
+        );
+      }
     }
 
-    @apply w-[104px] h-[48px] absolute top-0 bottom-0 right-[56px] overflow-hidden;
+    @apply w-[104px] h-[48px] absolute top-0 bottom-0 z-[100] right-[56px] overflow-hidden;
     .carImage {
       @apply w-[104px] max-w-[104px] h-[48px];
       @apply absolute top-[60%] translate-y-[-50%];

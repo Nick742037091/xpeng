@@ -11,18 +11,46 @@ import {
 
 import styles from './index.module.scss'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { carModelList } from './data'
 
-function HomeIcon() {
+function LeftIcon() {
+  const { isBgTransparent } = useTopNavigatorContext()
   return (
-    <Link href="/" className="text-white">
+    <Link href="/" className="absolute left-[40px]">
       <Image
-        src="https://xps01.xiaopeng.com/www/public/img/white-logo.570fd7b8.svg"
+        src={
+          isBgTransparent
+            ? 'https://xps01.xiaopeng.com/www/public/img/white-logo.570fd7b8.svg'
+            : 'https://xps01.xiaopeng.com/www/public/img/black-logo.98ed887d.svg'
+        }
         alt="home"
         width={40}
         height={25}
       />
     </Link>
+  )
+}
+
+function RightButtons() {
+  const { isBgTransparent } = useTopNavigatorContext()
+  return (
+    <div className="absolute right-[40px] flex items-center gap-[24px]">
+      <Link
+        href="/test-drive"
+        className={clsx(
+          'border border-white rounded-[4px] px-[16px] py-[8px]',
+          'flex items-center justify-center leading-[1.1] btn-hover',
+          isBgTransparent ? 'border-white' : 'border-black'
+        )}
+      >
+        预约试驾
+      </Link>
+      <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
+      <Link href="/login" className=" hover:opacity-60">
+        登录
+      </Link>
+    </div>
   )
 }
 
@@ -47,34 +75,85 @@ function HoverMenus({
   )
 }
 
-function CarModels() {
-  const [isHover, setIsHover] = useState(false)
+function CarModelsPanel({ active }: { active: boolean }) {
+  const [hoverIndex, setHoverIndex] = useState(-1)
   return (
-    <div className={clsx(styles.navItem, styles.carModel)}>
-      <div className={styles.carAnimation}>
+    <div
+      className={clsx(
+        'fixed z-[100] top-[56px] left-0 right-0 bg-white',
+        'transition-all duration-500 ease-in-out',
+        active ? 'h-[400px]' : 'h-0',
+        'flex items-center justify-center overflow-hidden'
+      )}
+    >
+      <div className="flex flex-wrap max-w-[77vw] mt-[61px] mx-auto">
+        {carModelList.map((item, index) => (
+          <div
+            key={item.modelName}
+            className="px-[32px] pb-[40px] flex flex-col items-center"
+            onMouseEnter={() => setHoverIndex(index)}
+            onMouseLeave={() => setHoverIndex(-1)}
+          >
+            <Image
+              src={item.modelImg}
+              alt={item.modelName}
+              width={180}
+              height={96}
+              className={clsx(
+                'transition-all duration-300 ease-in-out',
+                hoverIndex === index && 'scale-110'
+              )}
+            />
+            <div
+              className={clsx(
+                'text-[14px]',
+                hoverIndex === index && 'opacity-60'
+              )}
+            >
+              {item.modelName}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function CarModels() {
+  const { isCarModelHover, setIsCarModelHover } = useTopNavigatorContext()
+  // TODO 车模图片影响hover，需要优化
+  return (
+    <div
+      className={clsx(
+        styles.navItem,
+        styles.carModelNav,
+        isCarModelHover && styles.hovering
+      )}
+      onMouseEnter={() => setIsCarModelHover(true)}
+      onMouseLeave={() => setIsCarModelHover(false)}
+    >
+      <Link href="/">车型</Link>
+      <div
+        className={styles.carAnimation}
+        onMouseEnter={() => setIsCarModelHover(true)}
+        onMouseLeave={() => setIsCarModelHover(false)}
+      >
         <Image
           src="/site/top-navigator/p7+.png"
           alt="new-card"
-          className={clsx(styles.carImage, isHover && styles.hovering)}
+          className={clsx(styles.carImage, isCarModelHover && styles.hovering)}
           width={104}
           height={48}
         />
       </div>
-
-      <Link
-        href="/"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        车型
-      </Link>
+      <CarModelsPanel active={isCarModelHover} />
     </div>
   )
 }
 
 function CenterNavigators() {
   return (
-    <div className="absolute left-[50%] translate-x-[-50%] top-0 bottom-0 flex items-center">
+    <div className="mx-auto flex">
       <CarModels />
       <HoverMenus
         list={[
@@ -106,41 +185,62 @@ function CenterNavigators() {
           { link: '/', title: '加入我们' }
         ]}
       >
-        <div className={styles.navItem}>联系我们</div>
+        <div className={styles.navItem}>关于我们</div>
       </HoverMenus>
     </div>
   )
 }
 
-function RightButtons() {
-  return (
-    <div className="ml-auto flex items-center gap-[24px]">
-      <Link
-        href="/test-drive"
-        className="text-white border border-white rounded-[4px] px-[16px] py-[8px] 
-        flex items-center justify-center leading-[1.1] btn-hover"
-      >
-        预约试驾
-      </Link>
-      <AiOutlineGlobal className="cursor-pointer text-white text-[24px] hover:opacity-60" />
-      <Link href="/login" className="text-white hover:opacity-60">
-        登录
-      </Link>
-    </div>
-  )
-}
-
 export default function TopNavigator() {
+  const [isCarModelHover, setIsCarModelHover] = useState(false)
+  const [isBgTransparent, setIsBgTransparent] = useState(true)
+  // 背景显示为透明需要延迟执行
+  useEffect(() => {
+    if (isCarModelHover) {
+      setIsBgTransparent(false)
+    } else {
+      setTimeout(() => {
+        setIsBgTransparent(true)
+      }, 500)
+    }
+  }, [isCarModelHover])
   // 登录页不显示顶部导航栏
   const pathname = usePathname()
   if (pathname === '/login') {
     return null
   }
   return (
-    <div className="flex fixed top-0 left-0 right-0 z-50 h-[56px] items-center px-[40px]">
-      <HomeIcon />
-      <CenterNavigators />
-      <RightButtons />
-    </div>
+    <TopNavigatorContext.Provider
+      value={{
+        isCarModelHover,
+        isBgTransparent,
+        setIsCarModelHover
+      }}
+    >
+      <div
+        className={clsx(
+          'flex fixed top-0 left-0 right-0 z-50 h-[56px] items-center',
+          isBgTransparent ? styles.bgTransparent : styles.bgLight,
+          'transition-all duration-300 ease-in'
+        )}
+      >
+        <LeftIcon />
+        <CenterNavigators />
+        <RightButtons />
+      </div>
+    </TopNavigatorContext.Provider>
   )
+}
+
+const TopNavigatorContext = createContext<{
+  isCarModelHover: boolean
+  isBgTransparent: boolean
+  setIsCarModelHover: (value: boolean) => void
+}>({
+  isCarModelHover: false,
+  isBgTransparent: true,
+  setIsCarModelHover: () => {}
+})
+export const useTopNavigatorContext = () => {
+  return useContext(TopNavigatorContext)
 }
