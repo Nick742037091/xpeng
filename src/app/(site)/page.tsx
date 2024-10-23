@@ -1,3 +1,9 @@
+import Slider from './components/Slider'
+
 export default function HomePage() {
-  return <div className="bg-black h-[1000px]">HomePage</div>
+  return (
+    <div className="">
+      <Slider />
+    </div>
+  )
 }

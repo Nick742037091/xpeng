@@ -46,7 +46,9 @@ function RightButtons() {
       >
         预约试驾
       </Link>
-      <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
+      <div className="w-[36px] h-[36px] flex items-center justify-center">
+        <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
+      </div>
       <Link href="/login" className=" hover:opacity-60">
         登录
       </Link>

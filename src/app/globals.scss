@@ -70,6 +70,11 @@
   color: #000;
 }
 
+body {
+  padding: 0;
+  margin: 0;
+}
+
 // 为按钮添加从左向右填充绿色的悬浮效果，添加该样式的按钮，需要1px边框
 .btn-hover {
   @apply relative overflow-hidden;
