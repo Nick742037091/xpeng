@@ -81,7 +81,7 @@ function CarModelsPanel({ active }: { active: boolean }) {
     <div
       className={clsx(
         'fixed z-[100] top-[56px] left-0 right-0 bg-white',
-        'transition-all duration-500 ease-in-out',
+        'transition-all duration-300 ease-in-out',
         active ? 'h-[400px]' : 'h-0',
         'flex items-center justify-center overflow-hidden'
       )}
@@ -121,7 +121,6 @@ function CarModelsPanel({ active }: { active: boolean }) {
 
 function CarModels() {
   const { isCarModelHover, setIsCarModelHover } = useTopNavigatorContext()
-  // TODO 车模图片影响hover，需要优化
   return (
     <div
       className={clsx(
@@ -133,11 +132,8 @@ function CarModels() {
       onMouseLeave={() => setIsCarModelHover(false)}
     >
       <Link href="/">车型</Link>
-      <div
-        className={styles.carAnimation}
-        onMouseEnter={() => setIsCarModelHover(true)}
-        onMouseLeave={() => setIsCarModelHover(false)}
-      >
+      <div className={styles.carAnimation}>
+        {/* TODO carAnimation 增加左右边缘模糊 */}
         <Image
           src="/site/top-navigator/p7+.png"
           alt="new-card"
@@ -201,7 +197,7 @@ export default function TopNavigator() {
     } else {
       setTimeout(() => {
         setIsBgTransparent(true)
-      }, 500)
+      }, 300)
     }
   }, [isCarModelHover])
   // 登录页不显示顶部导航栏
@@ -220,8 +216,7 @@ export default function TopNavigator() {
       <div
         className={clsx(
           'flex fixed top-0 left-0 right-0 z-50 h-[56px] items-center',
-          isBgTransparent ? styles.bgTransparent : styles.bgLight,
-          'transition-all duration-300 ease-in'
+          isBgTransparent ? styles.bgTransparent : styles.bgLight
         )}
       >
         <LeftIcon />
