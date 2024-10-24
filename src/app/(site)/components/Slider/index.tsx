@@ -12,6 +12,9 @@ import Image from 'next/image'
 import Autoplay from 'embla-carousel-autoplay'
 import { useEffect, useState } from 'react'
 import clsx from 'clsx'
+import { GoX } from 'react-icons/go'
+import { FaChevronRight } from 'react-icons/fa6'
+import Link from 'next/link'
 
 function Indicator({
   current,
@@ -40,6 +43,50 @@ function Indicator({
         </div>
       ))}
     </div>
+  )
+}
+
+function SliderButton({
+  text,
+  href,
+  className,
+  index
+}: {
+  text: string
+  href: string
+  className?: string
+  index: number
+}) {
+  const [isHover, setIsHover] = useState(false)
+  const bgColor = index === 1 ? 'bg-white' : 'bg-transparent'
+  let textColor = index === 1 ? 'text-black' : 'text-white'
+  // 悬浮时字体为白色
+  if (isHover) {
+    textColor = 'text-white'
+  }
+  let arrowColor = index === 1 ? 'text-[#a4ce4c]' : 'text-white'
+  // 悬浮时箭头为白色
+  if (isHover) {
+    arrowColor = 'text-white'
+  }
+
+  return (
+    <Link
+      key={index}
+      href={href}
+      className={clsx(
+        className,
+        'flex items-center justify-center text-[16px]',
+        'border border-white btn-hover',
+        'rounded-[4px] px-[32px] py-[11px] mr-[16px]',
+        bgColor
+      )}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      <span className={clsx(textColor)}>{text}</span>
+      <FaChevronRight className={clsx('ml-[4px] text-[14px]', arrowColor)} />
+    </Link>
   )
 }
 
@@ -98,8 +145,19 @@ export default function Slider() {
                   'font-[300]'
                 )}
               >
+                <GoX className="absolute text-[28px] top-[-16px] left-[-16px]" />
                 <div className="">{item.title}</div>
                 <div className="">{item.subtitle}</div>
+                <div className="mt-[32px] flex items-center gap-[16px]">
+                  {item.buttons.map((button, index) => (
+                    <SliderButton
+                      key={index}
+                      text={button.text}
+                      href={button.href}
+                      index={index}
+                    />
+                  ))}
+                </div>
               </div>
             </CarouselItem>
           ))}

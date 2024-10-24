@@ -87,8 +87,8 @@ body {
     @apply border-none;
   }
   &:hover {
-    // hover时，设置宽度为100%，隐藏原边框，添加覆盖层边框
-    @apply border-transparent;
+    // hover时，设置宽度为100%，隐藏原边框，添加覆盖层边框，设置背景透明，颜色为白色，::after才能正常展示
+    @apply border-transparent bg-transparent text-white;
     &::after {
       @apply w-full;
       @apply border border-[#a4ce4c];
