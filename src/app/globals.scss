@@ -65,12 +65,18 @@
   }
 }
 
+// 设计稿宽度
+$designWidth: 1440;
+$baseFontSize: 16;
 :root {
-  font-size: 14px;
-  color: #000;
+  // 根据设计稿宽度计算根元素字号
+  font-size: calc((100vw / $designWidth) * $baseFontSize);
 }
 
 body {
+  // 添加body字体大小，作为默认字号
+  font-size: 14px;
+  color: #000;
   padding: 0;
   margin: 0;
 }

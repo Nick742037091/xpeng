@@ -27,6 +27,7 @@ function LeftIcon() {
         alt="home"
         width={40}
         height={25}
+        className="w-[40px] h-[25px]"
       />
     </Link>
   )
@@ -39,7 +40,7 @@ function RightButtons() {
       <Link
         href="/test-drive"
         className={clsx(
-          'border border-white rounded-[4px] px-[16px] py-[8px]',
+          'border rounded-[4px] px-[16px] py-[8px]',
           'flex items-center justify-center leading-[1.1] btn-hover',
           isBgTransparent ? 'border-white' : 'border-black'
         )}
@@ -79,6 +80,15 @@ function HoverMenus({
 
 function CarModelsPanel({ active }: { active: boolean }) {
   const [hoverIndex, setHoverIndex] = useState(-1)
+  const fillNum = 4 - (carModelList.length % 4)
+  // 填充空数据，使每行都能对齐
+  const fillCarModelList = [
+    ...carModelList,
+    ...Array(fillNum).fill({
+      modelName: '',
+      modelImg: ''
+    })
+  ]
   return (
     <div
       className={clsx(
@@ -88,34 +98,46 @@ function CarModelsPanel({ active }: { active: boolean }) {
         'flex items-center justify-center overflow-hidden'
       )}
     >
-      <div className="flex flex-wrap max-w-[77vw] mt-[61px] mx-auto">
-        {carModelList.map((item, index) => (
-          <div
-            key={item.modelName}
-            className="px-[32px] pb-[40px] flex flex-col items-center"
-            onMouseEnter={() => setHoverIndex(index)}
-            onMouseLeave={() => setHoverIndex(-1)}
-          >
-            <Image
-              src={item.modelImg}
-              alt={item.modelName}
-              width={180}
-              height={96}
-              className={clsx(
-                'transition-all duration-300 ease-in-out',
-                hoverIndex === index && 'scale-110'
-              )}
-            />
+      <div
+        className="flex flex-wrap justify-between mt-[61px] mx-auto max-w-[77vw]"
+        style={{ width: 'min(77vw, 1708px)' }}
+      >
+        {fillCarModelList.map((item, index) => {
+          if (item.modelName === '') {
+            return (
+              <div key={item.modelName} className="px-[32px] pb-[40px]">
+                <div className="w-[180px] h-[96px]" />
+              </div>
+            )
+          }
+          return (
             <div
-              className={clsx(
-                'text-[14px]',
-                hoverIndex === index && 'opacity-60'
-              )}
+              key={item.modelName}
+              className="px-[32px] pb-[40px] flex flex-col items-center"
+              onMouseEnter={() => setHoverIndex(index)}
+              onMouseLeave={() => setHoverIndex(-1)}
             >
-              {item.modelName}
+              <Image
+                src={item.modelImg}
+                alt={item.modelName}
+                width={180}
+                height={96}
+                className={clsx(
+                  'w-[180px] h-[96px] transition-all duration-300 ease-in-out',
+                  hoverIndex === index && 'scale-110'
+                )}
+              />
+              <div
+                className={clsx(
+                  'text-[14px]',
+                  hoverIndex === index && 'opacity-60'
+                )}
+              >
+                {item.modelName}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
@@ -192,6 +214,20 @@ function CenterNavigators() {
 export default function TopNavigator() {
   const [isCarModelHover, setIsCarModelHover] = useState(false)
   const [isBgTransparent, setIsBgTransparent] = useState(true)
+  // 页面向下滚动时，设置白色底色
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsBgTransparent(false)
+      } else {
+        setIsBgTransparent(true)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
   // 背景显示为透明需要延迟执行
   useEffect(() => {
     if (isCarModelHover) {

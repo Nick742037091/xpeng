@@ -4,6 +4,9 @@ const nextConfig = {
     remotePatterns: [
       {
         hostname: 'xps01.xiaopeng.com'
+      },
+      {
+        hostname: 's.xiaopeng.com'
       }
     ]
   }
