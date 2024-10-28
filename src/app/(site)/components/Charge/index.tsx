@@ -97,9 +97,9 @@ export default function Charge() {
       </div>
       <div className="flex gap-[32px] justify-stretch">
         <HoverCard {...firstItem} className="h-[660px] w-[418px]" />
-        <div className="flex-1 flex flex-wrap gap-[32px] justify-center">
+        <div className="flex-1 flex flex-col justify-between">
           {otherGroup.map((group, index) => (
-            <div key={index} className="flex-1 flex flex-col gap-[24px]">
+            <div key={index} className="flex gap-x-[32px]">
               {group.map((item) => (
                 <HoverCard
                   key={item.title}
