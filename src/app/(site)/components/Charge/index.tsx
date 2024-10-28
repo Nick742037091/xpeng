@@ -61,12 +61,12 @@ function HoverCard({
         src={bgSrc}
         alt={title}
         className={clsx(
-          'object-cover h-f',
+          'object-cover h-full w-full',
           'transition-all duration-300',
           isHover && 'scale-[120%]'
         )}
-        width={320}
-        height={240}
+        width="1000"
+        height="1000"
       />
       <div className="absolute bottom-[22px] mx-[32px]">
         <h2 className="text-[18px] tracking-[.16em]">{title}</h2>
@@ -86,7 +86,7 @@ export default function Charge() {
     otherGroup.push(dataList.slice(i, i + 2))
   }
   return (
-    <div className="bg-[#f9f9f9] pt-[80px] pb-[1.2rem] flex flex-col items-center">
+    <div className="bg-[#f9f9f9] pt-[80px] pb-[120px] flex flex-col items-center">
       <div className="pt-[120px] pb-[64px] text-center">
         <h2 className="text-[32px] tracking-[.16em] mb-[16px]">
           全场景充电服务

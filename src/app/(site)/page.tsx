@@ -1,6 +1,7 @@
 import Slider from './components/Slider'
 import RotateCar from './components/RotateCar'
 import Charge from './components/Charge'
+import AfterSales from './components/AfterSales'
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Slider />
       <RotateCar />
       <Charge />
+      <AfterSales />
     </div>
   )
 }
