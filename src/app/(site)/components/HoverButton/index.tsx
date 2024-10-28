@@ -62,8 +62,8 @@ export default function HoverButton({
       className={clsx(
         className,
         'flex items-center justify-center text-[16px] tracking-[.16em] font-[400]',
-        'border btn-hover',
-        'rounded-[4Px] px-[32px] h-[44px] mr-[16px]',
+        'border btn-hover cursor-pointer',
+        'rounded-[4Px] px-[32px] h-[44px]',
         bgColor,
         borderColor
       )}
