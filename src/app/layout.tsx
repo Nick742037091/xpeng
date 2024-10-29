@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.scss'
+import { Toaster } from '@/components/ui/toaster'
+import NextTopLoader from 'nextjs-toploader'
 
 export const metadata: Metadata = {
   title: '小鹏汽车丨未来出行探索者',
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <NextTopLoader />
+        <Toaster />
+        {children}
+      </body>
     </html>
   )
 }

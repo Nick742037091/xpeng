@@ -28,6 +28,14 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
     --background: 224 71.4% 4.1%;
@@ -54,6 +62,14 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 @layer base {
@@ -65,23 +81,23 @@
   }
 }
 
-// 设计稿宽度
+/* 设计稿宽度 */
 $designWidth: 1440;
 $baseFontSize: 16;
 :root {
-  // 根据设计稿宽度计算根元素字号
+  /* 根据设计稿宽度计算根元素字号 */
   font-size: calc((100vw / $designWidth) * $baseFontSize);
 }
 
 body {
-  // 添加body字体大小，作为默认字号
+  /* 添加body字体大小，作为默认字号 */
   font-size: 14px;
   color: #000;
   padding: 0;
   margin: 0;
 }
 
-// 为按钮添加从左向右填充绿色的悬浮效果，添加该样式的按钮，需要1px边框
+/* 为按钮添加从左向右填充绿色的悬浮效果，添加该样式的按钮，需要1px边框 */
 .btn-hover {
   @apply relative overflow-hidden;
   & * {
@@ -91,12 +107,12 @@ body {
     content: '';
     @apply absolute top-0 left-0 w-0 h-full  z-[0] bg-[#a4ce4c];
     @apply transition-all duration-300;
-    // 未hover时，设置宽度0，没有边框
+    /* 未hover时，设置宽度0，没有边框 */
     @apply w-0;
     @apply border-none;
   }
   &:hover {
-    // hover时，设置宽度为100%，隐藏原边框，添加覆盖层边框，设置背景透明，颜色为白色，::after才能正常展示
+    /* hover时，设置宽度为100%，隐藏原边框，添加覆盖层边框，设置背景透明，颜色为白色，::after才能正常展示 */
     @apply border-transparent bg-transparent text-white;
     &::before {
       @apply w-full;
