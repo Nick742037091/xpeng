@@ -70,7 +70,7 @@ export default function RotateCar() {
           onClick={() => api?.scrollNext()}
         />
         <Carousel
-          className="w-[100vw] h-[39vw] mx-auto"
+          className="w-full h-[39vw] mx-auto"
           setApi={setApi}
           opts={{
             loop: true
@@ -80,7 +80,7 @@ export default function RotateCar() {
             {rotateCarList.map((item, index) => (
               <CarouselItem
                 key={index}
-                className="w-[100vw] h-[45vw] px-0 flex flex-col  items-center justify-center"
+                className="w-full h-[45vw] px-0 flex flex-col  items-center justify-center"
               >
                 <div className="w-[83vw] h-[39vw] relative">
                   <Image

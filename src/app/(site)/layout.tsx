@@ -1,4 +1,5 @@
 import TopNavigator from './components/TopNavigator/index'
+import './app.scss'
 
 export default function HomeLayout({
   children
