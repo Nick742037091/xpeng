@@ -1,5 +1,5 @@
-import TopNavigator from './components/TopNavigator/index'
 import './app.scss'
+import TopNavigatorWrapper from './components/TopNavigator/wrapper'
 
 export default function HomeLayout({
   children
@@ -8,7 +8,7 @@ export default function HomeLayout({
 }) {
   return (
     <div>
-      <TopNavigator />
+      <TopNavigatorWrapper />
       {children}
     </div>
   )

@@ -1,81 +1,29 @@
-import { ChevronUp, Home, User, User2 } from 'lucide-react'
-
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem
+  SidebarGroupLabel
 } from '@/components/ui/sidebar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { getAdminProfile } from '@/lib/dal'
-import { Logout } from '../Logout'
 
-const items = [
-  {
-    title: '首页配置',
-    url: '/admin',
-    icon: Home
-  },
-  {
-    title: '用户管理',
-    url: '/admin/customer',
-    icon: User
-  }
-]
+import { Content } from './Content'
+import { Footer } from './Footer'
+import Link from 'next/link'
 
-export async function AppSidebar() {
-  const profile = await getAdminProfile()
-  if (!profile) return null
+export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>管理后台</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            <Link href="/admin">管理后台</Link>
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <Content />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 /> {profile.userName}
-                  <ChevronUp className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                className="w-[--radix-popper-anchor-width]"
-              >
-                <Logout />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
+      <Footer />
     </Sidebar>
   )
 }

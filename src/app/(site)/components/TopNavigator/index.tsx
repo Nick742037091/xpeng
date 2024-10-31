@@ -12,7 +12,8 @@ import {
 import styles from './index.module.scss'
 import clsx from 'clsx'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { carModelList } from './data'
+import { ListCarModelItem } from '@/db/navCarModels'
+import { CarModels } from './CardModels'
 
 function LeftIcon() {
   const { isBgTransparent } = useTopNavigatorContext()
@@ -78,99 +79,6 @@ function HoverMenus({
   )
 }
 
-function CarModelsPanel({ active }: { active: boolean }) {
-  const [hoverIndex, setHoverIndex] = useState(-1)
-  const fillNum = 4 - (carModelList.length % 4)
-  // 填充空数据，使每行都能对齐
-  const fillCarModelList = [
-    ...carModelList,
-    ...Array(fillNum).fill({
-      modelName: '',
-      modelImg: ''
-    })
-  ]
-  return (
-    <div
-      className={clsx(
-        'fixed z-[100] top-[56px] left-0 right-0 bg-white',
-        'transition-all duration-300 ease-in-out',
-        active ? 'h-[400px]' : 'h-0',
-        'flex items-center justify-center overflow-hidden'
-      )}
-    >
-      <div
-        className="flex flex-wrap justify-between mt-[61px] mx-auto max-w-[77vw]"
-        style={{ width: 'min(77vw, 1708px)' }}
-      >
-        {fillCarModelList.map((item, index) => {
-          if (item.modelName === '') {
-            return (
-              <div key={item.modelName} className="px-[32px] pb-[40px]">
-                <div className="w-[180px] h-[96px]" />
-              </div>
-            )
-          }
-          return (
-            <div
-              key={item.modelName}
-              className="px-[32px] pb-[40px] flex flex-col items-center"
-              onMouseEnter={() => setHoverIndex(index)}
-              onMouseLeave={() => setHoverIndex(-1)}
-            >
-              <Image
-                src={item.modelImg}
-                alt={item.modelName}
-                width={180}
-                height={96}
-                className={clsx(
-                  'w-[180px] h-[96px] transition-all duration-300 ease-in-out',
-                  hoverIndex === index && 'scale-110'
-                )}
-              />
-              <div
-                className={clsx(
-                  'text-[14px]',
-                  hoverIndex === index && 'opacity-60'
-                )}
-              >
-                {item.modelName}
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
-
-function CarModels() {
-  const { isCarModelHover, setIsCarModelHover } = useTopNavigatorContext()
-  return (
-    <div
-      className={clsx(
-        styles.navItem,
-        styles.carModelNav,
-        isCarModelHover && styles.hovering
-      )}
-      onMouseEnter={() => setIsCarModelHover(true)}
-      onMouseLeave={() => setIsCarModelHover(false)}
-    >
-      <Link href="/">车型</Link>
-      <div className={styles.carAnimation}>
-        {/* TODO carAnimation 增加左右边缘模糊 */}
-        <Image
-          src="/site/top-navigator/p7+.png"
-          alt="new-card"
-          className={clsx(styles.carImage, isCarModelHover && styles.hovering)}
-          width={104}
-          height={48}
-        />
-      </div>
-      <CarModelsPanel active={isCarModelHover} />
-    </div>
-  )
-}
-
 function CenterNavigators() {
   return (
     <div className="mx-auto flex">
@@ -211,7 +119,11 @@ function CenterNavigators() {
   )
 }
 
-export default function TopNavigator() {
+export default function TopNavigator({
+  carModelList
+}: {
+  carModelList: ListCarModelItem[]
+}) {
   const [isCarModelHover, setIsCarModelHover] = useState(false)
   const [isBgTransparent, setIsBgTransparent] = useState(true)
   // 页面向下滚动时，设置白色底色
@@ -248,6 +160,7 @@ export default function TopNavigator() {
       value={{
         isCarModelHover,
         isBgTransparent,
+        carModelList,
         setIsCarModelHover
       }}
     >
@@ -268,10 +181,13 @@ export default function TopNavigator() {
 const TopNavigatorContext = createContext<{
   isCarModelHover: boolean
   isBgTransparent: boolean
+  // 由于导航栏是客户端组件，只能在其上层的服务端组件获取carModelList，通过props传入，然后将其放在context中，供CarModelsPanel组件使用
+  carModelList: ListCarModelItem[]
   setIsCarModelHover: (value: boolean) => void
 }>({
   isCarModelHover: false,
   isBgTransparent: true,
+  carModelList: [],
   setIsCarModelHover: () => {}
 })
 export const useTopNavigatorContext = () => {

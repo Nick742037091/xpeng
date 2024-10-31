@@ -2,8 +2,11 @@
 $designWidth: 1440;
 $baseFontSize: 16;
 :root {
-  /* 根据设计稿宽度计算根元素字号 */
-  font-size: calc((100vw / $designWidth) * $baseFontSize);
+  /* 根据设计稿宽度计算根元素字号，最大字号是默认值16px */
+  font-size: min(
+    calc((100vw / $designWidth) * $baseFontSize),
+    $baseFontSize * 1px
+  );
 }
 
 body {
