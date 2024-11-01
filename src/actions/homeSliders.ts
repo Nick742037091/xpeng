@@ -1,27 +1,23 @@
 'use server'
-import { Prisma } from '@prisma/client'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { responseError, responseSuccess } from './utils'
 import { importSliders } from '@/app/(site)/components/Slider/data'
 
-export type ListHomeSliderItem = Prisma.homeSlidersGetPayload<{
-  select: {
-    id: true
-    img: true
-    title: true
-    subtitle: true
-    buttons: true
-  }
-}>
-
+export type ListHomeSliderItem = Awaited<
+  ReturnType<typeof getHomeSliders>
+>[number]
 export type ButtonItem = {
   text: string
   href: string
 }
 
-export async function getHomeSliders() {
+export async function getHomeSliders({ status }: { status?: number } = {}) {
   return await prisma.homeSliders.findMany({
+    where: {
+      // 支持多个where，向下添加行即可
+      ...(status !== undefined && { status })
+    },
     orderBy: {
       id: 'asc'
     },
@@ -31,7 +27,8 @@ export async function getHomeSliders() {
       title: true,
       subtitle: true,
       buttons: true,
-      order: true
+      order: true,
+      status: true
     }
   })
 }
@@ -45,7 +42,8 @@ export const getHomeSliderDetail = async (id?: number) => {
       title: true,
       subtitle: true,
       buttons: true,
-      order: true
+      order: true,
+      status: true
     }
   })
 }
@@ -56,7 +54,8 @@ export const saveHomeSlider = async ({
   title,
   subtitle,
   buttons,
-  order
+  order,
+  status
 }: {
   id?: number
   img: string
@@ -64,20 +63,20 @@ export const saveHomeSlider = async ({
   subtitle: string
   buttons: ButtonItem[]
   order: number
+  status: number
 }) => {
   if (!img) return responseError('图片不能为空')
   if (!title) return responseError('标题不能为空')
   if (!subtitle) return responseError('副标题不能为空')
-  if (!buttons) return responseError('按钮配置不能为空')
 
   if (id) {
     await prisma.homeSliders.update({
       where: { id: +id },
-      data: { img, title, subtitle, buttons, order }
+      data: { img, title, subtitle, buttons, order, status }
     })
   } else {
     await prisma.homeSliders.create({
-      data: { img, title, subtitle, buttons, order }
+      data: { img, title, subtitle, buttons, order, status }
     })
   }
   refreshHomeSliderPage()
@@ -94,6 +93,6 @@ export const deleteHomeSlider = async (id: number) => {
 }
 
 export const refreshHomeSliderPage = async () => {
-  await importSliders()
-  revalidatePath('/admin/home-slider')
+  // await importSliders()
+  revalidatePath('/admin/home-sliders')
 }

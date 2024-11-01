@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import RefreshButton from './RefreshButton'
 import { useRef } from 'react'
 import EditDialog, { EditDialogRef } from './EditDialog'
-import { confirm, error, success } from '@/lib/utils'
+import { cn, confirm, error, success } from '@/lib/utils'
 
 export default function Table({ data }: { data: ListHomeSliderItem[] }) {
   const columns: ColumnDef<ListHomeSliderItem>[] = [
@@ -28,13 +28,32 @@ export default function Table({ data }: { data: ListHomeSliderItem[] }) {
     },
     {
       header: '排序',
-      accessorKey: 'order'
+      accessorKey: 'order',
+      cell: ({ row }) => {
+        return <div className="w-[50px]">{row.original.order}</div>
+      }
+    },
+    {
+      header: '状态',
+      accessorKey: 'status',
+      cell: ({ row }) => {
+        return (
+          <div
+            className={cn(
+              'w-[50px]',
+              row.original.status === 1 ? 'text-green-500' : 'text-red-500'
+            )}
+          >
+            {row.original.status === 1 ? '启用' : '禁用'}
+          </div>
+        )
+      }
     },
     {
       header: '操作',
       cell: ({ row }) => {
         return (
-          <div>
+          <div className="flex items-center">
             <Button onClick={() => handleEditItem(row.original.id)}>
               编辑
             </Button>

@@ -24,6 +24,9 @@ import {
 } from '@/components/ui/table'
 import { Pencil, Plus, Trash2 } from 'lucide-react'
 import type { ButtonItem } from '@/actions/homeSliders'
+import Loading from '@/components/admin/Loading'
+import { useFormStatus } from 'react-dom'
+import { Switch } from '@/components/ui/switch'
 
 export type EditDialogRef = {
   open: (id: number) => void
@@ -139,8 +142,13 @@ function ButtonConfig({
   )
 }
 
-function ConfirmButton() {
-  return <Button type="submit">确定</Button>
+export function ConfirmButton() {
+  const { pending } = useFormStatus()
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending && <Loading />}确定
+    </Button>
+  )
 }
 
 export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
@@ -152,12 +160,14 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     subtitle: string
     buttons: ButtonItem[]
     order: number
+    status: number
   }>({
     img: '',
     title: '',
     subtitle: '',
     buttons: [],
-    order: 0
+    order: 0,
+    status: 0
   })
 
   const title = id ? '编辑轮播图' : '新增轮播图'
@@ -173,7 +183,8 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
         subtitle: detail.subtitle,
         img: detail.img,
         buttons: detail.buttons as ButtonItem[],
-        order: detail.order
+        order: detail.order,
+        status: detail.status
       })
     } else {
       setDetail({
@@ -181,7 +192,8 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
         title: '',
         subtitle: '',
         buttons: [],
-        order: 0
+        order: 0,
+        status: 0
       })
     }
   }
@@ -219,7 +231,7 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     })
   }
 
-  const handleDeleteButton = (index: number) => {
+  const handleDeleteButton = async (index: number) => {
     setDetail({
       ...detail,
       buttons: detail.buttons.filter((_, i) => i !== index)
@@ -287,6 +299,26 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
                   setDetail({ ...detail, order: parseInt(e.target.value) || 0 })
                 }}
               />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                状态
+              </Label>
+              <div className="col-span-3 flex items-center space-x-2">
+                <Switch
+                  id="status"
+                  checked={detail?.status === 1}
+                  onCheckedChange={(checked) => {
+                    setDetail({ ...detail, status: checked ? 1 : 0 })
+                  }}
+                />
+                <Label
+                  htmlFor="status"
+                  className="text-sm text-muted-foreground"
+                >
+                  {detail?.status === 1 ? '启用' : '禁用'}
+                </Label>
+              </div>
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
               <Label className="text-right mt-2">按钮配置</Label>

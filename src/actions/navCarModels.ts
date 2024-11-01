@@ -1,21 +1,18 @@
 'use server'
-import { Prisma } from '@prisma/client'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate'
 import { responseError, responseSuccess } from './utils'
 import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
 
-export type ListCarModelItem = Prisma.navCarModelsGetPayload<{
-  select: {
-    id: true
-    modelName: true
-    modelImg: true
-    order: true
-  }
-}>
+export type ListNavCarModelItem = Awaited<
+  ReturnType<typeof getNavCarModels>
+>[number]
 
-export async function getNavCarModels() {
+export async function getNavCarModels({ status }: { status?: number } = {}) {
   return await prisma.navCarModels.findMany({
+    where: {
+      ...(status !== undefined ? { status } : {})
+    },
     orderBy: {
       order: 'asc'
     },
@@ -23,7 +20,8 @@ export async function getNavCarModels() {
       id: true,
       modelName: true,
       modelImg: true,
-      order: true
+      order: true,
+      status: true
     }
   })
 }
@@ -35,7 +33,8 @@ export const getNavCarModelDetail = async (id?: number) => {
       id: true,
       modelName: true,
       modelImg: true,
-      order: true
+      order: true,
+      status: true
     }
   })
 }
@@ -44,12 +43,14 @@ export const saveNavCarModel = async ({
   id,
   modelName,
   modelImg,
-  order
+  order,
+  status
 }: {
   id?: number
   modelName: string
   modelImg: string
   order: number
+  status: number
 }) => {
   if (!modelName) {
     return responseError('车型不能为空')
@@ -60,11 +61,11 @@ export const saveNavCarModel = async ({
   if (id) {
     await prisma.navCarModels.update({
       where: { id: +id },
-      data: { modelName, modelImg, order }
+      data: { modelName, modelImg, order, status }
     })
   } else {
     await prisma.navCarModels.create({
-      data: { modelName, modelImg, order }
+      data: { modelName, modelImg, order, status }
     })
   }
   refreshNavCarModelsPage()
@@ -84,36 +85,4 @@ export const deleteNavCarModel = async (id: number) => {
 export const refreshNavCarModelsPage = async () => {
   // await importCarModels()
   revalidatePath('/admin/nav-car-models', 'page')
-}
-
-export async function createNavCarModel(data: {
-  modelName: string
-  modelImg: string
-  order: number
-}) {
-  return await prisma.navCarModels.create({
-    data: {
-      modelName: data.modelName,
-      modelImg: data.modelImg,
-      order: data.order
-    }
-  })
-}
-
-export async function updateNavCarModel(
-  id: number,
-  data: {
-    modelName: string
-    modelImg: string
-    order: number
-  }
-) {
-  return await prisma.navCarModels.update({
-    where: { id },
-    data: {
-      modelName: data.modelName,
-      modelImg: data.modelImg,
-      order: data.order
-    }
-  })
 }

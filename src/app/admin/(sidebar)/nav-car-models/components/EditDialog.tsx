@@ -14,11 +14,26 @@ import { Button } from '@/components/ui/button'
 import { useFormStatus } from 'react-dom'
 import { success, error } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
+import { useForm } from 'react-hook-form'
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectItem,
+  SelectContent
+} from '@/components/ui/form'
+import { Switch } from '@/components/ui/switch'
 
 type Detail = {
   modelName: string
   modelImg: string
   order: number
+  status: number
 }
 
 export interface EditDialogRef {
@@ -32,7 +47,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   const [detail, setDetail] = useState<Detail>({
     modelName: '',
     modelImg: '',
-    order: 0
+    order: 0,
+    status: 1
   })
 
   const getDetail = async (id: number) => {
@@ -50,7 +66,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
       setDetail({
         modelName: '',
         modelImg: '',
-        order: 0
+        order: 0,
+        status: 1
       })
     }
   }
@@ -64,7 +81,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
       id: +id,
       modelName: detail.modelName,
       modelImg: detail.modelImg,
-      order: detail.order
+      order: detail.order,
+      status: detail.status
     })
     if (isSuccess) {
       success(message)
@@ -122,6 +140,26 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
                   setDetail({ ...detail, order: parseInt(e.target.value) })
                 }}
               />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                状态
+              </Label>
+              <div className="col-span-3 flex items-center space-x-2">
+                <Switch
+                  id="status"
+                  checked={detail?.status === 1}
+                  onCheckedChange={(checked) => {
+                    setDetail({ ...detail, status: checked ? 1 : 0 })
+                  }}
+                />
+                <Label
+                  htmlFor="status"
+                  className="text-sm text-muted-foreground"
+                >
+                  {detail?.status === 1 ? '启用' : '禁用'}
+                </Label>
+              </div>
             </div>
           </div>
           <DialogFooter>

@@ -12,6 +12,7 @@ import { useRef } from 'react'
 import EditDialog, { EditDialogRef } from './EditDialog'
 import { confirm, error } from '@/lib/utils'
 import { success } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 export default function Table({ data }: { data: ListCarModelItem[] }) {
   const columns: ColumnDef<ListCarModelItem>[] = [
@@ -24,14 +25,30 @@ export default function Table({ data }: { data: ListCarModelItem[] }) {
       accessorKey: 'modelImg'
     },
     {
-      accessorKey: "order",
-      header: "排序",
+      accessorKey: 'order',
+      header: '排序'
+    },
+    {
+      header: '状态',
+      accessorKey: 'status',
+      cell: ({ row }) => {
+        return (
+          <div
+            className={cn(
+              'w-[50px]',
+              row.original.status === 1 ? 'text-green-500' : 'text-red-500'
+            )}
+          >
+            {row.original.status === 1 ? '启用' : '禁用'}
+          </div>
+        )
+      }
     },
     {
       header: '操作',
       cell: ({ row }) => {
         return (
-          <div>
+          <div className="flex items-center">
             <Button onClick={() => handleEditItem(row.original.id)}>
               编辑
             </Button>
