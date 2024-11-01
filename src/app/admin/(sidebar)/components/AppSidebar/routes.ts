@@ -8,6 +8,10 @@ export const routes: Route[] = [
       {
         title: '导航栏车型',
         url: '/admin/nav-car-models'
+      },
+      {
+        title: '首页轮播图',
+        url: '/admin/home-sliders'
       }
     ]
   },

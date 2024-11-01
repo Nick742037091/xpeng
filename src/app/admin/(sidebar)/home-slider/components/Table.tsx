@@ -2,26 +2,29 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import {
-  deleteNavCarModel,
-  type ListCarModelItem
-} from '@/actions/navCarModels'
+  deleteHomeSlider,
+  type ListHomeSliderItem
+} from '@/actions/homeSliders'
 import { DataTable } from '@/components/ui/data-table'
 import { Button } from '@/components/ui/button'
 import RefreshButton from './RefreshButton'
 import { useRef } from 'react'
 import EditDialog, { EditDialogRef } from './EditDialog'
-import { confirm, error } from '@/lib/utils'
-import { success } from '@/lib/utils'
+import { confirm, error, success } from '@/lib/utils'
 
-export default function Table({ data }: { data: ListCarModelItem[] }) {
-  const columns: ColumnDef<ListCarModelItem>[] = [
+export default function Table({ data }: { data: ListHomeSliderItem[] }) {
+  const columns: ColumnDef<ListHomeSliderItem>[] = [
     {
-      header: '车型',
-      accessorKey: 'modelName'
+      header: '标题',
+      accessorKey: 'title'
+    },
+    {
+      header: '副标题',
+      accessorKey: 'subtitle'
     },
     {
       header: '图片',
-      accessorKey: 'modelImg'
+      accessorKey: 'img'
     },
     {
       header: '操作',
@@ -52,11 +55,11 @@ export default function Table({ data }: { data: ListCarModelItem[] }) {
 
   const handleDeleteItem = async (id: number) => {
     const isConfirm = await confirm({
-      title: '删除车型',
-      description: '确定要删除该车型吗？'
+      title: '删除轮播图',
+      description: '确定要删除该轮播图吗？'
     })
     if (!isConfirm) return
-    const { isSuccess, message } = await deleteNavCarModel(id)
+    const { isSuccess, message } = await deleteHomeSlider(id)
     if (isSuccess) {
       success(message)
     } else {
@@ -73,7 +76,7 @@ export default function Table({ data }: { data: ListCarModelItem[] }) {
             editDialogRef.current?.open(0)
           }}
         >
-          新增车型
+          新增轮播图
         </Button>
         <RefreshButton />
       </div>

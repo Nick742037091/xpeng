@@ -1,21 +1,40 @@
 'use server'
-
+import { Prisma } from '@prisma/client'
 import prisma from '@/lib/prisma'
-import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate'
+import { responseError, responseSuccess } from './utils'
+import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
+
+export type ListCarModelItem = Prisma.navCarModelsGetPayload<{
+  select: {
+    id: true
+    modelName: true
+    modelImg: true
+  }
+}>
 
 export async function getNavCarModels() {
-  return await prisma.navCarModels.findMany()
+  return await prisma.navCarModels.findMany({
+    orderBy: {
+      id: 'asc'
+    },
+    select: {
+      id: true,
+      modelName: true,
+      modelImg: true
+    }
+  })
 }
 
-export type ListCarModelItem = Awaited<
-  ReturnType<typeof getNavCarModels>
->[number]
-
 export const getNavCarModelDetail = async (id?: number) => {
-  if (id) {
-    return await prisma.navCarModels.findUnique({ where: { id } })
-  }
+  return await prisma.navCarModels.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      modelName: true,
+      modelImg: true
+    }
+  })
 }
 
 export const saveNavCarModel = async ({
@@ -28,18 +47,10 @@ export const saveNavCarModel = async ({
   modelImg: string
 }) => {
   if (!modelName) {
-    return {
-      isSuccess: false,
-      message: '车型不能为空',
-      code: -1
-    }
+    return responseError('车型不能为空')
   }
   if (!modelImg) {
-    return {
-      isSuccess: false,
-      message: '图片不能为空',
-      code: -1
-    }
+    return responseError('图片不能为空')
   }
   if (id) {
     await prisma.navCarModels.update({
@@ -52,31 +63,20 @@ export const saveNavCarModel = async ({
     })
   }
   refreshNavCarModelsPage()
-  return {
-    isSuccess: true,
-    message: '保存成功',
-    code: 0
-  }
+  return responseSuccess(null, '保存成功')
 }
 
 export const deleteNavCarModel = async (id: number) => {
   const detail = await prisma.navCarModels.findUnique({ where: { id } })
   if (!detail) {
-    return {
-      isSuccess: false,
-      message: '记录不存在',
-      code: -1
-    }
+    return responseError('记录不存在')
   }
   await prisma.navCarModels.delete({ where: { id } })
   refreshNavCarModelsPage()
-  return {
-    isSuccess: true,
-    message: '删除成功',
-    code: 0
-  }
+  return responseSuccess(null, '删除成功')
 }
 
 export const refreshNavCarModelsPage = async () => {
+  // await importCarModels()
   revalidatePath('/admin/nav-car-models', 'page')
 }

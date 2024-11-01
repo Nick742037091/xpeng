@@ -7,13 +7,13 @@ import {
 } from '@/components/ui/carousel'
 import { type CarouselApi } from '@/components/ui/carousel'
 
-import { sliderList } from './data'
 import Autoplay from 'embla-carousel-autoplay'
 import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { GoX } from 'react-icons/go'
 import Link from 'next/link'
 import HoverButton from '../HoverButton'
+import { ListHomeSliderItem } from '@/actions/homeSliders'
 
 function Indicator({
   current,
@@ -45,7 +45,11 @@ function Indicator({
   )
 }
 
-export default function Slider() {
+export default function Slider({
+  sliderList
+}: {
+  sliderList: ListHomeSliderItem[]
+}) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
 

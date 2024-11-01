@@ -8,9 +8,23 @@ datasource db {
 }
 
 model navCarModels {
-  id        Int    @id @default(autoincrement())
-  modelName String @map("model_name")
-  modelImg  String @map("model_img")
+  id        Int      @id @default(autoincrement())
+  modelName String   @map("model_name")
+  modelImg  String   @map("model_img")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("nav_car_models")
+}
+
+model homeSliders {
+  id        Int      @id @default(autoincrement())
+  img       String   @map("img")
+  title     String   @map("title")
+  subtitle  String   @map("subtitle")
+  buttons   Json     @map("buttons")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("home_sliders")
 }

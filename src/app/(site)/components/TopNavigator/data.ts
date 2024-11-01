@@ -1,4 +1,6 @@
-export const carModelList = [
+import prisma from '@/lib/prisma'
+
+const carModelList = [
   {
     modelName: 'P7+',
     modelImg:
@@ -35,3 +37,17 @@ export const carModelList = [
       'https://xps01.xiaopeng.com/cms/material/pic/2023/09-24/pic_20230924150408_94553.png'
   }
 ]
+
+// 导入数据到数据库的函数
+export async function importCarModels() {
+  // 清空现有数据
+  await prisma.navCarModels.deleteMany()
+
+  // 批量创建新数据
+  await prisma.navCarModels.createMany({
+    data: carModelList.map((item) => ({
+      modelName: item.modelName,
+      modelImg: item.modelImg
+    }))
+  })
+}

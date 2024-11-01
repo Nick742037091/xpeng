@@ -1,12 +1,12 @@
-import Slider from './components/Slider'
+import SliderWrapper from './components/Slider/wrapper'
 import RotateCar from './components/RotateCar'
 import Charge from './components/Charge'
 import AfterSales from './components/AfterSales'
 
 export default function HomePage() {
   return (
-    <div className="">
-      <Slider />
+    <div>
+      <SliderWrapper />
       <RotateCar />
       <Charge />
       <AfterSales />

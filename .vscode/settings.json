@@ -1,4 +1,4 @@
 {
   "editor.formatOnSave": true,
-  "tailwindCSS.rootFontSize": 100
+  "tailwindCSS.rootFontSize": 16
 }
