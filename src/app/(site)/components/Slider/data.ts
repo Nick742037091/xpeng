@@ -122,11 +122,12 @@ export const sliderList = [
 export const importSliders = async () => {
   await prisma.homeSliders.deleteMany()
   await prisma.homeSliders.createMany({
-    data: sliderList.map((item) => ({
+    data: sliderList.map((item, index) => ({
       img: item.img,
       title: item.title,
       subtitle: item.subtitle,
-      buttons: item.buttons
+      buttons: item.buttons,
+      order: index + 1
     }))
   })
 }

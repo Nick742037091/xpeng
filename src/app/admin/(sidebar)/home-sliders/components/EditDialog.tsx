@@ -151,11 +151,13 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     title: string
     subtitle: string
     buttons: ButtonItem[]
+    order: number
   }>({
     img: '',
     title: '',
     subtitle: '',
-    buttons: []
+    buttons: [],
+    order: 0
   })
 
   const title = id ? '编辑轮播图' : '新增轮播图'
@@ -170,14 +172,16 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
         title: detail.title,
         subtitle: detail.subtitle,
         img: detail.img,
-        buttons: detail.buttons as ButtonItem[]
+        buttons: detail.buttons as ButtonItem[],
+        order: detail.order
       })
     } else {
       setDetail({
         img: '',
         title: '',
         subtitle: '',
-        buttons: []
+        buttons: [],
+        order: 0
       })
     }
   }
@@ -267,6 +271,20 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
                 className="col-span-3"
                 onChange={(e) => {
                   setDetail({ ...detail, img: e.target.value })
+                }}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="order" className="text-right">
+                排序
+              </Label>
+              <Input
+                name="order"
+                type="number"
+                value={detail?.order}
+                className="col-span-3"
+                onChange={(e) => {
+                  setDetail({ ...detail, order: parseInt(e.target.value) || 0 })
                 }}
               />
             </div>

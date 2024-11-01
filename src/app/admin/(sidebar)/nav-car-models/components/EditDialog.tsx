@@ -10,13 +10,16 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { getNavCarModelDetail, saveNavCarModel } from '@/actions/navCarModels'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import type { ListCarModelItem } from '@/actions/navCarModels'
 import { Button } from '@/components/ui/button'
 import { useFormStatus } from 'react-dom'
 import { success, error } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
 
-type Detail = Omit<ListCarModelItem, 'id'>
+type Detail = {
+  modelName: string
+  modelImg: string
+  order: number
+}
 
 export interface EditDialogRef {
   open: (id: number) => void
@@ -28,7 +31,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   const title = id ? '编辑车型' : '新增车型'
   const [detail, setDetail] = useState<Detail>({
     modelName: '',
-    modelImg: ''
+    modelImg: '',
+    order: 0
   })
 
   const getDetail = async (id: number) => {
@@ -45,7 +49,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
     } else {
       setDetail({
         modelName: '',
-        modelImg: ''
+        modelImg: '',
+        order: 0
       })
     }
   }
@@ -58,7 +63,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
     const { isSuccess, message } = await saveNavCarModel({
       id: +id,
       modelName: detail.modelName,
-      modelImg: detail.modelImg
+      modelImg: detail.modelImg,
+      order: detail.order
     })
     if (isSuccess) {
       success(message)
@@ -100,6 +106,20 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
                 className="col-span-3"
                 onChange={(e) => {
                   setDetail({ ...detail, modelImg: e.target.value as string })
+                }}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="order" className="text-right">
+                排序
+              </Label>
+              <Input
+                name="order"
+                type="number"
+                value={detail?.order}
+                className="col-span-3"
+                onChange={(e) => {
+                  setDetail({ ...detail, order: parseInt(e.target.value) })
                 }}
               />
             </div>

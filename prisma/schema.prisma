@@ -11,6 +11,7 @@ model navCarModels {
   id        Int      @id @default(autoincrement())
   modelName String   @map("model_name")
   modelImg  String   @map("model_img")
+  order     Int      @default(0) @map("order")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -23,6 +24,7 @@ model homeSliders {
   title     String   @map("title")
   subtitle  String   @map("subtitle")
   buttons   Json     @map("buttons")
+  order     Int      @default(0) @map("order")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

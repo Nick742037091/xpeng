@@ -10,18 +10,20 @@ export type ListCarModelItem = Prisma.navCarModelsGetPayload<{
     id: true
     modelName: true
     modelImg: true
+    order: true
   }
 }>
 
 export async function getNavCarModels() {
   return await prisma.navCarModels.findMany({
     orderBy: {
-      id: 'asc'
+      order: 'asc'
     },
     select: {
       id: true,
       modelName: true,
-      modelImg: true
+      modelImg: true,
+      order: true
     }
   })
 }
@@ -32,7 +34,8 @@ export const getNavCarModelDetail = async (id?: number) => {
     select: {
       id: true,
       modelName: true,
-      modelImg: true
+      modelImg: true,
+      order: true
     }
   })
 }
@@ -40,11 +43,13 @@ export const getNavCarModelDetail = async (id?: number) => {
 export const saveNavCarModel = async ({
   id,
   modelName,
-  modelImg
+  modelImg,
+  order
 }: {
   id?: number
   modelName: string
   modelImg: string
+  order: number
 }) => {
   if (!modelName) {
     return responseError('车型不能为空')
@@ -55,11 +60,11 @@ export const saveNavCarModel = async ({
   if (id) {
     await prisma.navCarModels.update({
       where: { id: +id },
-      data: { modelName, modelImg }
+      data: { modelName, modelImg, order }
     })
   } else {
     await prisma.navCarModels.create({
-      data: { modelName, modelImg }
+      data: { modelName, modelImg, order }
     })
   }
   refreshNavCarModelsPage()
@@ -79,4 +84,36 @@ export const deleteNavCarModel = async (id: number) => {
 export const refreshNavCarModelsPage = async () => {
   // await importCarModels()
   revalidatePath('/admin/nav-car-models', 'page')
+}
+
+export async function createNavCarModel(data: {
+  modelName: string
+  modelImg: string
+  order: number
+}) {
+  return await prisma.navCarModels.create({
+    data: {
+      modelName: data.modelName,
+      modelImg: data.modelImg,
+      order: data.order
+    }
+  })
+}
+
+export async function updateNavCarModel(
+  id: number,
+  data: {
+    modelName: string
+    modelImg: string
+    order: number
+  }
+) {
+  return await prisma.navCarModels.update({
+    where: { id },
+    data: {
+      modelName: data.modelName,
+      modelImg: data.modelImg,
+      order: data.order
+    }
+  })
 }

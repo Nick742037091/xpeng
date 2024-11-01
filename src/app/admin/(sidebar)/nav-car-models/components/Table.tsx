@@ -24,6 +24,10 @@ export default function Table({ data }: { data: ListCarModelItem[] }) {
       accessorKey: 'modelImg'
     },
     {
+      accessorKey: "order",
+      header: "排序",
+    },
+    {
       header: '操作',
       cell: ({ row }) => {
         return (

@@ -27,6 +27,10 @@ export default function Table({ data }: { data: ListHomeSliderItem[] }) {
       accessorKey: 'img'
     },
     {
+      header: '排序',
+      accessorKey: 'order'
+    },
+    {
       header: '操作',
       cell: ({ row }) => {
         return (

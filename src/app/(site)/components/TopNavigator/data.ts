@@ -45,9 +45,10 @@ export async function importCarModels() {
 
   // 批量创建新数据
   await prisma.navCarModels.createMany({
-    data: carModelList.map((item) => ({
+    data: carModelList.map((item, index) => ({
       modelName: item.modelName,
-      modelImg: item.modelImg
+      modelImg: item.modelImg,
+      order: index + 1
     }))
   })
 }

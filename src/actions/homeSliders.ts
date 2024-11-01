@@ -30,7 +30,8 @@ export async function getHomeSliders() {
       img: true,
       title: true,
       subtitle: true,
-      buttons: true
+      buttons: true,
+      order: true
     }
   })
 }
@@ -43,7 +44,8 @@ export const getHomeSliderDetail = async (id?: number) => {
       img: true,
       title: true,
       subtitle: true,
-      buttons: true
+      buttons: true,
+      order: true
     }
   })
 }
@@ -53,13 +55,15 @@ export const saveHomeSlider = async ({
   img,
   title,
   subtitle,
-  buttons
+  buttons,
+  order
 }: {
   id?: number
   img: string
   title: string
   subtitle: string
   buttons: ButtonItem[]
+  order: number
 }) => {
   if (!img) return responseError('图片不能为空')
   if (!title) return responseError('标题不能为空')
@@ -69,11 +73,11 @@ export const saveHomeSlider = async ({
   if (id) {
     await prisma.homeSliders.update({
       where: { id: +id },
-      data: { img, title, subtitle, buttons }
+      data: { img, title, subtitle, buttons, order }
     })
   } else {
     await prisma.homeSliders.create({
-      data: { img, title, subtitle, buttons }
+      data: { img, title, subtitle, buttons, order }
     })
   }
   refreshHomeSliderPage()
@@ -90,6 +94,6 @@ export const deleteHomeSlider = async (id: number) => {
 }
 
 export const refreshHomeSliderPage = async () => {
-  // await importSliders()
+  await importSliders()
   revalidatePath('/admin/home-slider')
 }
