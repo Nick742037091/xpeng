@@ -14,19 +14,6 @@ import { Button } from '@/components/ui/button'
 import { useFormStatus } from 'react-dom'
 import { success, error } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
-import { useForm } from 'react-hook-form'
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectItem,
-  SelectContent
-} from '@/components/ui/form'
 import { Switch } from '@/components/ui/switch'
 
 type Detail = {

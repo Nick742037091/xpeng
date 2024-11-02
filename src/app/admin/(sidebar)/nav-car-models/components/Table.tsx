@@ -3,7 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import {
   deleteNavCarModel,
-  type ListCarModelItem
+  type ListNavCarModelItem
 } from '@/actions/navCarModels'
 import { DataTable } from '@/components/ui/data-table'
 import { Button } from '@/components/ui/button'
@@ -14,8 +14,8 @@ import { confirm, error } from '@/lib/utils'
 import { success } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 
-export default function Table({ data }: { data: ListCarModelItem[] }) {
-  const columns: ColumnDef<ListCarModelItem>[] = [
+export default function Table({ data }: { data: ListNavCarModelItem[] }) {
+  const columns: ColumnDef<ListNavCarModelItem>[] = [
     {
       header: '车型',
       accessorKey: 'modelName'

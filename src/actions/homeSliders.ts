@@ -2,7 +2,7 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { responseError, responseSuccess } from './utils'
-import { importSliders } from '@/app/(site)/components/Slider/data'
+// import { importSliders } from '@/app/(site)/components/Slider/data'
 
 export type ListHomeSliderItem = Awaited<
   ReturnType<typeof getHomeSliders>
@@ -12,8 +12,10 @@ export type ButtonItem = {
   href: string
 }
 
+export type HomeSliderDetail = Awaited<ReturnType<typeof getHomeSliderDetail>>
+
 export async function getHomeSliders({ status }: { status?: number } = {}) {
-  return await prisma.homeSliders.findMany({
+  const res = await prisma.homeSliders.findMany({
     where: {
       // 支持多个where，向下添加行即可
       ...(status !== undefined && { status })
@@ -31,10 +33,14 @@ export async function getHomeSliders({ status }: { status?: number } = {}) {
       status: true
     }
   })
+  return res.map((item) => ({
+    ...item,
+    buttons: item.buttons as null | ButtonItem[]
+  }))
 }
 
 export const getHomeSliderDetail = async (id?: number) => {
-  return await prisma.homeSliders.findUnique({
+  const res = await prisma.homeSliders.findUnique({
     where: { id },
     select: {
       id: true,
@@ -46,6 +52,11 @@ export const getHomeSliderDetail = async (id?: number) => {
       status: true
     }
   })
+  if (!res) return null
+  return {
+    ...res,
+    buttons: res?.buttons as null | ButtonItem[]
+  }
 }
 
 export const saveHomeSlider = async ({

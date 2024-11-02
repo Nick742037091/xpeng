@@ -12,7 +12,7 @@ import {
 import styles from './index.module.scss'
 import clsx from 'clsx'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { ListCarModelItem } from '@/actions/navCarModels'
+import { ListNavCarModelItem } from '@/actions/navCarModels'
 import { CarModels } from './CardModels'
 
 function LeftIcon() {
@@ -122,7 +122,7 @@ function CenterNavigators() {
 export default function TopNavigator({
   carModelList
 }: {
-  carModelList: ListCarModelItem[]
+  carModelList: ListNavCarModelItem[]
 }) {
   const [isCarModelHover, setIsCarModelHover] = useState(false)
   const [isBgTransparent, setIsBgTransparent] = useState(true)
@@ -182,7 +182,7 @@ const TopNavigatorContext = createContext<{
   isCarModelHover: boolean
   isBgTransparent: boolean
   // 由于导航栏是客户端组件，只能在其上层的服务端组件获取carModelList，通过props传入，然后将其放在context中，供CarModelsPanel组件使用
-  carModelList: ListCarModelItem[]
+  carModelList: ListNavCarModelItem[]
   setIsCarModelHover: (value: boolean) => void
 }>({
   isCarModelHover: false,

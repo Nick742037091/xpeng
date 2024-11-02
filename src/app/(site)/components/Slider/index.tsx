@@ -104,7 +104,7 @@ export default function Slider({
                 <div className="">{item.title}</div>
                 <div className="">{item.subtitle}</div>
                 <div className="mt-[32px] flex items-center gap-[16px]">
-                  {item.buttons.map((button, index) => (
+                  {item.buttons?.map((button, index) => (
                     <Link key={index} href={button.href}>
                       <HoverButton
                         text={button.text}

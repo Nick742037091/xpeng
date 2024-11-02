@@ -2,7 +2,7 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate'
 import { responseError, responseSuccess } from './utils'
-import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
+// import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
 
 export type ListNavCarModelItem = Awaited<
   ReturnType<typeof getNavCarModels>
