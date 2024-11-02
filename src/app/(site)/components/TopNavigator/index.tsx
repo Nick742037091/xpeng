@@ -69,8 +69,8 @@ function HoverMenus({
     <HoverCard openDelay={200}>
       <HoverCardTrigger>{children}</HoverCardTrigger>
       <HoverCardContent className="flex flex-col items-center gap-[20px] w-[110px]">
-        {list.map((item) => (
-          <Link href={item.link} key={item.link} className="hover:opacity-60">
+        {list.map((item, index) => (
+          <Link href={item.link} key={index} className="hover:opacity-60">
             {item.title}
           </Link>
         ))}

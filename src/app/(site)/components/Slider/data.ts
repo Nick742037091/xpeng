@@ -8,7 +8,7 @@ export const sliderList = [
     buttons: [
       {
         text: '点击预约直播',
-        href: 'https://www.xiaopeng.com/p7plus'
+        href: '/p7plus'
       }
     ]
   },
@@ -19,11 +19,11 @@ export const sliderList = [
     buttons: [
       {
         text: '立即预定',
-        href: 'https://www.xiaopeng.com/p7plus'
+        href: '/p7plus'
       },
       {
         text: '预约品鉴',
-        href: 'https://www.xiaopeng.com/p7plus'
+        href: '/p7plus'
       }
     ]
   },
@@ -34,11 +34,11 @@ export const sliderList = [
     buttons: [
       {
         text: '立即订购',
-        href: 'https://www.xiaopeng.com/g9'
+        href: '/g9'
       },
       {
         text: '预约试驾',
-        href: 'https://www.xiaopeng.com/g9'
+        href: '/g9'
       }
     ]
   },
@@ -49,11 +49,11 @@ export const sliderList = [
     buttons: [
       {
         text: '了解G6',
-        href: 'https://www.xiaopeng.com/g6'
+        href: '/g6'
       },
       {
         text: '预约试驾',
-        href: 'https://www.xiaopeng.com/g6'
+        href: '/g6'
       }
     ]
   },
@@ -64,11 +64,11 @@ export const sliderList = [
     buttons: [
       {
         text: '立即订购',
-        href: 'https://www.xiaopeng.com/x9'
+        href: '/x9'
       },
       {
         text: '预约试驾',
-        href: 'https://www.xiaopeng.com/x9'
+        href: '/x9'
       }
     ]
   },
@@ -79,11 +79,11 @@ export const sliderList = [
     buttons: [
       {
         text: '立即订购',
-        href: 'https://www.xiaopeng.com/m03'
+        href: '/m03'
       },
       {
         text: '预约试驾',
-        href: 'https://www.xiaopeng.com/m03'
+        href: '/m03'
       }
     ]
   },
@@ -94,11 +94,11 @@ export const sliderList = [
     buttons: [
       {
         text: '了解P7i',
-        href: 'https://www.xiaopeng.com/p7i'
+        href: '/p7i'
       },
       {
         text: '预约试驾',
-        href: 'https://www.xiaopeng.com/p7i'
+        href: '/p7i'
       }
     ]
   },
@@ -109,11 +109,11 @@ export const sliderList = [
     buttons: [
       {
         text: '了解2024款P5',
-        href: 'https://www.xiaopeng.com/p5'
+        href: '/p5'
       },
       {
         text: '预约试驾',
-        href: 'https://www.xiaopeng.com/p5'
+        href: '/p5'
       }
     ]
   }
