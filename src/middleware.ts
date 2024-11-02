@@ -5,9 +5,7 @@ const publicRoutes = ['/admin/sign-in']
 
 export default async function middleware(req: NextRequest) {
   const redirectToLogin = () => {
-    return NextResponse.redirect(
-      new URL(process.env.BASE_PATH + '/admin/sign-in', req.nextUrl)
-    )
+    return NextResponse.redirect(new URL('/admin/sign-in', req.nextUrl))
   }
   const next = () => NextResponse.next()
 
