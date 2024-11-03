@@ -2,7 +2,7 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { responseError, responseSuccess } from './utils'
-// import { importSliders } from '@/app/(site)/components/Slider/data'
+import { importSliders } from '@/app/(site)/components/Slider/data'
 
 export type ListHomeSliderItem = Awaited<
   ReturnType<typeof getHomeSliders>
@@ -104,6 +104,6 @@ export const deleteHomeSlider = async (id: number) => {
 }
 
 export const refreshHomeSliderPage = async () => {
-  // await importSliders()
+  await importSliders()
   revalidatePath('/admin/home-sliders')
 }
