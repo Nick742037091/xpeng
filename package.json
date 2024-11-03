@@ -8,9 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync-to-db:dev": "npx prisma generate && npx prisma db push",
-    "sync-to-db:prod": "npx prisma db push",
-    "sync-from-db": "npx prisma db pull"
+    "prisma:dev": "npx prisma db push",
+    "prisma:prod": "npx prisma db push"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^16.0.0",
