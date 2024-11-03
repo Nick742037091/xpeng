@@ -48,7 +48,8 @@ export async function importCarModels() {
     data: carModelList.map((item, index) => ({
       modelName: item.modelName,
       modelImg: item.modelImg,
-      order: index + 1
+      order: index + 1,
+      status: 1
     }))
   })
 }

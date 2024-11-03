@@ -127,7 +127,8 @@ export const importSliders = async () => {
       title: item.title,
       subtitle: item.subtitle,
       buttons: item.buttons,
-      order: index + 1
+      order: index + 1,
+      status: 1
     }))
   })
 }
