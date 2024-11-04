@@ -103,5 +103,6 @@ export const deleteHomeSlider = async (id: number) => {
 }
 
 export const refreshHomeSliderPage = async () => {
-  revalidatePath('/admin/home-sliders')
+  revalidatePath('/', 'page')
+  revalidatePath('/admin/home-sliders', 'page')
 }
