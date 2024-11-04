@@ -94,9 +94,12 @@ export default function RotateCar() {
                   <div
                     className={clsx('w-full h-full')}
                     style={{
-                      backgroundImage: `url(${item.img})`,
-                      // TODO 会导致加载卡顿
-                      backgroundSize: '3600% 100%'
+                      backgroundImage: `url(${`/site/rotate-card/image${
+                        index + 1
+                      }.png`})`,
+                      backgroundSize: '100% 100%'
+                      // TODO 会导致加载卡顿，这里处理了一下，截取了第一张图
+                      // backgroundSize: '3600% 100%'
                     }}
                   />
                 </div>

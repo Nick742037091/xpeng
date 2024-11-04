@@ -3,9 +3,8 @@ module.exports = {
     {
       name: 'xpeng',
       script: 'npm',
-      args: 'run prod',
+      args: 'run start',
       instances: 1,
-      autorestart: true,
       output: './logs/out.log',
       error: './logs/err.log',
       env: {

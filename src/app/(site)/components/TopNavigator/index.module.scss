@@ -1,5 +1,6 @@
 .bgLight {
   @apply bg-white text-black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   .navItem:hover {
     color: rgba(0, 0, 0, 0.6);
   }

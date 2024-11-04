@@ -1,0 +1,44 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: 添加环境变量文件
+    image: node:20.12.0
+    environment:
+      ENV_VARS:
+        from_secret: env_vars
+    commands:
+      - echo "$${ENV_VARS}" > .env
+  - name: 推送项目
+    image: appleboy/drone-scp
+    settings:
+      host:
+        from_secret: ssh_server
+      username: ubuntu
+      key:
+        from_secret: ssh_key
+      port:
+        from_secret: ssh_port
+      command_timeout: 2m
+      target: /home/ubuntu/project/xpeng
+      source:
+        - ./*
+  - name: 部署项目
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: ssh_server
+      username: ubuntu
+      key:
+        from_secret: ssh_key
+      port:
+        from_secret: ssh_port
+      script:
+        - cd /home/ubuntu/project/xpeng
+        - pnpm install
+        - pnpm prisma:generate
+        - pnpm build
+        - pnpm prisma:prod
+        - pm2 restart pm2.config.js
+        - pm2 save
