@@ -82,6 +82,6 @@ export const deleteNavCarModel = async (id: number) => {
 }
 
 export const refreshNavCarModelsPage = async () => {
-  revalidatePath('/', 'page')
+  revalidatePath('/', 'layout')
   revalidatePath('/admin/nav-car-models', 'page')
 }
