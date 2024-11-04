@@ -46,7 +46,7 @@ function RightButtons() {
           isBgTransparent ? 'border-white' : 'border-black'
         )}
       >
-        预约试驾
+        <span>预约试驾</span>
       </Link>
       <div className="w-[36px] h-[36px] flex items-center justify-center">
         <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
