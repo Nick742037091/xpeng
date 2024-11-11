@@ -42,3 +42,7 @@ steps:
         - pnpm prisma:prod
         - pm2 restart pm2.config.js
         - pm2 save
+
+trigger:
+  branch:
+    - master
