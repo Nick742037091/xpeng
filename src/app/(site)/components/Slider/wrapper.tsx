@@ -1,7 +1,13 @@
-import { getHomeSliders } from '@/actions/homeSliders'
 import Slider from './index'
+import { api } from '@/server/client'
 
 export default async function SliderWrapper() {
-  const sliders = await getHomeSliders({ status: 1 })
-  return <Slider sliderList={sliders} />
+  const resp = await api.homeSliders.$get({
+    query: { status: '1' }
+  })
+  const { code, data } = await resp.json()
+  if (code !== 0) {
+    return null
+  }
+  return <Slider sliderList={data} />
 }

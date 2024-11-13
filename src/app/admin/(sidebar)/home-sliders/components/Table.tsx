@@ -1,19 +1,18 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import {
-  deleteHomeSlider,
-  type ListHomeSliderItem
-} from '@/actions/homeSliders'
 import { DataTable } from '@/components/ui/data-table'
 import { Button } from '@/components/ui/button'
 import RefreshButton from './RefreshButton'
 import { useRef } from 'react'
 import EditDialog, { EditDialogRef } from './EditDialog'
 import { cn, confirm, error, success } from '@/lib/utils'
+import type { HomeSliderListItem } from '@/server/client/types/homeSliders'
+import { api } from '@/server/client'
+import { revalidatePath } from 'next/cache'
 
-export default function Table({ data }: { data: ListHomeSliderItem[] }) {
-  const columns: ColumnDef<ListHomeSliderItem>[] = [
+export default function Table({ data }: { data: HomeSliderListItem[] }) {
+  const columns: ColumnDef<HomeSliderListItem>[] = [
     {
       header: '标题',
       accessorKey: 'title'
@@ -82,9 +81,14 @@ export default function Table({ data }: { data: ListHomeSliderItem[] }) {
       description: '确定要删除该轮播图吗？'
     })
     if (!isConfirm) return
-    const { isSuccess, message } = await deleteHomeSlider(id)
-    if (isSuccess) {
+    const resp = await api.homeSliders[':id'].$delete({
+      param: { id: id.toString() }
+    })
+    const { code, message } = await resp.json()
+    if (code === 0) {
       success(message)
+      revalidatePath('/', 'layout')
+      revalidatePath('/admin/home-sliders', 'page')
     } else {
       error(message)
     }

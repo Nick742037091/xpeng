@@ -12,7 +12,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { getHomeSliderDetail, saveHomeSlider } from '@/actions/homeSliders'
 import { error, success } from '@/lib/utils'
 import {
   Table,
@@ -23,24 +22,20 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { Pencil, Plus, Trash2 } from 'lucide-react'
-import type { ButtonItem } from '@/actions/homeSliders'
 import Loading from '@/components/admin/Loading'
 import { useFormStatus } from 'react-dom'
 import { Switch } from '@/components/ui/switch'
-
+import { api } from '@/server/client'
+import type { ButtonItem } from '@/server/api/routes/homeSliders'
+import { refreshHomeSliderPage } from '@/actions/homeSliders'
 export type EditDialogRef = {
   open: (id: number) => void
 }
 
-interface Button {
-  text: string
-  href: string
-}
-
 interface ButtonConfigProps {
-  buttons: Button[]
-  onAdd: (button: Button) => void
-  onUpdate: (index: number, button: Button) => void
+  buttons: ButtonItem[]
+  onAdd: (button: ButtonItem) => void
+  onUpdate: (index: number, button: ButtonItem) => void
   onDelete: (index: number) => void
 }
 
@@ -50,7 +45,7 @@ function ButtonConfig({
   onUpdate,
   onDelete
 }: ButtonConfigProps) {
-  const [editingButton, setEditingButton] = useState<Button | null>(null)
+  const [editingButton, setEditingButton] = useState<ButtonItem | null>(null)
   const [buttonText, setButtonText] = useState('')
   const [buttonHref, setButtonHref] = useState('')
 
@@ -176,15 +171,19 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     setId(id)
     setVisible(true)
     if (id) {
-      const detail = await getHomeSliderDetail(id)
-      if (!detail) return
+      const { data, code } = await (
+        await api.homeSliders[':id'].$get({
+          param: { id: id + '' }
+        })
+      ).json()
+      if (code !== 0 || !data) return
       setDetail({
-        title: detail.title,
-        subtitle: detail.subtitle,
-        img: detail.img,
-        buttons: detail.buttons as ButtonItem[],
-        order: detail.order,
-        status: detail.status
+        title: data.title,
+        subtitle: data.subtitle,
+        img: data.img,
+        buttons: data.buttons as ButtonItem[],
+        order: data.order,
+        status: data.status
       })
     } else {
       setDetail({
@@ -203,26 +202,29 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
   }))
 
   const handleAction = async () => {
-    const { isSuccess, message } = await saveHomeSlider({
-      id: +id,
-      ...detail
-    })
-    if (isSuccess) {
+    const { message, code } = await (
+      await api.homeSliders[':id'].$post({
+        param: { id: id.toString() },
+        json: detail
+      })
+    ).json()
+    if (code === 0) {
       success(message)
       setVisible(false)
+      refreshHomeSliderPage()
     } else {
       error(message)
     }
   }
 
-  const handleAddButton = (button: Button) => {
+  const handleAddButton = (button: ButtonItem) => {
     setDetail({
       ...detail,
       buttons: [...detail.buttons, button]
     })
   }
 
-  const handleUpdateButton = (index: number, button: Button) => {
+  const handleUpdateButton = (index: number, button: ButtonItem) => {
     const newButtons = [...detail.buttons]
     newButtons[index] = button
     setDetail({

@@ -13,8 +13,7 @@ import clsx from 'clsx'
 import { GoX } from 'react-icons/go'
 import Link from 'next/link'
 import HoverButton from '../HoverButton'
-import { ListHomeSliderItem } from '@/actions/homeSliders'
-
+import type { HomeSliderListItem } from '@/server/client/types/homeSliders'
 function Indicator({
   current,
   length,
@@ -48,7 +47,7 @@ function Indicator({
 export default function Slider({
   sliderList
 }: {
-  sliderList: ListHomeSliderItem[]
+  sliderList: HomeSliderListItem[]
 }) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)

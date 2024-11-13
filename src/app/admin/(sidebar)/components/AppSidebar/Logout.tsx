@@ -1,11 +1,19 @@
 'use client'
 
-import { logout } from '@/app/admin/sign-in/actions'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
+import { api } from '@/server/client'
+import { useRouter } from 'next/navigation'
 
 export function Logout() {
+  const router = useRouter()
+  const handleLogout = async () => {
+    const { code } = await (await api.admin.logout.$post()).json()
+    if (code === 0) {
+      router.replace('/admin/sign-in')
+    }
+  }
   return (
-    <DropdownMenuItem className="cursor-pointer" onClick={() => logout()}>
+    <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
       <span>退出登录</span>
     </DropdownMenuItem>
   )

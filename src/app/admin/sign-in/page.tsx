@@ -12,8 +12,8 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { login } from './actions'
 import { useToast } from '@/hooks/use-toast'
+import { api } from '@/server/client'
 
 export default function Login() {
   const router = useRouter()
@@ -24,7 +24,14 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { code, message } = await login({ username, password })
+    const { code, message } = await (
+      await api.admin.login.$post({
+        json: {
+          username,
+          password
+        }
+      })
+    ).json()
     if (code === 0) {
       router.replace('/admin')
     } else {
