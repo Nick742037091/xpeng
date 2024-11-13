@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/hooks/use-toast'
-import { api } from '@/server/client'
+import { api } from '@/server/api/client'
 
 export default function Login() {
   const router = useRouter()

@@ -2,7 +2,7 @@
 
 import { useFormStatus } from 'react-dom'
 import { Button } from '@/components/ui/button'
-import { refreshNavCarModelsPage } from '@/actions/navCarModels'
+import { refreshNavCarModelsPage } from '@/server/action/navCarModels'
 import Loading from '@/components/admin/Loading'
 
 function StatusButton() {

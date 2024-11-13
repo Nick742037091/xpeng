@@ -1,7 +1,7 @@
 'use client'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import { api } from '@/server/client'
+import { api } from '@/server/api/client'
 import { useRouter } from 'next/navigation'
 
 export function Logout() {

@@ -2,9 +2,9 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import {
-  deleteNavCarModel,
+  refreshNavCarModelsPage,
   type ListNavCarModelItem
-} from '@/actions/navCarModels'
+} from '@/server/action/navCarModels'
 import { DataTable } from '@/components/ui/data-table'
 import { Button } from '@/components/ui/button'
 import RefreshButton from './RefreshButton'
@@ -13,6 +13,7 @@ import EditDialog, { EditDialogRef } from './EditDialog'
 import { confirm, error } from '@/lib/utils'
 import { success } from '@/lib/utils'
 import { cn } from '@/lib/utils'
+import { api } from '@/server/api/client'
 
 export default function Table({ data }: { data: ListNavCarModelItem[] }) {
   const columns: ColumnDef<ListNavCarModelItem>[] = [
@@ -77,9 +78,15 @@ export default function Table({ data }: { data: ListNavCarModelItem[] }) {
       description: '确定要删除该车型吗？'
     })
     if (!isConfirm) return
-    const { isSuccess, message } = await deleteNavCarModel(id)
-    if (isSuccess) {
+    const resp = await api.navCarModels[':id'].$delete({
+      param: {
+        id: id + ''
+      }
+    })
+    const { code, message } = await resp.json()
+    if (code === 0) {
       success(message)
+      refreshNavCarModelsPage()
     } else {
       error(message)
     }

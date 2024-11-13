@@ -12,7 +12,7 @@ import {
 import styles from './index.module.scss'
 import clsx from 'clsx'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { ListNavCarModelItem } from '@/actions/navCarModels'
+import { ListNavCarModelItem } from '@/server/action/navCarModels'
 import { CarModels } from './CardModels'
 
 function LeftIcon() {

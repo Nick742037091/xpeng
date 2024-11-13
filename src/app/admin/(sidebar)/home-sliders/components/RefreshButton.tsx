@@ -3,7 +3,7 @@
 import { useFormStatus } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import Loading from '@/components/admin/Loading'
-import { refreshHomeSliderPage } from '@/actions/homeSliders'
+import { refreshHomeSliderPage } from '@/server/action/homeSliders'
 
 function StatusButton() {
   const { pending } = useFormStatus()

@@ -8,13 +8,14 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { getNavCarModelDetail, saveNavCarModel } from '@/actions/navCarModels'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useFormStatus } from 'react-dom'
 import { success, error } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
 import { Switch } from '@/components/ui/switch'
+import { api } from '@/server/api/client'
+import { refreshNavCarModelsPage } from '@/server/action/navCarModels'
 
 type Detail = {
   modelName: string
@@ -29,7 +30,7 @@ export interface EditDialogRef {
 
 const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   const [visible, setVisible] = useState<boolean>(false)
-  const [id, setId] = useState<number>(0)
+  const [id, setId] = useState<number | null>(null)
   const title = id ? '编辑车型' : '新增车型'
   const [detail, setDetail] = useState<Detail>({
     modelName: '',
@@ -39,9 +40,15 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   })
 
   const getDetail = async (id: number) => {
-    const detail = await getNavCarModelDetail(id)
-    if (!detail) return
-    setDetail(detail)
+    const { data } = await (
+      await api.navCarModels[':id'].$get({
+        param: {
+          id: id.toString()
+        }
+      })
+    ).json()
+    if (!data) return
+    setDetail(data)
   }
 
   const open = (id: number) => {
@@ -64,16 +71,21 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   }))
 
   const handleAction = async () => {
-    const { isSuccess, message } = await saveNavCarModel({
-      id: +id,
+    const json = {
       modelName: detail.modelName,
       modelImg: detail.modelImg,
       order: detail.order,
       status: detail.status
-    })
-    if (isSuccess) {
+    }
+    const req = id
+      ? api.navCarModels[':id'].$post({ param: { id: id + '' }, json })
+      : api.navCarModels.$put({ json })
+    const resp = await req
+    const { code, message } = await resp.json()
+    if (code === 0) {
       success(message)
       setVisible(false)
+      refreshNavCarModelsPage()
     } else {
       error(message)
     }

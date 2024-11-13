@@ -13,7 +13,7 @@ import clsx from 'clsx'
 import { GoX } from 'react-icons/go'
 import Link from 'next/link'
 import HoverButton from '../HoverButton'
-import type { HomeSliderListItem } from '@/server/client/types/homeSliders'
+import type { HomeSliderListItem } from '@/server/action/homeSliders'
 function Indicator({
   current,
   length,

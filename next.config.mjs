@@ -9,6 +9,9 @@ const nextConfig = {
         hostname: 's.xiaopeng.com'
       }
     ]
+  },
+  sassOptions: {
+    silenceDeprecations: ['legacy-js-api']
   }
 }
 

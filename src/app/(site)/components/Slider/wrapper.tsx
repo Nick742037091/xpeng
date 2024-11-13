@@ -1,4 +1,4 @@
-import { getHomeSliders } from '@/actions/homeSliders'
+import { getHomeSliders } from '@/server/action/homeSliders'
 import Slider from './index'
 
 export default async function SliderWrapper() {

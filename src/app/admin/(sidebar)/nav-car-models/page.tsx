@@ -1,4 +1,4 @@
-import { getNavCarModels } from '@/actions/navCarModels'
+import { getNavCarModels } from '@/server/action/navCarModels'
 import Table from './components/Table'
 
 export default async function NavCarModels() {

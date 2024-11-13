@@ -7,9 +7,11 @@ import RefreshButton from './RefreshButton'
 import { useRef } from 'react'
 import EditDialog, { EditDialogRef } from './EditDialog'
 import { cn, confirm, error, success } from '@/lib/utils'
-import type { HomeSliderListItem } from '@/server/client/types/homeSliders'
-import { api } from '@/server/client'
-import { revalidatePath } from 'next/cache'
+import {
+  refreshHomeSliderPage,
+  type HomeSliderListItem
+} from '@/server/action/homeSliders'
+import { api } from '@/server/api/client'
 
 export default function Table({ data }: { data: HomeSliderListItem[] }) {
   const columns: ColumnDef<HomeSliderListItem>[] = [
@@ -87,8 +89,7 @@ export default function Table({ data }: { data: HomeSliderListItem[] }) {
     const { code, message } = await resp.json()
     if (code === 0) {
       success(message)
-      revalidatePath('/', 'layout')
-      revalidatePath('/admin/home-sliders', 'page')
+      refreshHomeSliderPage()
     } else {
       error(message)
     }

@@ -25,9 +25,9 @@ import { Pencil, Plus, Trash2 } from 'lucide-react'
 import Loading from '@/components/admin/Loading'
 import { useFormStatus } from 'react-dom'
 import { Switch } from '@/components/ui/switch'
-import { api } from '@/server/client'
+import { api } from '@/server/api/client'
 import type { ButtonItem } from '@/server/api/routes/homeSliders'
-import { refreshHomeSliderPage } from '@/actions/homeSliders'
+import { refreshHomeSliderPage } from '@/server/action/homeSliders'
 export type EditDialogRef = {
   open: (id: number) => void
 }
@@ -171,11 +171,10 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     setId(id)
     setVisible(true)
     if (id) {
-      const { data, code } = await (
-        await api.homeSliders[':id'].$get({
-          param: { id: id + '' }
-        })
-      ).json()
+      const resp = await api.homeSliders[':id'].$get({
+        param: { id: id + '' }
+      })
+      const { data, code } = await resp.json()
       if (code !== 0 || !data) return
       setDetail({
         title: data.title,
@@ -202,12 +201,14 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
   }))
 
   const handleAction = async () => {
-    const { message, code } = await (
-      await api.homeSliders[':id'].$post({
-        param: { id: id.toString() },
-        json: detail
-      })
-    ).json()
+    const req = id
+      ? api.homeSliders[':id'].$post({
+          param: { id: id + '' },
+          json: detail
+        })
+      : api.homeSliders.$put({ json: detail })
+    const resp = await req
+    const { message, code } = await resp.json()
     if (code === 0) {
       success(message)
       setVisible(false)
