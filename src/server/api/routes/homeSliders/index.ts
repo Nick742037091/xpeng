@@ -8,10 +8,6 @@ export type ButtonItem = {
   href: string
 }
 
-const querySchema = z.object({
-  status: z.string().min(1, '状态不能为空').optional()
-})
-
 const paramSchema = z.object({
   id: z.string().min(1, 'id不能为空')
 })
@@ -32,36 +28,6 @@ const bodySchema = z.object({
 
 const app = new Hono()
   .basePath('/homeSliders')
-  // 查找轮播图列表
-  .get('/', Validator('query', querySchema), async (c) => {
-    const { status } = c.req.valid('query')
-    const res = await prisma.homeSliders.findMany({
-      where: {
-        // 支持多个where，向下添加行即可
-        ...(status !== undefined && { status: +status })
-      },
-      orderBy: {
-        id: 'asc'
-      },
-      select: {
-        id: true,
-        img: true,
-        title: true,
-        subtitle: true,
-        buttons: true,
-        order: true,
-        status: true
-      }
-    })
-    return c.json({
-      data: res.map((item) => ({
-        ...item,
-        buttons: item.buttons as null | ButtonItem[]
-      })),
-      message: '请求成功',
-      code: 0
-    })
-  })
   // 查找轮播图详情
   .get('/:id', Validator('param', paramSchema), async (c) => {
     const { id } = c.req.valid('param')

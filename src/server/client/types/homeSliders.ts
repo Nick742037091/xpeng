@@ -1,8 +1,5 @@
-import { InferResponseType } from 'hono'
-import { client } from '..'
+import { getHomeSliders } from '@/actions/homeSliders'
 
-export type HomeSliderList = InferResponseType<
-  typeof client.api.homeSliders.$get
->['data']
+export type HomeSliderList = Awaited<ReturnType<typeof getHomeSliders>>
 
 export type HomeSliderListItem = HomeSliderList[number]
