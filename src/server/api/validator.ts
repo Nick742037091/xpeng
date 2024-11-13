@@ -14,7 +14,7 @@ export type Hook<
   E extends Env,
   P extends string,
   Target extends keyof ValidationTargets = keyof ValidationTargets,
-  O = {}
+  O = object
 > = (
   result: (
     | { success: true; data: T }
