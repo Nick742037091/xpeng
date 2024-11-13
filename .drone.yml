@@ -34,9 +34,9 @@ steps:
         from_secret: ssh_key
       port:
         from_secret: ssh_port
+      script_stop: true
       script:
         # 设置错误立即退出
-        - set - e
         - cd /home/ubuntu/project/xpeng
         - pnpm install && echo '安装依赖成功' || (echo '安装依赖失败'; exit 1)
         - pnpm prisma:generate && echo '生成prisma类型成功' || (echo '生成prisma类型失败'; exit 1)
