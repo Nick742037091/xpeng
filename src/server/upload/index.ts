@@ -1,5 +1,6 @@
 import COS from 'cos-js-sdk-v5'
 import { api } from '@/server/api/client'
+import { nanoid } from 'nanoid'
 
 let cos: COS | null = null
 
@@ -19,7 +20,7 @@ export const initCos = async () => {
 export const upload = async (file: File | null, path: string) => {
   if (!file) return
   if (!cos) return
-  const key = Date.now()
+  const key = nanoid()
   const env = process.env.NEXT_PUBLIC_ENV!
   const bucket = process.env.NEXT_PUBLIC_UPLOAD_BUCKET!
   const region = process.env.NEXT_PUBLIC_UPLOAD_REGION!
