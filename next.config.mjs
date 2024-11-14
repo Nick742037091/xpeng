@@ -7,6 +7,9 @@ const nextConfig = {
       },
       {
         hostname: 's.xiaopeng.com'
+      },
+      {
+        hostname: 'xpeng-1253523970.cos.ap-guangzhou.myqcloud.com'
       }
     ]
   },

@@ -14,6 +14,7 @@ import { confirm, error } from '@/lib/utils'
 import { success } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { api } from '@/server/api/client'
+import Image from 'next/image'
 
 export default function Table({ data }: { data: ListNavCarModelItem[] }) {
   const columns: ColumnDef<ListNavCarModelItem>[] = [
@@ -23,7 +24,17 @@ export default function Table({ data }: { data: ListNavCarModelItem[] }) {
     },
     {
       header: '图片',
-      accessorKey: 'modelImg'
+      accessorKey: 'modelImg',
+      cell: ({ row }) => {
+        return (
+          <Image
+            src={row.original.modelImg}
+            alt="车型图片"
+            width={100}
+            height={50}
+          />
+        )
+      }
     },
     {
       accessorKey: 'order',

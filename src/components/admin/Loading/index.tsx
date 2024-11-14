@@ -1,5 +1,18 @@
 import { Loader2 } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
-export default function Loading() {
-  return <Loader2 className="animate-spin text-[16px]" size={16} />
+export default function Loading({
+  className,
+  size = 16,
+  color = 'black'
+}: {
+  className?: string
+  size?: number
+  color?: string
+}) {
+  return (
+    <div className={cn(className)}>
+      <Loader2 className={cn('animate-spin')} size={size} style={{ color }} />
+    </div>
+  )
 }

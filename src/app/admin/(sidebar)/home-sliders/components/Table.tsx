@@ -12,6 +12,7 @@ import {
   type HomeSliderListItem
 } from '@/server/action/homeSliders'
 import { api } from '@/server/api/client'
+import Image from 'next/image'
 
 export default function Table({ data }: { data: HomeSliderListItem[] }) {
   const columns: ColumnDef<HomeSliderListItem>[] = [
@@ -25,7 +26,12 @@ export default function Table({ data }: { data: HomeSliderListItem[] }) {
     },
     {
       header: '图片',
-      accessorKey: 'img'
+      accessorKey: 'img',
+      cell: ({ row }) => {
+        return (
+          <Image src={row.original.img} alt="轮播图" width={100} height={50} />
+        )
+      }
     },
     {
       header: '排序',

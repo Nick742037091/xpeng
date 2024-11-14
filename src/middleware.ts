@@ -21,6 +21,7 @@ export default async function middleware(req: NextRequest) {
       // 后台页面跳转到登录页面
       return NextResponse.redirect(new URL('/admin/sign-in', req.nextUrl))
     } else if (isApi) {
+      debugger
       // api返回未登录提示
       return NextResponse.json({
         code: 401,

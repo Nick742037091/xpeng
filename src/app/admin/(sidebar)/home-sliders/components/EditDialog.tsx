@@ -27,7 +27,9 @@ import { useFormStatus } from 'react-dom'
 import { Switch } from '@/components/ui/switch'
 import { api } from '@/server/api/client'
 import type { ButtonItem } from '@/server/api/routes/homeSliders'
+
 import { refreshHomeSliderPage } from '@/server/action/homeSliders'
+import ImageUpload from '@/components/admin/ImageUpload'
 export type EditDialogRef = {
   open: (id: number) => void
 }
@@ -241,6 +243,22 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     })
   }
 
+  const imageList = detail.img ? [detail.img] : []
+
+  const handleUploadImage = (index: number, imageUrl: string) => {
+    setDetail({
+      ...detail,
+      img: imageUrl
+    })
+  }
+
+  const handleDeleteImage = () => {
+    setDetail({
+      ...detail,
+      img: ''
+    })
+  }
+
   return (
     <Dialog open={visible} onOpenChange={setVisible}>
       <DialogContent className="sm:max-w-[800px]">
@@ -276,18 +294,21 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
                 }}
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-4  items-center gap-4">
               <Label htmlFor="img" className="text-right">
                 图片
               </Label>
-              <Input
-                name="img"
-                value={detail?.img}
-                className="col-span-3"
-                onChange={(e) => {
-                  setDetail({ ...detail, img: e.target.value })
-                }}
-              />
+              <div className="col-span-3">
+                <ImageUpload
+                  imageList={imageList}
+                  max={1}
+                  onUpload={handleUploadImage}
+                  onDelete={handleDeleteImage}
+                  uploadPath="home-sliders"
+                  width={400}
+                  height={200}
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="order" className="text-right">

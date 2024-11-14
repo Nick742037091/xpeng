@@ -16,6 +16,7 @@ import Loading from '@/components/admin/Loading'
 import { Switch } from '@/components/ui/switch'
 import { api } from '@/server/api/client'
 import { refreshNavCarModelsPage } from '@/server/action/navCarModels'
+import ImageUpload from '@/components/admin/ImageUpload'
 
 type Detail = {
   modelName: string
@@ -91,9 +92,25 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
     }
   }
 
+  const imageList = detail.modelImg ? [detail.modelImg] : []
+
+  const handleUploadImage = (index: number, imageUrl: string) => {
+    setDetail({
+      ...detail,
+      modelImg: imageUrl
+    })
+  }
+
+  const handleDeleteImage = () => {
+    setDetail({
+      ...detail,
+      modelImg: ''
+    })
+  }
+
   return (
     <Dialog open={visible} onOpenChange={setVisible}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <form action={handleAction} autoComplete="off">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
@@ -117,14 +134,18 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
               <Label htmlFor="modelImg" className="text-right">
                 图片
               </Label>
-              <Input
-                name="modelImg"
-                value={detail?.modelImg}
-                className="col-span-3"
-                onChange={(e) => {
-                  setDetail({ ...detail, modelImg: e.target.value as string })
-                }}
-              />
+              <div className="col-span-3">
+                <ImageUpload
+                  imageList={imageList}
+                  max={1}
+                  onUpload={handleUploadImage}
+                  onDelete={handleDeleteImage}
+                  uploadPath="home-sliders"
+                  width={400}
+                  height={200}
+                  color="black"
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="order" className="text-right">
