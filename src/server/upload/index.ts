@@ -20,11 +20,14 @@ export const upload = async (file: File | null, path: string) => {
   if (!file) return
   if (!cos) return
   const key = Date.now()
+  const env = process.env.NEXT_PUBLIC_ENV!
+  const bucket = process.env.NEXT_PUBLIC_UPLOAD_BUCKET!
+  const region = process.env.NEXT_PUBLIC_UPLOAD_REGION!
   const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
   const result = await cos.putObject({
-    Bucket: 'xpeng-1253523970',
-    Region: 'ap-guangzhou',
-    Key: `${path}/${key}.${ext}`,
+    Bucket: bucket,
+    Region: region,
+    Key: `${env}/${path}/${key}.${ext}`,
     Body: file
   })
   return 'https://' + result.Location
