@@ -29,7 +29,9 @@ export default function Table({ data }: { data: HomeSliderListItem[] }) {
       accessorKey: 'img',
       cell: ({ row }) => {
         return (
-          <Image src={row.original.img} alt="轮播图" width={100} height={50} />
+          <div className="w-[100px] h-[50px] relative">
+            <Image src={row.original.img} alt="轮播图" fill />
+          </div>
         )
       }
     },

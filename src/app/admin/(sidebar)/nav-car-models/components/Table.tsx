@@ -27,12 +27,9 @@ export default function Table({ data }: { data: ListNavCarModelItem[] }) {
       accessorKey: 'modelImg',
       cell: ({ row }) => {
         return (
-          <Image
-            src={row.original.modelImg}
-            alt="车型图片"
-            width={100}
-            height={50}
-          />
+          <div className="w-[100px] h-[50px] relative">
+            <Image src={row.original.modelImg} alt="车型图片" fill />
+          </div>
         )
       }
     },

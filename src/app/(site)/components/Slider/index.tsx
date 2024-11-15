@@ -14,6 +14,7 @@ import { GoX } from 'react-icons/go'
 import Link from 'next/link'
 import HoverButton from '../HoverButton'
 import type { HomeSliderListItem } from '@/server/action/homeSliders'
+import Image from 'next/image'
 function Indicator({
   current,
   length,
@@ -89,10 +90,13 @@ export default function Slider({
             <CarouselItem
               key={index}
               className="basis-full h-[100vh] px-0 relative"
-              style={{
-                background: `url(${item.img}) no-repeat center center / cover`
-              }}
             >
+              <Image
+                src={item.img}
+                alt="轮播图"
+                fill
+                className="object-cover"
+              />
               <div
                 className={clsx(
                   'absolute z-[10] left-[15%] top-[30%] text-white text-[32px]',
