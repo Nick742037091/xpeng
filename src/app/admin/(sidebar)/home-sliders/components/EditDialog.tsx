@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle
@@ -280,7 +279,6 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
         <form action={handleAction} autoComplete="off">
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            <DialogDescription></DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
