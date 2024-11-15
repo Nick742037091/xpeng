@@ -17,6 +17,7 @@ import { Switch } from '@/components/ui/switch'
 import { api } from '@/server/api/client'
 import { refreshNavCarModelsPage } from '@/server/action/navCarModels'
 import ImageUpload from '@/components/admin/ImageUpload'
+import EditDialogSkeleton from './EditDialogSkeleton'
 
 type Detail = {
   modelName: string
@@ -39,15 +40,16 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
     order: 0,
     status: 1
   })
-
+  const [loading, setLoading] = useState(false)
   const getDetail = async (id: number) => {
-    const { data } = await (
-      await api.navCarModels[':id'].$get({
-        param: {
-          id: id.toString()
-        }
-      })
-    ).json()
+    setLoading(true)
+    const resp = await api.navCarModels[':id'].$get({
+      param: {
+        id: id.toString()
+      }
+    })
+    setLoading(false)
+    const { data } = await resp.json()
     if (!data) return
     setDetail(data)
   }
@@ -108,14 +110,25 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
     })
   }
 
+  if (loading)
+    return (
+      <Dialog open={visible}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+          <EditDialogSkeleton />
+        </DialogContent>
+      </Dialog>
+    )
+
   return (
     <Dialog open={visible} onOpenChange={setVisible}>
       <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
         <form action={handleAction} autoComplete="off">
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription></DialogDescription>
-          </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="modelName" className="text-right">
@@ -195,7 +208,7 @@ export function ConfirmButton() {
   const { pending } = useFormStatus()
   return (
     <Button type="submit" disabled={pending}>
-      {pending && <Loading />}保存
+      {pending && <Loading color="white" />}保存
     </Button>
   )
 }

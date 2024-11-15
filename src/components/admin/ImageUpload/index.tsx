@@ -6,8 +6,8 @@ import Loading from '@/components/admin/Loading'
 import styles from './index.module.scss'
 import { cn } from '@/lib/utils'
 
-import { useEffect, useRef, useState } from 'react'
-import { initCos, upload } from '@/server/upload'
+import { useRef, useState } from 'react'
+import { upload } from '@/server/upload'
 
 function UploadLoading({ color = 'white' }: { color?: string }) {
   return (
@@ -40,9 +40,6 @@ export default function ImageUpload({
   uploadPath: string
   color?: string
 }) {
-  useEffect(() => {
-    initCos()
-  }, [])
   const showAdd = imageList.length < max && editable
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -59,7 +56,6 @@ export default function ImageUpload({
   const handleSelectFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-
     try {
       setUploading(true)
       const imageUrl = await upload(file, uploadPath)
@@ -74,16 +70,12 @@ export default function ImageUpload({
   return (
     <div className="w-full flex flex-wrap gap-4">
       {imageList.map((image, index) => (
-        <div key={index} className={styles.imgWrapper}>
-          <Image
-            width={1000}
-            height={1000}
-            alt=""
-            key={index}
-            src={image}
-            className="object-cover"
-            style={{ width, height }}
-          />
+        <div
+          key={index}
+          className={styles.imgWrapper}
+          style={{ width, height }}
+        >
+          <Image alt="" key={index} src={image} className="object-cover" fill />
           {editable && (
             <RiUpload2Line
               className={cn('left-[5px]', styles.actionBtn)}

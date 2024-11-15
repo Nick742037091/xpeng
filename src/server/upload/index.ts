@@ -19,6 +19,7 @@ export const initCos = async () => {
 
 export const upload = async (file: File | null, path: string) => {
   if (!file) return
+  await initCos()
   if (!cos) return
   const key = nanoid()
   const env = process.env.NEXT_PUBLIC_ENV!

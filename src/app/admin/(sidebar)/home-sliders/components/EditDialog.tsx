@@ -30,6 +30,7 @@ import type { ButtonItem } from '@/server/api/routes/homeSliders'
 
 import { refreshHomeSliderPage } from '@/server/action/homeSliders'
 import ImageUpload from '@/components/admin/ImageUpload'
+import EditDialogSkeleton from './EditDialogSkeleton'
 export type EditDialogRef = {
   open: (id: number) => void
 }
@@ -143,7 +144,7 @@ export function ConfirmButton() {
   const { pending } = useFormStatus()
   return (
     <Button type="submit" disabled={pending}>
-      {pending && <Loading />}确定
+      {pending && <Loading color="white" />}确定
     </Button>
   )
 }
@@ -169,14 +170,17 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
 
   const title = id ? '编辑轮播图' : '新增轮播图'
 
+  const [loading, setLoading] = useState(false)
   const open = async (id: number) => {
     setId(id)
     setVisible(true)
     if (id) {
+      setLoading(true)
       const resp = await api.homeSliders[':id'].$get({
         param: { id: id + '' }
       })
       const { data, code } = await resp.json()
+      setLoading(false)
       if (code !== 0 || !data) return
       setDetail({
         title: data.title,
@@ -258,6 +262,17 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
       img: ''
     })
   }
+  if (loading)
+    return (
+      <Dialog open={visible} onOpenChange={setVisible}>
+        <DialogContent className="sm:max-w-[800px]">
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+          <EditDialogSkeleton />
+        </DialogContent>
+      </Dialog>
+    )
 
   return (
     <Dialog open={visible} onOpenChange={setVisible}>
