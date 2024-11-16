@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
