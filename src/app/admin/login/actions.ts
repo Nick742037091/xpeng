@@ -1,6 +1,6 @@
 'use server'
 
-import { createSession, deleteSession } from '@/lib/session'
+import { createAdminSession, deleteAdminSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 
 export async function login({
@@ -14,7 +14,7 @@ export async function login({
     username === process.env.ADMIN_EMAIL &&
     password === process.env.ADMIN_PASSWORD
   ) {
-    await createSession(username, username)
+    await createAdminSession(username, username)
     return {
       message: '请求成功',
       data: null,
@@ -30,6 +30,6 @@ export async function login({
 }
 
 export async function logout() {
-  await deleteSession()
-  redirect('/admin/sign-in')
+  await deleteAdminSession()
+  redirect('/admin/login')
 }

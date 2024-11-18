@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
-import { createSession, deleteSession } from '@/lib/session'
+import { createAdminSession, deleteAdminSession } from '@/lib/session'
 import { Validator } from '@/server/api/validator'
 import { responseSuccess, responseError } from '@/server/common/response'
 
@@ -18,7 +18,7 @@ const app = new Hono()
       username === process.env.ADMIN_EMAIL &&
       password === process.env.ADMIN_PASSWORD
     ) {
-      await createSession(username, username)
+      await createAdminSession(username, username)
       return c.json(responseSuccess())
     } else {
       return c.json(responseError('用户名或密码错误'))
@@ -26,7 +26,7 @@ const app = new Hono()
   })
   // 退出登录
   .post('/logout', async (c) => {
-    await deleteSession()
+    await deleteAdminSession()
     return c.json(responseSuccess())
   })
 

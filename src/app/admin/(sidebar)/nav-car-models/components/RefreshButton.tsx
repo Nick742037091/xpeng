@@ -10,7 +10,7 @@ function StatusButton() {
   return (
     <Button type="submit" variant="outline" disabled={pending}>
       <div className="flex items-center gap-2">
-        {pending && <Loading />}
+        {pending && <Loading color="black" />}
         <span>刷新</span>
       </div>
     </Button>

@@ -14,6 +14,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/hooks/use-toast'
 import { api } from '@/server/api/client'
+import Loading from '@/components/admin/Loading'
 
 export default function Login() {
   const router = useRouter()
@@ -21,17 +22,20 @@ export default function Login() {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
+    if (loading) return
     e.preventDefault()
-    const { code, message } = await (
-      await api.admin.login.$post({
-        json: {
-          username,
-          password
-        }
-      })
-    ).json()
+    setLoading(true)
+    const resp = await api.admin.login.$post({
+      json: {
+        username,
+        password
+      }
+    })
+    const { code, message } = await resp.json()
+    setLoading(false)
     if (code === 0) {
       router.replace('/admin')
     } else {
@@ -60,6 +64,7 @@ export default function Login() {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="请输入用户名"
                 required
+                disabled={loading}
               />
             </div>
             <div className="space-y-2">
@@ -71,10 +76,11 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="请输入密码"
                 required
+                disabled={loading}
               />
             </div>
-            <Button type="submit" className="w-full">
-              登录
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? <Loading /> : '登录'}
             </Button>
           </form>
         </CardContent>

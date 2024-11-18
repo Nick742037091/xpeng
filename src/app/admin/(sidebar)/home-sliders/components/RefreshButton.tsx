@@ -9,7 +9,7 @@ function StatusButton() {
   const { pending } = useFormStatus()
   return (
     <Button type="submit" variant="outline" disabled={pending}>
-      {pending && <Loading />}刷新
+      {pending && <Loading color="black" />}刷新
     </Button>
   )
 }

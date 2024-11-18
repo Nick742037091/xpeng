@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { decrypt } from './lib/session'
+import { ADMIN_SESSION_COOKIE_NAME, decrypt } from './lib/session'
 
 // 无须校验登录的页面
 const publicPageRoutes = [
   // admin登录
-  '/admin/sign-in'
+  '/admin/login'
 ]
 // 无须校验登录的api
 const publicApiRoutes = [
@@ -19,7 +19,7 @@ export default async function middleware(req: NextRequest) {
   const redirectToLogin = () => {
     if (isAdminPage) {
       // 后台页面跳转到登录页面
-      return NextResponse.redirect(new URL('/admin/sign-in', req.nextUrl))
+      return NextResponse.redirect(new URL('/admin/login', req.nextUrl))
     } else if (isApi) {
       debugger
       // api返回未登录提示
@@ -42,10 +42,10 @@ export default async function middleware(req: NextRequest) {
     return next()
   }
   // 由于使用了server action，用cookie进行登录验证比较合适
-  const cookie = req.cookies.get('session')?.value
-  if (!cookie) return redirectToLogin()
-  const session = await decrypt(cookie)
-  if (!session?.userId) return redirectToLogin()
+  const adminCookie = req.cookies.get(ADMIN_SESSION_COOKIE_NAME)?.value
+  if (!adminCookie) return redirectToLogin()
+  const adminSession = await decrypt(adminCookie)
+  if (!adminSession?.userId) return redirectToLogin()
   return next()
 }
 

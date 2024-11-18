@@ -207,7 +207,7 @@ export function ConfirmButton() {
   const { pending } = useFormStatus()
   return (
     <Button type="submit" disabled={pending}>
-      {pending && <Loading color="white" />}保存
+      {pending && <Loading />}保存
     </Button>
   )
 }

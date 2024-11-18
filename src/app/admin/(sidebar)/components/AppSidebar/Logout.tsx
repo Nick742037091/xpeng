@@ -9,7 +9,7 @@ export function Logout() {
   const handleLogout = async () => {
     const { code } = await (await api.admin.logout.$post()).json()
     if (code === 0) {
-      router.replace('/admin/sign-in')
+      router.replace('/admin/login')
     }
   }
   return (

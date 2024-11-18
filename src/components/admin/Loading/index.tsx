@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 export default function Loading({
   className,
   size = 16,
-  color = 'black'
+  color = 'white'
 }: {
   className?: string
   size?: number
