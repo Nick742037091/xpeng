@@ -31,3 +31,5 @@ export const getSiteProfile = cache(async () => {
   }
   return null
 })
+
+export type SiteProfile = Awaited<ReturnType<typeof getSiteProfile>>

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import P7PlusImg from './imgs/p7+.png'
 import Logo from '@/assets/icons/common/logo_black.png'
 import Policy from './components/Policy'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { api } from '@/server/api/client'
 import { success } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
@@ -36,9 +36,21 @@ export default function LoginPage() {
   const [verifyCode, setVerifyCode] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const [isAgree, setIsAgree] = useState(false)
+  const [countdown, setCountdown] = useState(0)
   const { confirm: policyConfirm, context: policyConfirmDialog } =
     usePolicyConfirmDialog()
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1)
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [countdown])
+
   const handleSendVerifyCode = async () => {
+    if (countdown > 0) return
     setErrorMsg('')
     if (!phone) {
       setErrorMsg('手机号不能为空')
@@ -53,6 +65,8 @@ export default function LoginPage() {
     const { code, message } = await resp.json()
     if (code === 0) {
       success('验证码发送成功')
+      // 60秒后可重新发送验证码
+      setCountdown(60)
     } else {
       setErrorMsg(message)
     }
@@ -125,10 +139,12 @@ export default function LoginPage() {
             onChange={(e) => setVerifyCode(e.target.value)}
           />
           <span
-            className="text-[#6da23a] mr-[4Px] cursor-pointer"
+            className={`mr-[4Px] cursor-pointer ${
+              countdown > 0 ? 'text-gray-400' : 'text-[#6da23a]'
+            }`}
             onClick={handleSendVerifyCode}
           >
-            获取验证码
+            {countdown > 0 ? `${countdown}秒后重试` : '获取验证码'}
           </span>
         </div>
         {errorMsg && <div className="w-full text-red-500">{errorMsg}</div>}

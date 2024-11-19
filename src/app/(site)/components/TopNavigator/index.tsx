@@ -14,7 +14,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { ListNavCarModelItem } from '@/server/action/navCarModels'
 import { CarModels } from './CardModels'
 import Account from './Account'
-import { Profile } from '@/server/api/client/types/auth'
+import { SiteProfile } from '@/lib/dal'
 
 function LeftIcon() {
   const { isBgTransparent } = useTopNavigatorContext()
@@ -136,7 +136,7 @@ export default function TopNavigator({
   profile
 }: {
   carModelList: ListNavCarModelItem[]
-  profile: Profile | null
+  profile: SiteProfile | null
 }) {
   const [isCarModelHover, setIsCarModelHover] = useState(false)
   const [isBgTransparent, setIsBgTransparent] = useState(true)
@@ -199,7 +199,7 @@ const TopNavigatorContext = createContext<{
   // 由于导航栏是客户端组件，只能在其上层的服务端组件获取carModelList，通过props传入，然后将其放在context中，供CarModelsPanel组件使用
   carModelList: ListNavCarModelItem[]
   setIsCarModelHover: (value: boolean) => void
-  profile: Profile | null
+  profile: SiteProfile | null
 }>({
   isCarModelHover: false,
   isBgTransparent: true,

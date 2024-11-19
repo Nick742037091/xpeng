@@ -17,6 +17,10 @@ import Image from 'next/image'
 export default function Table({ data }: { data: HomeSliderListItem[] }) {
   const columns: ColumnDef<HomeSliderListItem>[] = [
     {
+      header: 'ID',
+      accessorKey: 'id'
+    },
+    {
       header: '标题',
       accessorKey: 'title'
     },

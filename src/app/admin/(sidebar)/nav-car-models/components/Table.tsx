@@ -19,6 +19,10 @@ import Image from 'next/image'
 export default function Table({ data }: { data: ListNavCarModelItem[] }) {
   const columns: ColumnDef<ListNavCarModelItem>[] = [
     {
+      header: 'ID',
+      accessorKey: 'id'
+    },
+    {
       header: '车型',
       accessorKey: 'modelName'
     },
