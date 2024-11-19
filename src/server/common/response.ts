@@ -22,3 +22,5 @@ export function responseError<T>(
     data
   }
 }
+
+export type CommonResponse = typeof responseSuccess | typeof responseError

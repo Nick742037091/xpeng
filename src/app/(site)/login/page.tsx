@@ -39,6 +39,7 @@ export default function LoginPage() {
   const { confirm: policyConfirm, context: policyConfirmDialog } =
     usePolicyConfirmDialog()
   const handleSendVerifyCode = async () => {
+    setErrorMsg('')
     if (!phone) {
       setErrorMsg('手机号不能为空')
       return
@@ -60,6 +61,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const handleLogin = async () => {
     if (loading) return
+    setErrorMsg('')
     if (!phone) {
       setErrorMsg('手机号不能为空')
       return

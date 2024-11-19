@@ -8,8 +8,8 @@ import {
   setSiteLoginVerifyCodeCache
 } from '@/server/common/redis'
 import prisma from '@/lib/prisma'
-import { getSiteProfile } from '@/lib/dal'
 import UniSMS from 'unisms'
+import { rateLimit } from '../../middlewares'
 
 const sendVerifyCodeSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确')
@@ -32,9 +32,15 @@ const app = new Hono()
     Validator('json', sendVerifyCodeSchema),
     async (c) => {
       const { phone } = c.req.valid('json')
-      // TODO 频繁调用校验
+      // 频繁调用校验
+      const limitResult = await rateLimit({
+        context: c,
+        key: phone
+      })
+      if (!limitResult) {
+        return c.json(responseError('发送验证码过于频繁'))
+      }
       const verifyCode = createVerifyCode()
-      // TODO 短信发送未审核通过，删除注释掉
       const client = new UniSMS({
         accessKeyId: process.env.SMS_ACCESS_KEY_ID!
       })
@@ -88,10 +94,6 @@ const app = new Hono()
   .post('/logout', async (c) => {
     await deleteSiteSession()
     return c.json(responseSuccess())
-  })
-  .get('/profile', async (c) => {
-    const profile = await getSiteProfile()
-    return c.json(responseSuccess(profile))
   })
 
 export default app

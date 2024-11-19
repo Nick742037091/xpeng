@@ -6,7 +6,7 @@ function Tag() {
   return (
     <div className="bg-black/10 px-[4px] py-[2px] text-red-500 fixed bottom-[10px] right-[10px] z-[9999]">
       个人测试网站，
-      <a className="underline" href="https://www.xiaopeng.com/">
+      <a className="underline" href="https://www.xiaopeng.com/" target="_blank">
         官网请访问
       </a>
     </div>
