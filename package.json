@@ -48,6 +48,7 @@
     "server-only": "^0.0.1",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "unisms": "^0.0.6",
     "zod": "^3.23.8"
   },
   "devDependencies": {

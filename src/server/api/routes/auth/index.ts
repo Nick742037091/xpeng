@@ -1,28 +1,98 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
-import { deleteSiteSession } from '@/lib/session'
+import { createSiteSession, deleteSiteSession } from '@/lib/session'
 import { Validator } from '@/server/api/validator'
-import { responseSuccess } from '@/server/common/response'
+import { responseError, responseSuccess } from '@/server/common/response'
+import {
+  getSiteLoginVerifyCodeCache,
+  setSiteLoginVerifyCodeCache
+} from '@/server/common/redis'
+import prisma from '@/lib/prisma'
+import { getSiteProfile } from '@/lib/dal'
+
+// import UniSMS from 'unisms'
+
+const sendVerifyCodeSchema = z.object({
+  phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确')
+})
 
 const loginSchema = z.object({
-  phone: z.string(),
-  verifyCode: z.string()
+  phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确'),
+  verifyCode: z.string().regex(/^\d{4}$/, '验证码格式不正确')
 })
+
+const createVerifyCode = () => {
+  return Math.floor(1000 + Math.random() * 9000).toString()
+}
 
 const app = new Hono()
   .basePath('/auth')
+  // 发送验证码
+  .post(
+    '/sendVerifyCode',
+    Validator('json', sendVerifyCodeSchema),
+    async (c) => {
+      const { phone } = c.req.valid('json')
+      // TODO 频繁调用校验
+      const verifyCode = createVerifyCode()
+      // TODO 短信发送未审核通过，删除注释掉
+      // const client = new UniSMS({
+      //   accessKeyId: process.env.SMS_ACCESS_KEY_ID!
+      // })
+      // await client.send({
+      //   to: phone,
+      //   signature: process.env.SMS_SIGNATURE!,
+      //   templateId: 'pub_verif_login',
+      //   templateData: {
+      //     code: verifyCode
+      //   }
+      // })
+      setSiteLoginVerifyCodeCache(phone, verifyCode)
+      return c.json(responseSuccess({ verifyCode }, '验证码发送成功'))
+    }
+  )
   // 登录
   .post('/login', Validator('json', loginSchema), async (c) => {
-    // const { phone, verifyCode } = c.req.valid('json')
-    // TODO: 判断验证码是否有效
+    const { phone, verifyCode } = c.req.valid('json')
+    // 判断验证码是否有效
+    const cacheVerifyCode = await getSiteLoginVerifyCodeCache(phone)
+    if (!cacheVerifyCode) {
+      return c.json(responseError('验证码已失效'))
+    }
+    if (cacheVerifyCode !== verifyCode) {
+      return c.json(responseError('验证码错误'))
+    }
     // 判断是否注册，未注册需要进行注册
+    let user = await prisma.users.findFirst({
+      where: {
+        phone
+      }
+    })
+    if (!user) {
+      // 未注册，进行注册
+      user = await prisma.users.create({
+        data: {
+          phone
+        }
+      })
+    }
+    await createSiteSession(user.id + '', user.phone)
     // 返回用户信息
-    return c.json(responseSuccess())
+    return c.json(
+      responseSuccess({
+        userId: user.id,
+        phone: user.phone
+      })
+    )
   })
   // 退出登录
   .post('/logout', async (c) => {
     await deleteSiteSession()
     return c.json(responseSuccess())
+  })
+  .get('/profile', async (c) => {
+    const profile = await getSiteProfile()
+    return c.json(responseSuccess(profile))
   })
 
 export default app

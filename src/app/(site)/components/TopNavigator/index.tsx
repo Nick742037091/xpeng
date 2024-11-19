@@ -1,6 +1,5 @@
 'use client'
 import Image from 'next/image'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AiOutlineGlobal } from 'react-icons/ai'
 import {
@@ -14,11 +13,13 @@ import clsx from 'clsx'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { ListNavCarModelItem } from '@/server/action/navCarModels'
 import { CarModels } from './CardModels'
+import Account from './Account'
+import { Profile } from '@/server/api/client/types/auth'
 
 function LeftIcon() {
   const { isBgTransparent } = useTopNavigatorContext()
   return (
-    <Link href="/" className="absolute left-[40px]">
+    <a href="/" className="absolute left-[40px]">
       <Image
         src={
           isBgTransparent
@@ -30,7 +31,7 @@ function LeftIcon() {
         height={25}
         className="w-[40px] h-[25px]"
       />
-    </Link>
+    </a>
   )
 }
 
@@ -38,7 +39,7 @@ function RightButtons() {
   const { isBgTransparent } = useTopNavigatorContext()
   return (
     <div className="absolute right-[40px] flex items-center gap-[24px]">
-      <Link
+      <a
         href="/test-drive"
         className={clsx(
           'border rounded-[4px] px-[16px] py-[8px]',
@@ -47,33 +48,44 @@ function RightButtons() {
         )}
       >
         <span>预约试驾</span>
-      </Link>
+      </a>
       <div className="w-[36px] h-[36px] flex items-center justify-center">
         <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
       </div>
-      <Link href="/login" className=" hover:opacity-60">
-        登录
-      </Link>
+      <Account />
     </div>
   )
 }
 
-function HoverMenus({
+export function HoverMenus({
   children,
   list
 }: {
   children: React.ReactNode
-  list: { link: string; title: string }[]
+  list: { link: string; title: string; onClick?: () => void }[]
 }) {
   return (
     <HoverCard openDelay={200}>
       <HoverCardTrigger>{children}</HoverCardTrigger>
       <HoverCardContent className="flex flex-col items-center gap-[20px] w-[110px]">
-        {list.map((item, index) => (
-          <Link href={item.link} key={index} className="hover:opacity-60">
-            {item.title}
-          </Link>
-        ))}
+        {list.map((item, index) => {
+          if (item.onClick) {
+            return (
+              <span
+                key={index}
+                className="hover:opacity-60 cursor-pointer"
+                onClick={item.onClick}
+              >
+                {item.title}
+              </span>
+            )
+          }
+          return (
+            <a href={item.link} key={index} className="hover:opacity-60">
+              {item.title}
+            </a>
+          )
+        })}
       </HoverCardContent>
     </HoverCard>
   )
@@ -91,18 +103,18 @@ function CenterNavigators() {
       >
         <div className={styles.navItem}>智能</div>
       </HoverMenus>
-      <Link href="/" className={styles.navItem}>
+      <a href="/" className={styles.navItem}>
         充电
-      </Link>
-      <Link href="/" className={styles.navItem}>
+      </a>
+      <a href="/" className={styles.navItem}>
         门店
-      </Link>
-      <Link href="/" className={styles.navItem}>
+      </a>
+      <a href="/" className={styles.navItem}>
         金融
-      </Link>
-      <Link href="/" className={styles.navItem}>
+      </a>
+      <a href="/" className={styles.navItem}>
         售后
-      </Link>
+      </a>
       <HoverMenus
         list={[
           { link: '/', title: '关于小鹏' },
@@ -120,9 +132,11 @@ function CenterNavigators() {
 }
 
 export default function TopNavigator({
-  carModelList
+  carModelList,
+  profile
 }: {
   carModelList: ListNavCarModelItem[]
+  profile: Profile | null
 }) {
   const [isCarModelHover, setIsCarModelHover] = useState(false)
   const [isBgTransparent, setIsBgTransparent] = useState(true)
@@ -161,7 +175,8 @@ export default function TopNavigator({
         isCarModelHover,
         isBgTransparent,
         carModelList,
-        setIsCarModelHover
+        setIsCarModelHover,
+        profile
       }}
     >
       <div
@@ -184,11 +199,13 @@ const TopNavigatorContext = createContext<{
   // 由于导航栏是客户端组件，只能在其上层的服务端组件获取carModelList，通过props传入，然后将其放在context中，供CarModelsPanel组件使用
   carModelList: ListNavCarModelItem[]
   setIsCarModelHover: (value: boolean) => void
+  profile: Profile | null
 }>({
   isCarModelHover: false,
   isBgTransparent: true,
   carModelList: [],
-  setIsCarModelHover: () => {}
+  setIsCarModelHover: () => {},
+  profile: null
 })
 export const useTopNavigatorContext = () => {
   return useContext(TopNavigatorContext)

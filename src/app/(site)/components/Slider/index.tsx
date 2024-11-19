@@ -89,12 +89,14 @@ export default function Slider({
           {sliderList.map((item, index) => (
             <CarouselItem
               key={index}
-              className="basis-full h-[100vh] px-0 relative"
+              className="w-screen h-screen px-0 relative"
             >
               <Image
                 src={item.img}
                 alt="轮播图"
                 fill
+                // 首张图片优先加载，否则会变形
+                loading={index === current ? 'eager' : 'lazy'}
                 className="object-cover"
               />
               <div

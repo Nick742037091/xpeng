@@ -61,9 +61,9 @@ export function deleteAdminSession() {
 /*******/
 
 /** 官网session */
-export async function createSiteSession(userId: string, userName: string) {
+export async function createSiteSession(userId: string, phone: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-  const session = await encrypt({ userId, userName, expiresAt })
+  const session = await encrypt({ userId, phone, expiresAt })
   cookies().set(SITE_SESSION_COOKIE_NAME, session, {
     httpOnly: true,
     secure: true,

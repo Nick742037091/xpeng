@@ -4,7 +4,9 @@ import { ADMIN_SESSION_COOKIE_NAME, decrypt } from './lib/session'
 // 无须校验登录的页面
 const publicPageRoutes = [
   // admin登录
-  '/admin/login'
+  '/admin/login',
+  // 用户登录
+  '/login'
 ]
 // 无须校验登录的api
 const publicApiRoutes = [

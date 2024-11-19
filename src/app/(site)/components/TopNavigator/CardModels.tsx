@@ -6,7 +6,6 @@ import clsx from 'clsx'
 
 import styles from './index.module.scss'
 import Image from 'next/image'
-import Link from 'next/link'
 
 function CarModelsPanel({ active }: { active: boolean }) {
   const { carModelList } = useTopNavigatorContext()
@@ -86,7 +85,7 @@ export function CarModels() {
       onMouseEnter={() => setIsCarModelHover(true)}
       onMouseLeave={() => setIsCarModelHover(false)}
     >
-      <Link href="/">车型</Link>
+      <a href="/">车型</a>
       <div className={styles.carAnimation}>
         {/* TODO carAnimation 增加左右边缘模糊 */}
         <Image
