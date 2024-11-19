@@ -3,6 +3,7 @@ import type { Context } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import type { StatusCode } from 'hono/utils/http-status'
 import { ClientCode, ServerCode } from '../common/code'
+import * as Sentry from '@sentry/nextjs'
 
 export class ApiError extends HTTPException {
   public readonly code?: StatusCode
@@ -14,7 +15,6 @@ export class ApiError extends HTTPException {
 }
 
 export function handleError(err: Error, c: Context): Response {
-  console.log('handleError', err.message)
   if (err instanceof z.ZodError) {
     // zod校验错误
     const firstError = err.errors[0]
@@ -23,6 +23,13 @@ export function handleError(err: Error, c: Context): Response {
       ClientCode.Validate
     )
   }
+  // 捕获除zod校验错误之外的api异常
+  Sentry.captureException(err, {
+    tags: {
+      source: 'api error',
+      routePath: c.req.routePath
+    }
+  })
   /**
    * This is a generic error, we should log it and return a 500
    */

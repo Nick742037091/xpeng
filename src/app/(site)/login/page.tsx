@@ -106,8 +106,8 @@ export default function LoginPage() {
         setErrorMsg(message)
       }
     } catch (error) {
-      console.log(error)
       setLoading(false)
+      throw new Error('Failed to login:', { cause: error })
     }
   }
 

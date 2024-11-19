@@ -9,7 +9,7 @@ import {
 } from '@/server/common/redis'
 import prisma from '@/lib/prisma'
 import UniSMS from 'unisms'
-import { rateLimit } from '../../middlewares'
+import { rateLimit } from '@/server/api/middlewares'
 
 const sendVerifyCodeSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确')
