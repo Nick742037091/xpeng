@@ -9,8 +9,7 @@ import {
 } from '@/server/common/redis'
 import prisma from '@/lib/prisma'
 import { getSiteProfile } from '@/lib/dal'
-
-// import UniSMS from 'unisms'
+import UniSMS from 'unisms'
 
 const sendVerifyCodeSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确')
@@ -36,19 +35,19 @@ const app = new Hono()
       // TODO 频繁调用校验
       const verifyCode = createVerifyCode()
       // TODO 短信发送未审核通过，删除注释掉
-      // const client = new UniSMS({
-      //   accessKeyId: process.env.SMS_ACCESS_KEY_ID!
-      // })
-      // await client.send({
-      //   to: phone,
-      //   signature: process.env.SMS_SIGNATURE!,
-      //   templateId: 'pub_verif_login',
-      //   templateData: {
-      //     code: verifyCode
-      //   }
-      // })
+      const client = new UniSMS({
+        accessKeyId: process.env.SMS_ACCESS_KEY_ID!
+      })
+      await client.send({
+        to: phone,
+        signature: process.env.SMS_SIGNATURE!,
+        templateId: 'pub_verif_login',
+        templateData: {
+          code: verifyCode
+        }
+      })
       setSiteLoginVerifyCodeCache(phone, verifyCode)
-      return c.json(responseSuccess({ verifyCode }, '验证码发送成功'))
+      return c.json(responseSuccess(null, '验证码发送成功'))
     }
   )
   // 登录
