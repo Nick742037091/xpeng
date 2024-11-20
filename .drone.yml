@@ -22,6 +22,7 @@ steps:
         from_secret: ssh_port
       command_timeout: 2m
       target: /home/ubuntu/project/xpeng
+      overwrite: true
       source:
         - ./*
   - name: 部署项目
