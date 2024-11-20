@@ -38,6 +38,7 @@ steps:
       script_stop: true
       script:
         - cd /home/ubuntu/project/xpeng
+        - export NODE_OPTIONS="--max-old-space-size=2048"
         - pnpm install && echo '安装依赖成功' || (echo '安装依赖失败'; exit 1)
         - pnpm prisma:generate && echo '生成prisma类型成功' || (echo '生成prisma类型失败'; exit 1)
         - pnpm build && echo '构建成功' || (echo '构建失败'; exit 1)
