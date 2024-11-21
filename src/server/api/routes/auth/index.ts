@@ -10,6 +10,7 @@ import {
 import prisma from '@/lib/prisma'
 import UniSMS from 'unisms'
 import { rateLimit } from '@/server/api/middlewares'
+import { getSiteProfile } from '@/lib/dal'
 
 const sendVerifyCodeSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确')
@@ -41,19 +42,24 @@ const app = new Hono()
         return c.json(responseError('发送验证码过于频繁'))
       }
       const verifyCode = createVerifyCode()
-      const client = new UniSMS({
-        accessKeyId: process.env.SMS_ACCESS_KEY_ID!
-      })
-      await client.send({
-        to: phone,
-        signature: process.env.SMS_SIGNATURE!,
-        templateId: 'pub_verif_login',
-        templateData: {
-          code: verifyCode
-        }
-      })
+      const sendMsg = process.env.SMS_SEND! === 'true'
+      if (sendMsg) {
+        const client = new UniSMS({
+          accessKeyId: process.env.SMS_ACCESS_KEY_ID!
+        })
+        await client.send({
+          to: phone,
+          signature: process.env.SMS_SIGNATURE!,
+          templateId: 'pub_verif_login',
+          templateData: {
+            code: verifyCode
+          }
+        })
+      }
       setSiteLoginVerifyCodeCache(phone, verifyCode)
-      return c.json(responseSuccess(null, '验证码发送成功'))
+      return c.json(
+        responseSuccess(sendMsg ? null : verifyCode, '验证码发送成功')
+      )
     }
   )
   // 登录
@@ -81,6 +87,7 @@ const app = new Hono()
         }
       })
     }
+    console.info('登录成功', { userId: user.id, phone: user.phone })
     await createSiteSession(user.id + '', user.phone)
     // 返回用户信息
     return c.json(
@@ -92,6 +99,8 @@ const app = new Hono()
   })
   // 退出登录
   .post('/logout', async (c) => {
+    const profile = await getSiteProfile()
+    console.info('退出登录成功', profile)
     await deleteSiteSession()
     return c.json(responseSuccess())
   })
