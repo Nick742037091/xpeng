@@ -10,7 +10,6 @@ import {
 import prisma from '@/lib/prisma'
 import UniSMS from 'unisms'
 import { rateLimit } from '@/server/api/middlewares'
-import { getSiteProfile } from '@/lib/dal'
 
 const sendVerifyCodeSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, '手机号格式不正确')
@@ -87,7 +86,6 @@ const app = new Hono()
         }
       })
     }
-    console.info('登录成功', { userId: user.id, phone: user.phone })
     await createSiteSession(user.id + '', user.phone)
     // 返回用户信息
     return c.json(
@@ -99,8 +97,6 @@ const app = new Hono()
   })
   // 退出登录
   .post('/logout', async (c) => {
-    const profile = await getSiteProfile()
-    console.info('退出登录成功', profile)
     await deleteSiteSession()
     return c.json(responseSuccess())
   })

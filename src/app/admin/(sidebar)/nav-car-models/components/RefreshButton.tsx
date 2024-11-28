@@ -8,7 +8,14 @@ import Loading from '@/components/admin/Loading'
 function StatusButton() {
   const { pending } = useFormStatus()
   return (
-    <Button type="submit" variant="outline" disabled={pending}>
+    <Button
+      type="submit"
+      variant="outline"
+      disabled={pending}
+      onClick={() => {
+        throw new Error('err')
+      }}
+    >
       <div className="flex items-center gap-2">
         {pending && <Loading color="black" />}
         <span>刷新</span>

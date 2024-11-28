@@ -1,3 +1,5 @@
+import logger from '@/server/common/logger'
+import { LOGGER_TYPE_PAGE_ERROR } from '@/server/common/logger/constant'
 import {
   getCosCredentialCache,
   setCosCredentialCache
@@ -5,6 +7,13 @@ import {
 import { responseError, responseSuccess } from '@/server/common/response'
 import { Hono } from 'hono'
 import sts from 'qcloud-cos-sts'
+import { z } from 'zod'
+import { Validator } from '@/server/api/validator'
+
+const pageErrorSchema = z.object({
+  msg: z.string(),
+  path: z.string()
+})
 
 const app = new Hono()
   .basePath('/common')
@@ -34,6 +43,15 @@ const app = new Hono()
     } catch {
       return c.json(responseError('获取凭证失败'))
     }
+  })
+  .post('/pageError', Validator('json', pageErrorSchema), async (c) => {
+    const { msg, path } = c.req.valid('json')
+    logger.error({
+      type: LOGGER_TYPE_PAGE_ERROR,
+      msg,
+      path
+    })
+    return c.json(responseSuccess())
   })
 
 export default app

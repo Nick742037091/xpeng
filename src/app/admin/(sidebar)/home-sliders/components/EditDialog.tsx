@@ -276,10 +276,10 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
   return (
     <Dialog open={visible} onOpenChange={setVisible}>
       <DialogContent className="sm:max-w-[800px]">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
         <form action={handleAction} autoComplete="off">
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-          </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="title" className="text-right">

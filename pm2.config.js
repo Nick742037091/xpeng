@@ -3,11 +3,11 @@ module.exports = {
     {
       name: 'xpeng',
       script: 'npm',
+      exec_mode: 'fork', // 解决日志丢失问题
       args: 'run start',
-      instances: 1,
-      env: {
-        NODE_ENV: 'production'
-      }
+      watch: false,
+      autorestart: true,
+      max_memory_restart: '1G'
     }
   ]
 }

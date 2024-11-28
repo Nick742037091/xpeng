@@ -9,6 +9,8 @@ import { responseError } from './server/common/response'
 export default async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname
   const isApi = /\/api+/.test(pathname)
+  // 由于next中间件无法获取响应，所以无法进行请求日志记录，api请求已通过hono的中间件进行日志记录
+  // TODO 通过nginx进行页面请求日志记录
   if (isApi) {
     return apiMiddleware(req)
   } else {
@@ -48,7 +50,8 @@ const publicApiRoutes = [
   // admin登录
   '/api/admin/login',
   '/api/auth/sendVerifyCode',
-  '/api/auth/login'
+  '/api/auth/login',
+  '/api/common/pageError'
 ]
 
 const apiMiddleware = async (req: NextRequest) => {
@@ -73,5 +76,6 @@ const apiMiddleware = async (req: NextRequest) => {
 }
 
 export const config = {
-  matcher: ['/', '/((?!_next/static|_next/image|.*\\.png$|.*\\.ico$).*)']
+  matcher: ['/', '/((?!_next/static|_next/image|.*\\.png$|.*\\.ico$).*)'],
+  runtime: 'nodejs'
 }

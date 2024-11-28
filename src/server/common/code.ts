@@ -4,9 +4,9 @@ import {
 } from 'hono/utils/http-status'
 
 export const ClientCode = {
-  Validate: 422
-} as Record<string, ClientErrorStatusCode>
+  Validate: 422 as ClientErrorStatusCode
+}
 
 export const ServerCode = {
-  Common: 500
-} as Record<string, ServerErrorStatusCode>
+  Common: 500 as ServerErrorStatusCode
+}
