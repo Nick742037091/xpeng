@@ -20,7 +20,7 @@ export const apiLog = async ({ c, next }: { c: Context; next: Next }) => {
       method: c.req.method,
       path: c.req.routePath,
       query: c.req.query(),
-      body: await c.req.json().catch(() => null),
+      body: await c.req.json().catch(() => {}),
       headers: Object.fromEntries(c.req.raw.headers.entries())
     },
     res: {
@@ -29,7 +29,7 @@ export const apiLog = async ({ c, next }: { c: Context; next: Next }) => {
       body: await c.res
         .clone()
         .json()
-        .catch(() => null)
+        .catch(() => {})
     }
   })
 }
