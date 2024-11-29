@@ -59,6 +59,9 @@ importers:
       cos-js-sdk-v5:
         specifier: ^1.8.6
         version: 1.8.6
+      create-puzzle:
+        specifier: ^3.0.2
+        version: 3.0.2
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
@@ -104,6 +107,9 @@ importers:
       qs:
         specifier: ^6.13.0
         version: 6.13.1
+      rc-slider-captcha:
+        specifier: ^1.7.0
+        version: 1.7.0(react@18.3.1)
       react:
         specifier: ^18
         version: 18.3.1
@@ -1243,6 +1249,9 @@ packages:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
     engines: {node: '>=10.16.0'}
 
+  cache2@3.1.2:
+    resolution: {integrity: sha512-y714OEbC+xC2bzP8bFjzsDpqHSCsNRtMm4gKxmdYq1fqQnhCgWkGhO9OVHZr973zCJAJSfenigGDpRDxtN+dQQ==}
+
   call-bind@1.0.7:
     resolution: {integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==}
     engines: {node: '>= 0.4'}
@@ -1276,6 +1285,9 @@ packages:
 
   class-variance-authority@0.7.1:
     resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
+
+  classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -1329,6 +1341,9 @@ packages:
 
   create-hmac@1.1.7:
     resolution: {integrity: sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==}
+
+  create-puzzle@3.0.2:
+    resolution: {integrity: sha512-XliUr6Di/ba4mRGa2Mjq59KwES+3gECCqbaVewKiK/l3p0UCgUqhIKRjmgyULkM1JeAmZTJCyuyVuSx3NCUDZg==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -1445,6 +1460,9 @@ packages:
 
   embla-carousel@8.5.1:
     resolution: {integrity: sha512-JUb5+FOHobSiWQ2EJNaueCNT/cQU9L6XWBbWmorWPQT9bkbk+fhsuLr8wWrzXKagO3oWszBO7MSx+GfaRk4E6A==}
+
+  emitter-pro@1.2.2:
+    resolution: {integrity: sha512-wmkoEzKYArkMPl7hxSwHvFDnXvmTaCZo6FdgiRQV87iCBuS+ugjopDkLQWOPMDhvV2hiyn9brGTSBCr6wunSLw==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -2372,6 +2390,16 @@ packages:
   raf-schd@4.0.3:
     resolution: {integrity: sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ==}
 
+  rc-hooks@3.0.16:
+    resolution: {integrity: sha512-d5SBXrSD0u4mEt+AXVLyI76TQJgzf2PvRSHhQiETAhYnqQrkAJOckmZgbfIZ5PTjGqrM3ovsD+2dD8ZBENx0mQ==}
+    peerDependencies:
+      react: '>= 16.8.6'
+
+  rc-slider-captcha@1.7.0:
+    resolution: {integrity: sha512-/cja5nCEIs/cmDnCHYNct7D3O3P9ydsLB7IkeaCl0ah0y/Xp6HBK3spqZgG8PF6uKg/9ENqVtO4Ioi/V6mF+tg==}
+    peerDependencies:
+      react: '>=16.9.0'
+
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -2810,8 +2838,15 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
+  ut2@1.14.0:
+    resolution: {integrity: sha512-Z7sZ2NiBeJzYy83ymJa/AIrIsmpvO3XwAPuUP6aO6h4n1oiOSUBuHvZYwOnWKeTGxqRWkeRzwK6y6nSpG4SUSg==}
+    engines: {node: '>=10'}
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  util-helpers@5.3.1:
+    resolution: {integrity: sha512-eUeQ6MNRQCkH0btjnafhKSWIoYayUgkA730pVRO6LIvdKwt0BIUvmdFjixCjDPhGa9Od450xGvGhRAjG0EnuYA==}
 
   which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
@@ -3872,6 +3907,11 @@ snapshots:
     dependencies:
       streamsearch: 1.1.0
 
+  cache2@3.1.2:
+    dependencies:
+      emitter-pro: 1.2.2
+      tslib: 2.8.1
+
   call-bind@1.0.7:
     dependencies:
       es-define-property: 1.0.0
@@ -3915,6 +3955,8 @@ snapshots:
   class-variance-authority@0.7.1:
     dependencies:
       clsx: 2.1.1
+
+  classnames@2.5.1: {}
 
   client-only@0.0.1: {}
 
@@ -3970,6 +4012,11 @@ snapshots:
       ripemd160: 2.0.2
       safe-buffer: 5.2.1
       sha.js: 2.4.11
+
+  create-puzzle@3.0.2:
+    dependencies:
+      ut2: 1.14.0
+      util-helpers: 5.3.1
 
   cross-spawn@7.0.6:
     dependencies:
@@ -4069,6 +4116,8 @@ snapshots:
       embla-carousel: 8.5.1
 
   embla-carousel@8.5.1: {}
+
+  emitter-pro@1.2.2: {}
 
   emoji-regex@8.0.0: {}
 
@@ -5126,6 +5175,20 @@ snapshots:
 
   raf-schd@4.0.3: {}
 
+  rc-hooks@3.0.16(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      tslib: 2.8.1
+      ut2: 1.14.0
+      util-helpers: 5.3.1
+
+  rc-slider-captcha@1.7.0(react@18.3.1):
+    dependencies:
+      classnames: 2.5.1
+      rc-hooks: 3.0.16(react@18.3.1)
+      react: 18.3.1
+      tslib: 2.8.1
+
   react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
@@ -5642,7 +5705,17 @@ snapshots:
     dependencies:
       react: 18.3.1
 
+  ut2@1.14.0:
+    dependencies:
+      tslib: 2.8.1
+
   util-deprecate@1.0.2: {}
+
+  util-helpers@5.3.1:
+    dependencies:
+      cache2: 3.1.2
+      tslib: 2.8.1
+      ut2: 1.14.0
 
   which-boxed-primitive@1.0.2:
     dependencies:

@@ -10,6 +10,7 @@ import { success } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
 import { useRouter } from 'next/navigation'
 import { usePolicyConfirmDialog } from './components/PolicyConfirmDialog'
+import { useCaptcha } from './components/Captcha'
 import { refreshAllPage } from '@/server/action/login'
 
 function LoginButton({
@@ -39,6 +40,7 @@ export default function LoginPage() {
   const [countdown, setCountdown] = useState(0)
   const { confirm: policyConfirm, context: policyConfirmDialog } =
     usePolicyConfirmDialog()
+  const { context: captchaDialog, open: openCaptchaDialog } = useCaptcha()
 
   useEffect(() => {
     if (countdown > 0) {
@@ -56,7 +58,10 @@ export default function LoginPage() {
       setErrorMsg('手机号不能为空')
       return
     }
-    // TODO 滑动图片验证
+    // 滑动图片验证
+    const isCaptchaSuccess = await openCaptchaDialog()
+    if (!isCaptchaSuccess) return
+
     const resp = await api.auth.sendVerifyCode.$post({
       json: {
         phone
@@ -151,6 +156,7 @@ export default function LoginPage() {
         <Policy isAgree={isAgree} onChange={setIsAgree} />
         <LoginButton loading={loading} onClick={handleLogin} />
         {policyConfirmDialog}
+        {captchaDialog}
       </div>
 
       <Image
