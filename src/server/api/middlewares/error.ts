@@ -22,7 +22,7 @@ export async function handleError(err: Error, c: Context): Promise<Response> {
     method: c.req.method,
     url: c.req.routePath,
     query: c.req.query(),
-    body: await c.req.json().catch(() => {})
+    body: await c.req.json().catch(() => ({}))
   })
 
   return c.json(
