@@ -106,8 +106,8 @@ export default function Slider({
                 )}
               >
                 <GoX className="absolute text-[28px] top-[-16px] left-[-16px]" />
-                <div className="">{item.title}</div>
-                <div className="">{item.subtitle}</div>
+                <h2 className="font-[HYYakuHei]">{item.title}</h2>
+                <h2 className="font-[HYYakuHei]">{item.subtitle}</h2>
                 <div className="mt-[32px] flex items-center gap-[16px]">
                   {item.buttons?.map((button, index) => (
                     <Link key={index} href={button.href}>

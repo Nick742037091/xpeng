@@ -80,3 +80,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@font-face {
+  font-family: 'HYYakuHei';
+  src: url('../assets/fonts/HYYakuHei.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

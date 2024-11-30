@@ -62,7 +62,9 @@ export default function AfterSales() {
   return (
     <div className="pt-[80px] pb-[120px] flex flex-col items-center">
       <div className="pt-[120px] pb-[64px] text-center">
-        <h2 className="text-[32px] tracking-[.16em] mb-[16px]">售后服务</h2>
+        <h2 className="text-[32px] tracking-[.16em] mb-[16px] font-[HYYakuHei]">
+          售后服务
+        </h2>
         <h2 className="text-[16px] tracking-[.16em] text-[rgba(0,0,0,.6)] font-[400]">
           鹏友好才是真的好
         </h2>

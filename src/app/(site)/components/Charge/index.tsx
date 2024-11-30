@@ -15,7 +15,7 @@ const dataList = [
     bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging1.jpg'
   },
   {
-    title: '自营充电网络',
+    title: '超充服务',
     description: '核心城区与高速场景补能',
     bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging2.jpg'
   },
@@ -88,11 +88,11 @@ export default function Charge() {
   return (
     <div className="bg-[#f9f9f9] pt-[80px] pb-[120px] flex flex-col items-center">
       <div className="pt-[120px] pb-[64px] text-center">
-        <h2 className="text-[32px] tracking-[.16em] mb-[16px]">
+        <h2 className="text-[32px] tracking-[.16em] mb-[16px] font-[HYYakuHei]">
           全场景充电服务
         </h2>
         <h2 className="text-[16px] tracking-[.16em] text-[rgba(0,0,0,.6)] font-[400]">
-          全场景充电服务遍布全国的补能网络，贴心的自营充电服务，让鹏友没有里程焦虑
+          遍布全国的补能网络，贴心的自营充电服务，让鹏友没有里程焦虑
         </h2>
       </div>
       <div className="flex gap-[32px] justify-stretch">
