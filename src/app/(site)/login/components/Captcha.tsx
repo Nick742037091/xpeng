@@ -9,6 +9,7 @@ import SliderCaptcha from 'rc-slider-captcha'
 import ImageBg from '../imgs/captcha-bg.jpeg'
 import { cn } from '@/lib/utils'
 import { createPuzzle } from 'create-puzzle'
+import { useTranslations } from 'next-intl'
 
 /**
  * rc-slider-captcha参考文档：https://caijf.github.io/rc-slider-captcha/
@@ -22,6 +23,7 @@ const PUZZLE_RANGE = 10
 export const useCaptcha = () => {
   const [isOpen, setIsOpen] = useState(false)
   const openResolve = useRef<((value: boolean) => void) | null>(null)
+  const t = useTranslations('LoginPage')
 
   const open = () => {
     return new Promise((resolve) => {
@@ -62,7 +64,7 @@ export const useCaptcha = () => {
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className={cn('flex flex-col items-center')}>
         <DialogHeader>
-          <DialogTitle>请完成安全验证</DialogTitle>
+          <DialogTitle>{t('captchaTip')}</DialogTitle>
         </DialogHeader>
         <SliderCaptcha
           bgSize={{ width: ImageBg.width, height: ImageBg.height }}

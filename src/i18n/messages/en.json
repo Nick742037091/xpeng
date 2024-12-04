@@ -1,0 +1,24 @@
+{
+  "LoginPage": {
+    "placeholder": {
+      "phone": "Phone number",
+      "verifyCode": "SMS verify code"
+    },
+    "getVerifyCode": "Verify code",
+    "loginButton": "Login",
+    "agree": " Agree ",
+    "and": " And ",
+    "userAgreement": "User Agreement",
+    "privacyPolicy": "Privacy Policy",
+    "countdown": "{countdown} seconds",
+    "errors": {
+      "phoneEmpty": "Phone number cannot be empty",
+      "verifyCodeEmpty": "Verification code cannot be empty",
+      "loginFailed": "Failed to login, please try again"
+    },
+    "messages": {
+      "verifyCodeSent": "Verification code sent successfully"
+    },
+    "captchaTip": "Please complete the security verification"
+  }
+}

@@ -14,3 +14,8 @@ export function success(message: string, duration = 2000) {
 export function error(message: string, duration = 2000) {
   toast({ description: message, variant: 'destructive', duration })
 }
+
+// 判断是否是客户端组件
+export function isClient() {
+  return typeof window !== 'undefined'
+}

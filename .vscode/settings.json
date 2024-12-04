@@ -1,4 +1,10 @@
 {
   "editor.formatOnSave": true,
-  "tailwindCSS.rootFontSize": 16
+  "tailwindCSS.rootFontSize": 16,
+  "i18n-ally.localesPaths": [
+    "src/i18n",
+    "src/i18n/messages"
+  ],
+  "i18n-ally.sourceLanguage": "zh-cn",
+  "i18n-ally.keystyle": "flat"
 }

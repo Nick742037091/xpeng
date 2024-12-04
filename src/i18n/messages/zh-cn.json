@@ -1,0 +1,24 @@
+{
+  "LoginPage": {
+    "placeholder": {
+      "phone": "请输入手机号",
+      "verifyCode": "请输入短信验证码"
+    },
+    "getVerifyCode": "获取验证码",
+    "loginButton": "登录",
+    "agree": " 同意 ",
+    "and": "与",
+    "userAgreement": "《小鹏汽车网络平台用户协议》",
+    "privacyPolicy": "《小鹏汽车网络平台隐私政策》",
+    "countdown": "{countdown}秒后重试",
+    "errors": {
+      "phoneEmpty": "手机号不能为空",
+      "verifyCodeEmpty": "验证码不能为空",
+      "loginFailed": "登录失败，请重试"
+    },
+    "messages": {
+      "verifyCodeSent": "验证码发送成功"
+    },
+    "captchaTip": "请完成安全验证"
+  }
+}

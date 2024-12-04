@@ -6,12 +6,17 @@ import Logo from '@/assets/icons/common/logo_black.png'
 import Policy from './components/Policy'
 import { useState, useEffect } from 'react'
 import { api } from '@/server/api/client'
-import { success } from '@/lib/utils'
+import { cn, success } from '@/lib/utils'
 import Loading from '@/components/admin/Loading'
 import { useRouter } from 'next/navigation'
 import { usePolicyConfirmDialog } from './components/PolicyConfirmDialog'
 import { useCaptcha } from './components/Captcha'
 import { refreshAllPage } from '@/server/action/login'
+import { useTranslations } from 'next-intl'
+import { COOKIE_NAME } from '@/i18n/request'
+import { useCookies } from 'react-cookie'
+import { AiOutlineGlobal } from 'react-icons/ai'
+import LocalSelect from '@/components/site/LocalSelect'
 
 function LoginButton({
   loading,
@@ -20,18 +25,36 @@ function LoginButton({
   loading: boolean
   onClick: () => void
 }) {
+  const t = useTranslations('LoginPage')
   return (
     <div
       className="mt-[14px] h-[48px] w-full flex justify-center items-center bg-black text-white
       cursor-pointer"
       onClick={onClick}
     >
-      {loading ? <Loading /> : '  登录'}
+      {loading ? <Loading /> : t('loginButton')}
+    </div>
+  )
+}
+
+function LocaleButton() {
+  const [, setLocale] = useCookies([COOKIE_NAME])
+  return (
+    <div className="absolute right-[10px] top-[10px] cursor-pointer text-[24px] hover:opacity-60">
+      <LocalSelect
+        onChange={(value) => {
+          setLocale(COOKIE_NAME, value)
+          location.reload()
+        }}
+      >
+        <AiOutlineGlobal />
+      </LocalSelect>
     </div>
   )
 }
 
 export default function LoginPage() {
+  const t = useTranslations('LoginPage')
   const router = useRouter()
   const [phone, setPhone] = useState('')
   const [verifyCode, setVerifyCode] = useState('')
@@ -55,7 +78,7 @@ export default function LoginPage() {
     if (countdown > 0) return
     setErrorMsg('')
     if (!phone) {
-      setErrorMsg('手机号不能为空')
+      setErrorMsg(t('errors.phoneEmpty'))
       return
     }
     // 滑动图片验证
@@ -69,7 +92,7 @@ export default function LoginPage() {
     })
     const { code, message } = await resp.json()
     if (code === 0) {
-      success('验证码发送成功')
+      success(t('messages.verifyCodeSent'))
       // 60秒后可重新发送验证码
       setCountdown(60)
     } else {
@@ -82,11 +105,11 @@ export default function LoginPage() {
     if (loading) return
     setErrorMsg('')
     if (!phone) {
-      setErrorMsg('手机号不能为空')
+      setErrorMsg(t('errors.phoneEmpty'))
       return
     }
     if (!verifyCode) {
-      setErrorMsg('验证码不能为空')
+      setErrorMsg(t('errors.verifyCodeEmpty'))
       return
     }
     if (!isAgree) {
@@ -112,7 +135,8 @@ export default function LoginPage() {
       }
     } catch (error) {
       setLoading(false)
-      throw new Error('Failed to login:', { cause: error })
+      setErrorMsg(t('errors.loginFailed'))
+      throw error
     }
   }
 
@@ -123,7 +147,7 @@ export default function LoginPage() {
         <div className="mt-[32Px] mb-[16Px] bg-white px-[20Px] py-[5Px] w-full">
           <input
             type="text"
-            placeholder="请输入手机号"
+            placeholder={t('placeholder.phone')}
             className="h-[46Px] w-full text-[#333]"
             style={{ fontSize: '16Px' }}
             value={phone}
@@ -137,19 +161,20 @@ export default function LoginPage() {
         >
           <input
             type="text"
-            placeholder="请输入短信验证码"
+            placeholder={t('placeholder.verifyCode')}
             className="h-[46Px] flex-1 text-[#333]"
             value={verifyCode}
             maxLength={4}
             onChange={(e) => setVerifyCode(e.target.value)}
           />
           <span
-            className={`mr-[4Px] cursor-pointer ${
+            className={cn(
+              'mr-[4Px] cursor-pointer',
               countdown > 0 ? 'text-gray-400' : 'text-[#6da23a]'
-            }`}
+            )}
             onClick={handleSendVerifyCode}
           >
-            {countdown > 0 ? `${countdown}秒后重试` : '获取验证码'}
+            {countdown > 0 ? t('countdown', { countdown }) : t('getVerifyCode')}
           </span>
         </div>
         {errorMsg && <div className="w-full text-red-500">{errorMsg}</div>}
@@ -164,6 +189,7 @@ export default function LoginPage() {
         src={P7PlusImg}
         alt="p7+"
       />
+      <LocaleButton />
     </div>
   )
 }
