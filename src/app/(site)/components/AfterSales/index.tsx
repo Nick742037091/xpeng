@@ -39,9 +39,14 @@ function HoverCard({
   )
 }
 
+const dataList = [
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou1.jpg',
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou2.jpg',
+  'https://xps01.xiaopeng.com/www/public/img/shouhou3.9febac91.jpg'
+]
+
 export default function AfterSales() {
   const t = useTranslations('AfterSales')
-  const dataList = t.raw('dataList')
 
   return (
     <div className="pt-[80px] pb-[120px] flex flex-col items-center">
@@ -56,18 +61,16 @@ export default function AfterSales() {
       <div className="flex gap-x-[32px]">
         {dataList.map((item, index) => (
           <div key={index} className="flex flex-col w-[418px]">
-            <HoverCard bgSrc={item.bgSrc} className="mb-[24px]" />
+            <HoverCard bgSrc={item} className="mb-[24px]" />
             <h2 className="mb-[16px] text-[18px] tracking-[.16em]">
-              {item.title}
+              {t(`dataList.${index}.title`)}
             </h2>
             <p className="text-[16px] tracking-[.2em] text-[#666]">
-              {item.description}
+              {t(`dataList.${index}.description`)}
             </p>
-            {item.tip && (
-              <div className="mt-[16px] text-[14px] tracking-[.2em] text-[rgba(0,0,0,.3)]">
-                {item.tip}
-              </div>
-            )}
+            <div className="mt-[16px] text-[14px] tracking-[.2em] text-[rgba(0,0,0,.3)]">
+              {t(`dataList.${index}.tip`)}
+            </div>
           </div>
         ))}
       </div>

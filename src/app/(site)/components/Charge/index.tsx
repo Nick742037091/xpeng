@@ -49,40 +49,16 @@ function HoverCard({
   )
 }
 
-const useDataList = () => {
-  const t = useTranslations('HomePage')
-  return [
-    {
-      title: t('Charge.dataList.0.title'),
-      description: t('Charge.dataList.0.description'),
-      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging1.jpg'
-    },
-    {
-      title: t('Charge.dataList.1.title'),
-      description: t('Charge.dataList.1.description'),
-      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging2.jpg'
-    },
-    {
-      title: t('Charge.dataList.2.title'),
-      description: t('Charge.dataList.2.description'),
-      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging3.jpg'
-    },
-    {
-      title: t('Charge.dataList.3.title'),
-      description: t('Charge.dataList.3.description'),
-      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging4.jpg'
-    },
-    {
-      title: t('Charge.dataList.4.title'),
-      description: t('Charge.dataList.4.description'),
-      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging5.jpg'
-    }
-  ]
-}
+const dataList = [
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging1.jpg',
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging2.jpg',
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging3.jpg',
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging4.jpg',
+  'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging5.jpg'
+]
 
 export default function Charge() {
   const t = useTranslations('HomePage')
-  const dataList = useDataList()
   const firstItem = dataList[0]
   const otherGroup: (typeof dataList)[] = []
   // 将其他数据分组，每组2个
@@ -100,14 +76,21 @@ export default function Charge() {
         </h2>
       </div>
       <div className="flex gap-[32px] justify-stretch">
-        <HoverCard {...firstItem} className="h-[660px] w-[418px]" />
+        <HoverCard
+          bgSrc={firstItem}
+          title={t('Charge.dataList.0.title')}
+          description={t('Charge.dataList.0.description')}
+          className="h-[660px] w-[418px]"
+        />
         <div className="flex-1 flex flex-col justify-between">
           {otherGroup.map((group, index) => (
             <div key={index} className="flex gap-x-[32px]">
-              {group.map((item) => (
+              {group.map((item, index) => (
                 <HoverCard
-                  key={item.title}
-                  {...item}
+                  key={index}
+                  bgSrc={item}
+                  title={t(`Charge.dataList.${index}.title`)}
+                  description={t(`Charge.dataList.${index}.description`)}
                   className="h-[314px] w-[418px]"
                 />
               ))}

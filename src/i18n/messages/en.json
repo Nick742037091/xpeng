@@ -97,11 +97,13 @@
       {
         "title": "Lifetime Roadside Assistance",
         "description": "24/7 service, worry-free rescue ready at any time, ensuring your peace of mind during travel",
+        "tip": "",
         "bgSrc": "https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou2.jpg"
       },
       {
         "title": "Intelligent Service Protection",
         "description": "24/7 intelligent online diagnosis, intelligent fault warning, protecting vehicle health",
+        "tip": "",
         "bgSrc": "https://xps01.xiaopeng.com/www/public/img/shouhou3.9febac91.jpg"
       }
     ]

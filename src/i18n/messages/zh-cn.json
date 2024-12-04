@@ -96,11 +96,13 @@
       {
         "title": "终身无忧救援",
         "description": "7*24H全天守候，无忧救援随时待命，让您安心出行",
+        "tip": "",
         "bgSrc": "https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou2.jpg"
       },
       {
         "title": "智能服务守护",
         "description": "7*24H智能在线诊断、智能故障预警，守护车辆健康",
+        "tip": "",
         "bgSrc": "https://xps01.xiaopeng.com/www/public/img/shouhou3.9febac91.jpg"
       }
     ]
