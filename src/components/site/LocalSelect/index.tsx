@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@/components/ui/popover'
-import { ReactNode } from 'react'
+import { AiOutlineGlobal } from 'react-icons/ai'
 import { COOKIE_NAME } from '@/i18n/request'
 import { useCookies } from 'react-cookie'
 import { cn } from '@/lib/utils'
@@ -18,18 +18,14 @@ const locales = [
     value: 'en'
   }
 ]
-export default function LocalSelect({
-  children,
-  onChange
-}: {
-  children: ReactNode
-  onChange: (value: string) => void
-}) {
-  const [locale] = useCookies([COOKIE_NAME])
+export default function LocalSelect() {
+  const [locale, setLocale] = useCookies([COOKIE_NAME])
   return (
     <Popover>
-      <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent className="w-[100px] mr-[20px] p-0">
+      <PopoverTrigger>
+        <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
+      </PopoverTrigger>
+      <PopoverContent className="w-[100px] mr-[20px] p-0 rounded-none border-none">
         <div className="flex flex-col">
           {locales.map((item) => (
             <div
@@ -39,7 +35,8 @@ export default function LocalSelect({
                 locale[COOKIE_NAME] === item.value && 'bg-black text-white'
               )}
               onClick={() => {
-                onChange(item.value)
+                setLocale(COOKIE_NAME, item.value)
+                location.reload()
               }}
             >
               <div>{item.label}</div>

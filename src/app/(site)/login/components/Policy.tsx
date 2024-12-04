@@ -47,15 +47,15 @@ export default function Policy({
         <Radio checked={isAgree} onChange={onChange} />
       </div>
       <div className="text-[#333] text-[12Px]">
-        {t('agree')}
+        {t('policy.agree')}
         <Link
           href="https://events.xiaopeng.com/nx9w4x.html?ch=00977&ps=event"
-          text={t('userAgreement')}
+          text={t('policy.userAgreement')}
         />
-        {t('and')}
+        {t('policy.and')}
         <Link
           href="https://events.xiaopeng.com/22p4p4.html?ch=00977&ps=event"
-          text={t('privacyPolicy')}
+          text={t('policy.privacyPolicy')}
         />
       </div>
     </div>

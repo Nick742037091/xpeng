@@ -1,4 +1,8 @@
 {
+  "SiteLayout": {
+    "tag": "个人测试网站，",
+    "officialWebsite": "官网请访问"
+  },
   "LoginPage": {
     "placeholder": {
       "phone": "请输入手机号",
@@ -6,10 +10,18 @@
     },
     "getVerifyCode": "获取验证码",
     "loginButton": "登录",
-    "agree": " 同意 ",
-    "and": "与",
-    "userAgreement": "《小鹏汽车网络平台用户协议》",
-    "privacyPolicy": "《小鹏汽车网络平台隐私政策》",
+    "policy": {
+      "agree": " 同意 ",
+      "and": "与",
+      "userAgreement": "《小鹏汽车网络平台用户协议》",
+      "privacyPolicy": "《小鹏汽车网络平台隐私政策》",
+      "confirmDialog": {
+        "title": "用户隐私协议",
+        "loginAndAgree": "登录及同意",
+        "confirm": "同意",
+        "cancel": "取消"
+      }
+    },
     "countdown": "{countdown}秒后重试",
     "errors": {
       "phoneEmpty": "手机号不能为空",
@@ -20,5 +32,77 @@
       "verifyCodeSent": "验证码发送成功"
     },
     "captchaTip": "请完成安全验证"
+  },
+  "TopNavigator": {
+    "carModels": "车型",
+    "smart": "智能",
+    "fuyaoArchitecture": "扶摇架构",
+    "intelligentTechnology": "智能科技",
+    "charge": "充电",
+    "store": "门店",
+    "finance": "金融",
+    "afterSale": "售后",
+    "aboutUs": "关于我们",
+    "aboutXiaopeng": "关于小鹏",
+    "consultationCenter": "咨询中心",
+    "investorRelations": "投资者关系",
+    "egs": "EGS",
+    "joinInCooperation": "授权加盟",
+    "joinUs": "加入我们",
+    "testDrive": "试驾",
+    "login": "登录",
+    "logout": "退出登录"
+  },
+  "HomePage": {
+    "Charge": {
+      "title": "自营充电网络",
+      "description": "1000+站点，覆盖全国所有地级行政区和直辖市；S4液冷超快充，最快充电5分钟，续航增加200km+",
+      "dataList": [
+        {
+          "title": "自营充电网络",
+          "description": "1000+站点，覆盖全国所有地级行政区和直辖市；S4液冷超快充，最快充电5分钟，续航增加200km+"
+        },
+        {
+          "title": "超充服务",
+          "description": "核心城区与高速场景补能"
+        },
+        {
+          "title": "家充服务",
+          "description": "超低补能成本，全程贴心服务"
+        },
+        {
+          "title": "目的地充电服务",
+          "description": "优选景点/酒店等休闲出游场景，无忧补能"
+        },
+        {
+          "title": "车主充电权益",
+          "description": "专享预约充电、限时免停车费等车主权益"
+        }
+      ],
+      "learnMore": "了解充电服务"
+    }
+  },
+  "AfterSales": {
+    "title": "售后服务",
+    "subtitle": "鹏友好才是真的好",
+    "learnMore": "了解售后服务",
+    "dataList": [
+      {
+        "title": "超长无忧质保",
+        "description": "最高5年/12万公里整车质保，8年/16万公里三电质保，可选超值终身质保产品",
+        "tip": "*不同车型存在差异",
+        "bgSrc": "https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou1.jpg"
+      },
+      {
+        "title": "终身无忧救援",
+        "description": "7*24H全天守候，无忧救援随时待命，让您安心出行",
+        "bgSrc": "https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou2.jpg"
+      },
+      {
+        "title": "智能服务守护",
+        "description": "7*24H智能在线诊断、智能故障预警，守护车辆健康",
+        "bgSrc": "https://xps01.xiaopeng.com/www/public/img/shouhou3.9febac91.jpg"
+      }
+    ]
   }
 }

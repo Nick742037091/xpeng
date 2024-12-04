@@ -13,9 +13,6 @@ import { usePolicyConfirmDialog } from './components/PolicyConfirmDialog'
 import { useCaptcha } from './components/Captcha'
 import { refreshAllPage } from '@/server/action/login'
 import { useTranslations } from 'next-intl'
-import { COOKIE_NAME } from '@/i18n/request'
-import { useCookies } from 'react-cookie'
-import { AiOutlineGlobal } from 'react-icons/ai'
 import LocalSelect from '@/components/site/LocalSelect'
 
 function LoginButton({
@@ -38,17 +35,9 @@ function LoginButton({
 }
 
 function LocaleButton() {
-  const [, setLocale] = useCookies([COOKIE_NAME])
   return (
     <div className="absolute right-[10px] top-[10px] cursor-pointer text-[24px] hover:opacity-60">
-      <LocalSelect
-        onChange={(value) => {
-          setLocale(COOKIE_NAME, value)
-          location.reload()
-        }}
-      >
-        <AiOutlineGlobal />
-      </LocalSelect>
+      <LocalSelect />
     </div>
   )
 }

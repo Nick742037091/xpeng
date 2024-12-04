@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 import { useRef, useState } from 'react'
 
 function Link({ href, text }: { href: string; text: string }) {
@@ -37,29 +38,30 @@ export default function PolicyConfirmDialog({
   onCancel: () => void
   onConfirm: () => void
 }) {
+  const t = useTranslations('LoginPage')
   if (!open) return null
   return (
     <div className="absolute h-full w-full flex justify-center items-center bg-black/50">
       <div className="w-[420Px] pt-[20Px] bg-white">
         <div className="font-400 text-center" style={{ fontSize: '18Px' }}>
-          用户隐私协议
+          {t('policy.confirmDialog.title')}
         </div>
         <div className="p-[20Px]">
-          {'登录及同意 '}
+          {t('policy.confirmDialog.loginAndAgree')}
           <Link
             href="https://events.xiaopeng.com/nx9w4x.html?ch=00977&ps=event"
-            text="《小鹏汽车网络平台用户协议》"
+            text={t('policy.userAgreement')}
           />
-          {' 与 '}
+          {t('policy.and')}
           <Link
             href="https://events.xiaopeng.com/22p4p4.html?ch=00977&ps=event"
-            text="《小鹏汽车网络平台隐私政策》"
+            text={t('policy.privacyPolicy')}
           />
         </div>
         <div className="flex justify-center">
-          <Button onClick={onCancel}>取消</Button>
+          <Button onClick={onCancel}>{t('policy.confirmDialog.cancel')}</Button>
           <Button onClick={onConfirm} className="text-[#6da23a]">
-            同意
+            {t('policy.confirmDialog.confirm')}
           </Button>
         </div>
       </div>

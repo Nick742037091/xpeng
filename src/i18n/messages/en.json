@@ -1,4 +1,8 @@
 {
+  "SiteLayout": {
+    "tag": "Personal test website，",
+    "officialWebsite": "visit official website"
+  },
   "LoginPage": {
     "placeholder": {
       "phone": "Phone number",
@@ -6,10 +10,19 @@
     },
     "getVerifyCode": "Verify code",
     "loginButton": "Login",
-    "agree": " Agree ",
-    "and": " And ",
-    "userAgreement": "User Agreement",
-    "privacyPolicy": "Privacy Policy",
+    "policy": {
+      "agree": " Agree ",
+      "and": " And ",
+      "userAgreement": "《User Agreement》",
+      "privacyPolicy": "《Privacy Policy》",
+      "confirmDialog": {
+        "title": "User Privacy Agreement",
+        "loginAndAgree": "Login and agree",
+        "content": "Login and agree to the User Agreement and Privacy Policy of the Xiaopeng Network Platform",
+        "confirm": "Agree",
+        "cancel": "Cancel"
+      }
+    },
     "countdown": "{countdown} seconds",
     "errors": {
       "phoneEmpty": "Phone number cannot be empty",
@@ -20,5 +33,77 @@
       "verifyCodeSent": "Verification code sent successfully"
     },
     "captchaTip": "Please complete the security verification"
+  },
+  "TopNavigator": {
+    "carModels": "Car Models",
+    "smart": "Smart",
+    "fuyaoArchitecture": "Fuyao Architecture",
+    "intelligentTechnology": "Intelligent Technology",
+    "charge": "Charge",
+    "store": "Store",
+    "finance": "Finance",
+    "afterSale": "After Sale",
+    "aboutUs": "About Us",
+    "aboutXiaopeng": "About Xiaopeng",
+    "consultationCenter": "Consultation Center",
+    "investorRelations": "Investor Relations",
+    "egs": "EGS",
+    "joinInCooperation": "Join in Cooperation",
+    "joinUs": "Join Us",
+    "testDrive": "Test Drive",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "HomePage": {
+    "Charge": {
+      "title": "Self-operated Charging Network",
+      "description": "1000+ stations, covering all prefecture-level cities and municipalities in China; S4 liquid cooling super fast charging, fastest charging in 5 minutes, and a 200km+ range increase",
+      "dataList": [
+        {
+          "title": "Self-operated Charging Network",
+          "description": "1000+ stations, covering all prefecture-level cities and municipalities in China; S4 liquid cooling super fast charging, fastest charging in 5 minutes, and a 200km+ range increase"
+        },
+        {
+          "title": "Supercharging Service",
+          "description": "Core urban and highway scene charging"
+        },
+        {
+          "title": "Home Charging Service",
+          "description": "Low charging cost, full-process service"
+        },
+        {
+          "title": "Destination Charging Service",
+          "description": "Select leisure travel scenarios such as scenic spots and hotels, and worry-free charging"
+        },
+        {
+          "title": "Owner Charging Rights",
+          "description": "Exclusive reservation charging and temporary free parking fee for owners"
+        }
+      ],
+      "learnMore": "Learn more About Charging Service"
+    }
+  },
+  "AfterSales": {
+    "title": "After-sales Service",
+    "subtitle": "Good Service Makes Good Friends",
+    "learnMore": "Learn More About After-sales Service",
+    "dataList": [
+      {
+        "title": "Extended Worry-free Warranty",
+        "description": "Up to 5 years/120,000 km vehicle warranty, 8 years/160,000 km powertrain warranty, optional lifetime warranty products",
+        "tip": "*Varies by model",
+        "bgSrc": "https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou1.jpg"
+      },
+      {
+        "title": "Lifetime Roadside Assistance",
+        "description": "24/7 service, worry-free rescue ready at any time, ensuring your peace of mind during travel",
+        "bgSrc": "https://s.xiaopeng.com/xp-fe/mainsite/2023/home/shouhou2.jpg"
+      },
+      {
+        "title": "Intelligent Service Protection",
+        "description": "24/7 intelligent online diagnosis, intelligent fault warning, protecting vehicle health",
+        "bgSrc": "https://xps01.xiaopeng.com/www/public/img/shouhou3.9febac91.jpg"
+      }
+    ]
   }
 }

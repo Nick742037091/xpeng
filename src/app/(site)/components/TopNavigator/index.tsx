@@ -1,7 +1,6 @@
 'use client'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { AiOutlineGlobal } from 'react-icons/ai'
 import {
   HoverCard,
   HoverCardContent,
@@ -15,6 +14,9 @@ import { ListNavCarModelItem } from '@/server/action/navCarModels'
 import { CarModels } from './CardModels'
 import Account from './Account'
 import { SiteProfile } from '@/lib/dal'
+import LocalSelect from '@/components/site/LocalSelect'
+import { useTranslations } from 'next-intl'
+import { cn, isZh } from '@/lib/utils'
 
 function LeftIcon() {
   const { isBgTransparent } = useTopNavigatorContext()
@@ -37,6 +39,7 @@ function LeftIcon() {
 
 function RightButtons() {
   const { isBgTransparent } = useTopNavigatorContext()
+  const t = useTranslations('TopNavigator')
   return (
     <div className="absolute right-[40px] flex items-center gap-[24px]">
       <a
@@ -47,10 +50,10 @@ function RightButtons() {
           isBgTransparent ? 'border-white' : 'border-black'
         )}
       >
-        <span>预约试驾</span>
+        <span>{t('testDrive')}</span>
       </a>
       <div className="w-[36px] h-[36px] flex items-center justify-center">
-        <AiOutlineGlobal className="cursor-pointer text-[24px] hover:opacity-60" />
+        <LocalSelect />
       </div>
       <Account />
     </div>
@@ -67,7 +70,12 @@ export function HoverMenus({
   return (
     <HoverCard openDelay={200}>
       <HoverCardTrigger>{children}</HoverCardTrigger>
-      <HoverCardContent className="flex flex-col items-center gap-[20px] w-[110px]">
+      <HoverCardContent
+        className={cn(
+          'flex flex-col items-center gap-[20px] w-[200px]',
+          isZh() ? 'w-[110px]' : 'w-[180px]'
+        )}
+      >
         {list.map((item, index) => {
           if (item.onClick) {
             return (
@@ -92,40 +100,41 @@ export function HoverMenus({
 }
 
 function CenterNavigators() {
+  const t = useTranslations('TopNavigator')
   return (
     <div className="mx-auto flex">
       <CarModels />
       <HoverMenus
         list={[
-          { link: '/', title: '扶摇架构' },
-          { link: '/', title: '智能科技' }
+          { link: '/', title: t('fuyaoArchitecture') },
+          { link: '/', title: t('intelligentTechnology') }
         ]}
       >
-        <div className={styles.navItem}>智能</div>
+        <div className={styles.navItem}>{t('smart')}</div>
       </HoverMenus>
       <a href="/" className={styles.navItem}>
-        充电
+        {t('charge')}
       </a>
       <a href="/" className={styles.navItem}>
-        门店
+        {t('store')}
       </a>
       <a href="/" className={styles.navItem}>
-        金融
+        {t('finance')}
       </a>
       <a href="/" className={styles.navItem}>
-        售后
+        {t('afterSale')}
       </a>
       <HoverMenus
         list={[
-          { link: '/', title: '关于小鹏' },
-          { link: '/', title: '咨询中心' },
-          { link: '/', title: '投资者关系' },
-          { link: '/', title: 'EGS' },
-          { link: '/', title: '授权加盟' },
-          { link: '/', title: '加入我们' }
+          { link: '/', title: t('aboutXiaopeng') },
+          { link: '/', title: t('consultationCenter') },
+          { link: '/', title: t('investorRelations') },
+          { link: '/', title: t('egs') },
+          { link: '/', title: t('joinInCooperation') },
+          { link: '/', title: t('joinUs') }
         ]}
       >
-        <div className={styles.navItem}>关于我们</div>
+        <div className={styles.navItem}>{t('aboutUs')}</div>
       </HoverMenus>
     </div>
   )

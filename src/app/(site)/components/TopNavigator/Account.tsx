@@ -13,16 +13,17 @@ import {
   HoverCardContent,
   HoverCardTrigger
 } from '@/components/ui/hover-card'
+import { useTranslations } from 'next-intl'
 
 export default function Account() {
   const router = useRouter()
   const { profile } = useTopNavigatorContext()
   const [loading, setLoading] = useState(false)
-
+  const t = useTranslations('TopNavigator')
   if (!profile) {
     return (
       <a href="/login" className="hover:opacity-60">
-        登录
+        {t('login')}
       </a>
     )
   }
@@ -48,7 +49,7 @@ export default function Account() {
           }}
         >
           {loading && <Loading color="black" />}
-          <div>退出登录</div>
+          <div>{t('logout')}</div>
         </div>
       </HoverCardContent>
     </HoverCard>

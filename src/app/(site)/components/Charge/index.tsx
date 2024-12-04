@@ -5,36 +5,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import HoverButton from '../HoverButton/index'
 import Link from 'next/link'
-
-type DataItem = (typeof dataList)[number]
-const dataList = [
-  {
-    title: '自营充电网络',
-    description:
-      '1000+站点，覆盖全国所有地级行政区和直辖市；S4液冷超快充，最快充电5分钟，续航增加200km+',
-    bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging1.jpg'
-  },
-  {
-    title: '超充服务',
-    description: '核心城区与高速场景补能',
-    bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging2.jpg'
-  },
-  {
-    title: '家充服务',
-    description: '超低补能成本，全程贴心服务',
-    bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging3.jpg'
-  },
-  {
-    title: '目的地充电服务',
-    description: '优选景点/酒店等休闲出游场景，无忧补能',
-    bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging4.jpg'
-  },
-  {
-    title: '车主充电权益',
-    description: '专享预约充电、限时免停车费等车主权益',
-    bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging5.jpg'
-  }
-]
+import { useTranslations } from 'next-intl'
 
 function HoverCard({
   title,
@@ -78,9 +49,42 @@ function HoverCard({
   )
 }
 
+const useDataList = () => {
+  const t = useTranslations('HomePage')
+  return [
+    {
+      title: t('Charge.dataList.0.title'),
+      description: t('Charge.dataList.0.description'),
+      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging1.jpg'
+    },
+    {
+      title: t('Charge.dataList.1.title'),
+      description: t('Charge.dataList.1.description'),
+      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging2.jpg'
+    },
+    {
+      title: t('Charge.dataList.2.title'),
+      description: t('Charge.dataList.2.description'),
+      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging3.jpg'
+    },
+    {
+      title: t('Charge.dataList.3.title'),
+      description: t('Charge.dataList.3.description'),
+      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging4.jpg'
+    },
+    {
+      title: t('Charge.dataList.4.title'),
+      description: t('Charge.dataList.4.description'),
+      bgSrc: 'https://s.xiaopeng.com/xp-fe/mainsite/2023/home/charging5.jpg'
+    }
+  ]
+}
+
 export default function Charge() {
+  const t = useTranslations('HomePage')
+  const dataList = useDataList()
   const firstItem = dataList[0]
-  const otherGroup: DataItem[][] = []
+  const otherGroup: (typeof dataList)[] = []
   // 将其他数据分组，每组2个
   for (let i = 1; i < dataList.length; i += 2) {
     otherGroup.push(dataList.slice(i, i + 2))
@@ -89,10 +93,10 @@ export default function Charge() {
     <div className="bg-[#f9f9f9] pt-[80px] pb-[120px] flex flex-col items-center">
       <div className="pt-[120px] pb-[64px] text-center">
         <h2 className="text-[32px] tracking-[.16em] mb-[16px] font-[HYYakuHei]">
-          全场景充电服务
+          {t('Charge.title')}
         </h2>
-        <h2 className="text-[16px] tracking-[.16em] text-[rgba(0,0,0,.6)] font-[400]">
-          遍布全国的补能网络，贴心的自营充电服务，让鹏友没有里程焦虑
+        <h2 className="text-[16px] tracking-[.16em] text-[rgba(0,0,0,.6)] font-[400] max-w-[80vw]">
+          {t('Charge.description')}
         </h2>
       </div>
       <div className="flex gap-[32px] justify-stretch">
@@ -112,7 +116,7 @@ export default function Charge() {
         </div>
       </div>
       <Link href="/charge" className="mt-[60px]">
-        <HoverButton text="了解充电服务" theme="transparent-black" />
+        <HoverButton text={t('Charge.learnMore')} theme="transparent-black" />
       </Link>
     </div>
   )

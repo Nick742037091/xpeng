@@ -6,6 +6,7 @@ import clsx from 'clsx'
 
 import styles from './index.module.scss'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 function CarModelsPanel({ active }: { active: boolean }) {
   const { carModelList } = useTopNavigatorContext()
@@ -74,6 +75,7 @@ function CarModelsPanel({ active }: { active: boolean }) {
 }
 
 export function CarModels() {
+  const t = useTranslations('TopNavigator')
   const { isCarModelHover, setIsCarModelHover } = useTopNavigatorContext()
   return (
     <div
@@ -85,7 +87,7 @@ export function CarModels() {
       onMouseEnter={() => setIsCarModelHover(true)}
       onMouseLeave={() => setIsCarModelHover(false)}
     >
-      <a href="/">车型</a>
+      <a href="/">{t('carModels')}</a>
       <div className={styles.carAnimation}>
         {/* TODO carAnimation 增加左右边缘模糊 */}
         <Image
