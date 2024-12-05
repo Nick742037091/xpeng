@@ -2,6 +2,7 @@
 import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
 import { ButtonItem } from '@/server/api/routes/homeSliders'
+// import { importSliders } from '@/app/(site)/components/Slider/data'
 
 export type HomeSliderList = Awaited<ReturnType<typeof getHomeSliders>>
 
@@ -21,7 +22,9 @@ export const getHomeSliders = async (status?: string) => {
       id: true,
       img: true,
       title: true,
+      titleEn: true,
       subtitle: true,
+      subtitleEn: true,
       buttons: true,
       order: true,
       status: true
@@ -39,6 +42,7 @@ export const getHomeSliders = async (status?: string) => {
 
 // 只能在from表单提交中使用
 export const refreshHomeSliderPage = async () => {
+  // await importSliders()
   revalidatePath('/', 'layout')
   revalidatePath('/admin/home-sliders', 'page')
 }

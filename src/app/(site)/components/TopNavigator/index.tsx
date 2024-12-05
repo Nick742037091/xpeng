@@ -16,8 +16,8 @@ import Account from './Account'
 import { SiteProfile } from '@/lib/dal'
 import LocalSelect from '@/components/site/LocalSelect'
 import { useTranslations } from 'next-intl'
-import { cn, isZh } from '@/lib/utils'
-
+import { cn } from '@/lib/utils'
+import { useAppContext } from '@/components/app/AppProvider'
 function LeftIcon() {
   const { isBgTransparent } = useTopNavigatorContext()
   return (
@@ -67,13 +67,14 @@ export function HoverMenus({
   children: React.ReactNode
   list: { link: string; title: string; onClick?: () => void }[]
 }) {
+  const { isZh } = useAppContext()
   return (
     <HoverCard openDelay={200}>
       <HoverCardTrigger>{children}</HoverCardTrigger>
       <HoverCardContent
         className={cn(
           'flex flex-col items-center gap-[20px] w-[200px]',
-          isZh() ? 'w-[110px]' : 'w-[180px]'
+          isZh ? 'w-[110px]' : 'w-[180px]'
         )}
       >
         {list.map((item, index) => {

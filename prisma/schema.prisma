@@ -29,15 +29,17 @@ model navCarModels {
 }
 
 model homeSliders {
-  id        Int      @id @default(autoincrement())
-  img       String   @map("img")
-  title     String   @map("title")
-  subtitle  String   @map("subtitle")
-  buttons   Json     @map("buttons")
-  order     Int      @default(0) @map("order")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  status    Int      @default(0) @map("status")
+  id         Int      @id @default(autoincrement())
+  img        String   @map("img")
+  title      String   @map("title")
+  titleEn    String   @map("title_en")
+  subtitle   String   @map("subtitle")
+  subtitleEn String   @map("subtitle_en")
+  buttons    Json     @map("buttons")
+  order      Int      @default(0) @map("order")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  status     Int      @default(0) @map("status")
 
   @@map("home_sliders")
 }

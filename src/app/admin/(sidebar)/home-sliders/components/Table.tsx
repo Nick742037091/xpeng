@@ -25,8 +25,16 @@ export default function Table({ data }: { data: HomeSliderListItem[] }) {
       accessorKey: 'title'
     },
     {
+      header: '标题(英文)',
+      accessorKey: 'titleEn'
+    },
+    {
       header: '副标题',
       accessorKey: 'subtitle'
+    },
+    {
+      header: '副标题(英文)',
+      accessorKey: 'subtitleEn'
     },
     {
       header: '图片',

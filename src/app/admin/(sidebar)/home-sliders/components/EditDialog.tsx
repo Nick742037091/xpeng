@@ -49,13 +49,19 @@ function ButtonConfig({
 }: ButtonConfigProps) {
   const [editingButton, setEditingButton] = useState<ButtonItem | null>(null)
   const [buttonText, setButtonText] = useState('')
+  const [buttonTextEn, setButtonTextEn] = useState('')
   const [buttonHref, setButtonHref] = useState('')
 
   const handleAdd = () => {
     if (!buttonText || !buttonHref) return
-    onAdd({ text: buttonText, href: buttonHref })
+    onAdd({
+      text: buttonText,
+      href: buttonHref,
+      textEn: buttonTextEn
+    })
     setButtonText('')
     setButtonHref('')
+    setButtonTextEn('')
   }
 
   const handleEdit = (index: number) => {
@@ -63,6 +69,7 @@ function ButtonConfig({
     setEditingButton(button)
     setButtonText(button.text)
     setButtonHref(button.href)
+    setButtonTextEn(button.textEn)
   }
 
   const handleUpdate = () => {
@@ -70,9 +77,14 @@ function ButtonConfig({
     const index = buttons.findIndex((b) => b === editingButton)
     if (index === -1) return
 
-    onUpdate(index, { text: buttonText, href: buttonHref })
+    onUpdate(index, {
+      text: buttonText,
+      textEn: buttonTextEn,
+      href: buttonHref
+    })
     setEditingButton(null)
     setButtonText('')
+    setButtonTextEn('')
     setButtonHref('')
   }
 
@@ -82,6 +94,7 @@ function ButtonConfig({
         <TableHeader>
           <TableRow>
             <TableHead className="w-[200px]">按钮文字</TableHead>
+            <TableHead className="w-[200px]">按钮文字(英文)</TableHead>
             <TableHead>链接地址</TableHead>
             <TableHead className="w-[100px]">操作</TableHead>
           </TableRow>
@@ -90,6 +103,7 @@ function ButtonConfig({
           {buttons.map((button, index) => (
             <TableRow key={index}>
               <TableCell>{button.text}</TableCell>
+              <TableCell>{button.textEn}</TableCell>
               <TableCell>{button.href}</TableCell>
               <TableCell className="space-x-2">
                 <Button
@@ -118,6 +132,12 @@ function ButtonConfig({
           placeholder="按钮文字"
           value={buttonText}
           onChange={(e) => setButtonText(e.target.value)}
+          className="w-[200px]"
+        />
+        <Input
+          placeholder="按钮文字(英文)"
+          value={buttonTextEn}
+          onChange={(e) => setButtonTextEn(e.target.value)}
           className="w-[200px]"
         />
         <Input
@@ -154,14 +174,18 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
   const [detail, setDetail] = useState<{
     img: string
     title: string
+    titleEn: string
     subtitle: string
+    subtitleEn: string
     buttons: ButtonItem[]
     order: number
     status: number
   }>({
     img: '',
     title: '',
+    titleEn: '',
     subtitle: '',
+    subtitleEn: '',
     buttons: [],
     order: 0,
     status: 0
@@ -184,6 +208,8 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
       setDetail({
         title: data.title,
         subtitle: data.subtitle,
+        titleEn: data.titleEn,
+        subtitleEn: data.subtitleEn,
         img: data.img,
         buttons: data.buttons as ButtonItem[],
         order: data.order,
@@ -193,7 +219,9 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
       setDetail({
         img: '',
         title: '',
+        titleEn: '',
         subtitle: '',
+        subtitleEn: '',
         buttons: [],
         order: 0,
         status: 0
@@ -275,11 +303,15 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
 
   return (
     <Dialog open={visible} onOpenChange={setVisible}>
-      <DialogContent className="sm:max-w-[800px]">
+      <DialogContent className="sm:max-w-[900px]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <form action={handleAction} autoComplete="off">
+        <form
+          action={handleAction}
+          autoComplete="off"
+          className="px-[10px] max-h-[80vh] overflow-y-auto"
+        >
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="title" className="text-right">
@@ -294,6 +326,18 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
                 }}
               />
             </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="titleEn" className="text-right">
+                标题(英文)
+              </Label>
+              <Input
+                name="titleEn"
+                value={detail?.titleEn}
+                className="col-span-3"
+              />
+            </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="subtitle" className="text-right">
                 副标题
@@ -307,6 +351,21 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
                 }}
               />
             </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="subtitleEn" className="text-right">
+                副标题(英文)
+              </Label>
+              <Input
+                name="subtitleEn"
+                value={detail?.subtitleEn}
+                className="col-span-3"
+                onChange={(e) => {
+                  setDetail({ ...detail, subtitleEn: e.target.value })
+                }}
+              />
+            </div>
+
             <div className="grid grid-cols-4  items-center gap-4">
               <Label htmlFor="img" className="text-right">
                 图片

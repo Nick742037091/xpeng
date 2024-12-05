@@ -15,6 +15,7 @@ import Link from 'next/link'
 import HoverButton from '../HoverButton'
 import type { HomeSliderListItem } from '@/server/action/homeSliders'
 import Image from 'next/image'
+import { useAppContext } from '@/components/app/AppProvider'
 function Indicator({
   current,
   length,
@@ -52,6 +53,7 @@ export default function Slider({
 }) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
+  const { isZh } = useAppContext()
 
   useEffect(() => {
     if (!api) return
@@ -61,7 +63,6 @@ export default function Slider({
   }, [api])
 
   const autoplay = api?.plugins().autoplay
-  // TODO 调整字体
   return (
     <div className="relative">
       <Indicator
@@ -106,13 +107,17 @@ export default function Slider({
                 )}
               >
                 <GoX className="absolute text-[28px] top-[-16px] left-[-16px]" />
-                <h2 className="font-[HYYakuHei]">{item.title}</h2>
-                <h2 className="font-[HYYakuHei]">{item.subtitle}</h2>
+                <h2 className="font-[HYYakuHei]">
+                  {isZh ? item.title : item.titleEn}
+                </h2>
+                <h2 className="font-[HYYakuHei]">
+                  {isZh ? item.subtitle : item.subtitleEn}
+                </h2>
                 <div className="mt-[32px] flex items-center gap-[16px]">
                   {item.buttons?.map((button, index) => (
                     <Link key={index} href={button.href}>
                       <HoverButton
-                        text={button.text}
+                        text={isZh ? button.text : button.textEn}
                         theme={index === 1 ? 'white' : 'transparent-white'}
                       />
                     </Link>

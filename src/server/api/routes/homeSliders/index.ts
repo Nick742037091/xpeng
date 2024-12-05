@@ -6,6 +6,7 @@ import { responseSuccess, responseError } from '@/server/common/response'
 
 export type ButtonItem = {
   text: string
+  textEn: string
   href: string
 }
 
@@ -16,10 +17,13 @@ const paramSchema = z.object({
 const bodySchema = z.object({
   img: z.string().min(1, '图片不能为空'),
   title: z.string().min(1, '标题不能为空'),
+  titleEn: z.string().min(1, '标题(英文)不能为空'),
   subtitle: z.string().min(1, '副标题不能为空'),
+  subtitleEn: z.string().min(1, '副标题(英文)不能为空'),
   buttons: z.array(
     z.object({
       text: z.string().min(1, '按钮文本不能为空'),
+      textEn: z.string().min(1, '按钮文本(英文)不能为空'),
       href: z.string().min(1, '按钮链接不能为空')
     })
   ),
@@ -38,7 +42,9 @@ const app = new Hono()
         id: true,
         img: true,
         title: true,
+        titleEn: true,
         subtitle: true,
+        subtitleEn: true,
         buttons: true,
         order: true,
         status: true

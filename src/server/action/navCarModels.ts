@@ -1,4 +1,5 @@
 'use server'
+// import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate'
 
@@ -25,6 +26,7 @@ export async function getNavCarModels({ status }: { status?: number } = {}) {
 }
 
 export const refreshNavCarModelsPage = async () => {
+  // await importCarModels()
   revalidatePath('/', 'layout')
   revalidatePath('/admin/nav-car-models', 'page')
 }
