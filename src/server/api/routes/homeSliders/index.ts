@@ -3,6 +3,7 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { Validator } from '@/server/api/validator'
 import { responseSuccess, responseError } from '@/server/common/response'
+import { importSliders } from '@/app/(site)/components/Slider/data'
 
 export type ButtonItem = {
   text: string
@@ -94,6 +95,10 @@ const app = new Hono()
     const { id } = c.req.valid('param')
     await prisma.homeSliders.delete({ where: { id: +id } })
     return c.json(responseSuccess(null, '删除成功'))
+  })
+  .put('/importSliders', async (c) => {
+    await importSliders()
+    return c.json(responseSuccess(null, '导入成功'))
   })
 
 export default app

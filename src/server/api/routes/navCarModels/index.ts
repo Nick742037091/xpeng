@@ -3,6 +3,7 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { Validator } from '@/server/api/validator'
 import { responseSuccess, responseError } from '@/server/common/response'
+import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
 
 const paramSchema = z.object({
   id: z.string().min(1, 'id不能为空')
@@ -69,6 +70,10 @@ const app = new Hono()
     const { id } = c.req.valid('param')
     await prisma.navCarModels.delete({ where: { id: +id } })
     return c.json(responseSuccess(null, '删除成功'))
+  })
+  .put('/importCarModels', async (c) => {
+    await importCarModels()
+    return c.json(responseSuccess(null, '导入成功'))
   })
 
 export default app

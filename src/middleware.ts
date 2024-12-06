@@ -51,7 +51,9 @@ const publicApiRoutes = [
   '/api/admin/login',
   '/api/auth/sendVerifyCode',
   '/api/auth/login',
-  '/api/common/pageError'
+  '/api/common/pageError',
+  '/api/homeSliders/importSliders',
+  '/api/navCarModels/importCarModels'
 ]
 
 const apiMiddleware = async (req: NextRequest) => {

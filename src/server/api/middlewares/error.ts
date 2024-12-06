@@ -11,7 +11,10 @@ export async function handleError(err: Error, c: Context): Promise<Response> {
     // zod校验错误
     const firstError = err.errors[0]
     return c.json(
-      { code: ClientCode.Validate, message: `${firstError.message}` },
+      responseError(
+        `${firstError.path}: ${firstError.message}`,
+        ClientCode.Validate
+      ),
       ClientCode.Validate
     )
   }
