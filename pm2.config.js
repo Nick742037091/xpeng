@@ -7,7 +7,8 @@ module.exports = {
       args: 'run start',
       watch: false,
       autorestart: true,
-      max_memory_restart: '1G'
+      max_memory_restart: '1G',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss'
     }
   ]
 }
