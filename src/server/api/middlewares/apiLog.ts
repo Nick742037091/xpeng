@@ -16,6 +16,7 @@ export const apiLog = async ({ c, next }: { c: Context; next: Next }) => {
   logger.info({
     type: LOGGER_TYPE_API_LOG,
     msg: `${c.req.method} ${c.req.routePath} ${c.res.status} in ${duration}ms`,
+    duration,
     req: {
       method: c.req.method,
       path: c.req.routePath,
