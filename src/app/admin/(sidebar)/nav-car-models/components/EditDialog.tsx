@@ -21,6 +21,7 @@ import EditDialogSkeleton from './EditDialogSkeleton'
 type Detail = {
   modelName: string
   modelImg: string
+  modelNameEn: string
   order: number
   status: number
 }
@@ -36,6 +37,7 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   const [detail, setDetail] = useState<Detail>({
     modelName: '',
     modelImg: '',
+    modelNameEn: '',
     order: 0,
     status: 1
   })
@@ -62,6 +64,7 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
       setDetail({
         modelName: '',
         modelImg: '',
+        modelNameEn: '',
         order: 0,
         status: 1
       })
@@ -75,6 +78,7 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   const handleAction = async () => {
     const json = {
       modelName: detail.modelName,
+      modelNameEn: detail.modelNameEn,
       modelImg: detail.modelImg,
       order: detail.order,
       status: detail.status
@@ -139,6 +143,22 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
                 className="col-span-3"
                 onChange={(e) => {
                   setDetail({ ...detail, modelName: e.target.value as string })
+                }}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="modelNameEn" className="text-right">
+                车型英文
+              </Label>
+              <Input
+                name="modelNameEn"
+                value={detail?.modelNameEn}
+                className="col-span-3"
+                onChange={(e) => {
+                  setDetail({
+                    ...detail,
+                    modelNameEn: e.target.value as string
+                  })
                 }}
               />
             </div>

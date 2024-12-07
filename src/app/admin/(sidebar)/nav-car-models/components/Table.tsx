@@ -27,6 +27,10 @@ export default function Table({ data }: { data: ListNavCarModelItem[] }) {
       accessorKey: 'modelName'
     },
     {
+      header: '车型英文',
+      accessorKey: 'modelNameEn'
+    },
+    {
       header: '图片',
       accessorKey: 'modelImg',
       cell: ({ row }) => {

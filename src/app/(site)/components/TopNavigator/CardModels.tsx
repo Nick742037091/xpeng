@@ -7,8 +7,10 @@ import clsx from 'clsx'
 import styles from './index.module.scss'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { useAppContext } from '@/components/app/AppProvider'
 
 function CarModelsPanel({ active }: { active: boolean }) {
+  const { isZh } = useAppContext()
   const { carModelList } = useTopNavigatorContext()
   const [hoverIndex, setHoverIndex] = useState(-1)
   const fillNum = 4 - (carModelList.length % 4)
@@ -17,6 +19,7 @@ function CarModelsPanel({ active }: { active: boolean }) {
     ...carModelList,
     ...Array(fillNum).fill({
       modelName: '',
+      modelNameEn: '',
       modelImg: ''
     })
   ]
@@ -50,7 +53,7 @@ function CarModelsPanel({ active }: { active: boolean }) {
             >
               <Image
                 src={item.modelImg}
-                alt={item.modelName}
+                alt={item.modelNameEn}
                 width={180}
                 height={96}
                 className={clsx(
@@ -64,7 +67,7 @@ function CarModelsPanel({ active }: { active: boolean }) {
                   hoverIndex === index && 'opacity-60'
                 )}
               >
-                {item.modelName}
+                {isZh ? item.modelName : item.modelNameEn}
               </div>
             </div>
           )

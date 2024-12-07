@@ -17,6 +17,7 @@ export async function getNavCarModels({ status }: { status?: number } = {}) {
     select: {
       id: true,
       modelName: true,
+      modelNameEn: true,
       modelImg: true,
       order: true,
       status: true

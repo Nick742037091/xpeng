@@ -12,6 +12,7 @@ const paramSchema = z.object({
 const bodySchema = z.object({
   modelImg: z.string().min(1, '图片不能为空'),
   modelName: z.string().min(1, '车型名称不能为空'),
+  modelNameEn: z.string().min(1, '车型名称英文不能为空'),
   order: z.number(),
   status: z.number()
 })
@@ -26,6 +27,7 @@ const app = new Hono()
       select: {
         id: true,
         modelName: true,
+        modelNameEn: true,
         modelImg: true,
         order: true,
         status: true
