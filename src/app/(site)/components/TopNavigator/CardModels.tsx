@@ -8,6 +8,7 @@ import styles from './index.module.scss'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useAppContext } from '@/components/app/AppProvider'
+import { cn } from '@/lib/utils'
 
 function CarModelsPanel({ active }: { active: boolean }) {
   const { isZh } = useAppContext()
@@ -82,15 +83,13 @@ export function CarModels() {
   const { isCarModelHover, setIsCarModelHover } = useTopNavigatorContext()
   return (
     <div
-      className={clsx(
-        styles.navItem,
+      className={cn(
         styles.carModelNav,
-        isCarModelHover && styles.hovering
+        'flex items-center ml-[-156px] overflow-hidden'
       )}
       onMouseEnter={() => setIsCarModelHover(true)}
       onMouseLeave={() => setIsCarModelHover(false)}
     >
-      <a href="/">{t('carModels')}</a>
       <div className={styles.carAnimation}>
         {/* TODO carAnimation 增加左右边缘模糊 */}
         <Image
@@ -100,6 +99,9 @@ export function CarModels() {
           width={104}
           height={48}
         />
+      </div>
+      <div className={cn(styles.navItem)}>
+        <a href="/">{t('carModels')}</a>
       </div>
       <CarModelsPanel active={isCarModelHover} />
     </div>

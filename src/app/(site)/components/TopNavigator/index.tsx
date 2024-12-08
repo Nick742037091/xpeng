@@ -9,7 +9,7 @@ import {
 
 import styles from './index.module.scss'
 import clsx from 'clsx'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { ListNavCarModelItem } from '@/server/action/navCarModels'
 import { CarModels } from './CardModels'
 import Account from './Account'
@@ -164,12 +164,16 @@ export default function TopNavigator({
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+  const delayTimmer = useRef<NodeJS.Timeout | null>(null)
   // 背景显示为透明需要延迟执行
   useEffect(() => {
+    if (delayTimmer.current) {
+      clearTimeout(delayTimmer.current)
+    }
     if (isCarModelHover) {
       setIsBgTransparent(false)
     } else {
-      setTimeout(() => {
+      delayTimmer.current = setTimeout(() => {
         setIsBgTransparent(true)
       }, 300)
     }
