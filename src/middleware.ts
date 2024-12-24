@@ -52,8 +52,9 @@ const publicApiRoutes = [
   '/api/auth/sendVerifyCode',
   '/api/auth/login',
   '/api/common/pageError',
-  '/api/homeSliders/importSliders',
-  '/api/navCarModels/importCarModels'
+  '/api/common/qcloudCredential',
+  '/api/admin/homeSliders/importSliders',
+  '/api/admin/navCarModels/importCarModels'
 ]
 
 const apiMiddleware = async (req: NextRequest) => {

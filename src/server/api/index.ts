@@ -1,9 +1,9 @@
 import { Hono } from 'hono'
 import commonRoute from './routes/common'
 import authRoute from './routes/auth'
-import homeSlidersRoute from './routes/homeSliders'
 import adminRoute from './routes/admin/index'
-import navCarModelsRoute from './routes/navCarModels'
+import homeSlidersRoute from './routes/admin/homeSliders'
+import navCarModelsRoute from './routes/admin/navCarModels'
 import { apiLog } from './middlewares/apiLog'
 import { handleError } from './middlewares/error'
 const app = new Hono().basePath('/api')

@@ -3,50 +3,74 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 import { Validator } from '@/server/api/validator'
 import { responseSuccess, responseError } from '@/server/common/response'
-import { importCarModels } from '@/app/(site)/components/TopNavigator/data'
+import { importSliders } from '@/app/(site)/components/Slider/data'
+
+export type ButtonItem = {
+  text: string
+  textEn: string
+  href: string
+}
 
 const paramSchema = z.object({
   id: z.string().min(1, 'id不能为空')
 })
 
 const bodySchema = z.object({
-  modelImg: z.string().min(1, '图片不能为空'),
-  modelName: z.string().min(1, '车型名称不能为空'),
-  modelNameEn: z.string().min(1, '车型名称英文不能为空'),
+  img: z.string().min(1, '图片不能为空'),
+  title: z.string().min(1, '标题不能为空'),
+  titleEn: z.string().min(1, '标题(英文)不能为空'),
+  subtitle: z.string().min(1, '副标题不能为空'),
+  subtitleEn: z.string().min(1, '副标题(英文)不能为空'),
+  buttons: z.array(
+    z.object({
+      text: z.string().min(1, '按钮文本不能为空'),
+      textEn: z.string().min(1, '按钮文本(英文)不能为空'),
+      href: z.string().min(1, '按钮链接不能为空')
+    })
+  ),
   order: z.number(),
   status: z.number()
 })
 
 const app = new Hono()
-  .basePath('/navCarModels')
-  // 查找车型详情
+  .basePath('/admin/homeSliders')
+  // 查找轮播图详情
   .get('/:id', Validator('param', paramSchema), async (c) => {
     const { id } = c.req.valid('param')
-    const res = await prisma.navCarModels.findUnique({
+    const res = await prisma.homeSliders.findUnique({
       where: { id: +id },
       select: {
         id: true,
-        modelName: true,
-        modelNameEn: true,
-        modelImg: true,
+        img: true,
+        title: true,
+        titleEn: true,
+        subtitle: true,
+        subtitleEn: true,
+        buttons: true,
         order: true,
         status: true
       }
     })
     if (res) {
-      return c.json(responseSuccess(res))
+      return c.json(
+        responseSuccess({
+          ...res,
+          buttons: res?.buttons as null | ButtonItem[]
+        })
+      )
     } else {
       return c.json(responseError('数据不存在'))
     }
   })
+  // 添加轮播图
   .put('/', Validator('json', bodySchema), async (c) => {
     const data = c.req.valid('json')
-    await prisma.navCarModels.create({
+    await prisma.homeSliders.create({
       data
     })
     return c.json(responseSuccess(null, '添加成功'))
   })
-  // 保存车型
+  // 保存轮播图
   .post(
     '/:id',
     Validator('param', paramSchema),
@@ -54,27 +78,26 @@ const app = new Hono()
     async (c) => {
       const { id } = c.req.valid('param')
       const data = c.req.valid('json')
-      const res = await prisma.navCarModels.findUnique({
+      const res = await prisma.homeSliders.findUnique({
         where: { id: +id }
       })
       if (!res) {
         return c.json(responseError('数据不存在'))
       }
-      await prisma.navCarModels.update({
+      await prisma.homeSliders.update({
         where: { id: +id },
         data
       })
       return c.json(responseSuccess(null, '更新成功'))
     }
   )
-  // 删除车型
   .delete('/:id', Validator('param', paramSchema), async (c) => {
     const { id } = c.req.valid('param')
-    await prisma.navCarModels.delete({ where: { id: +id } })
+    await prisma.homeSliders.delete({ where: { id: +id } })
     return c.json(responseSuccess(null, '删除成功'))
   })
-  .put('/importCarModels', async (c) => {
-    await importCarModels()
+  .put('/importSliders', async (c) => {
+    await importSliders()
     return c.json(responseSuccess(null, '导入成功'))
   })
 

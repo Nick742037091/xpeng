@@ -44,7 +44,7 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
   const [loading, setLoading] = useState(false)
   const getDetail = async (id: number) => {
     setLoading(true)
-    const resp = await api.navCarModels[':id'].$get({
+    const resp = await api.admin.navCarModels[':id'].$get({
       param: {
         id: id.toString()
       }
@@ -84,8 +84,8 @@ const EditDialog = forwardRef<EditDialogRef>(function EditDialog({}, ref) {
       status: detail.status
     }
     const req = id
-      ? api.navCarModels[':id'].$post({ param: { id: id + '' }, json })
-      : api.navCarModels.$put({ json })
+      ? api.admin.navCarModels[':id'].$post({ param: { id: id + '' }, json })
+      : api.admin.navCarModels.$put({ json })
     const resp = await req
     const { code, message } = await resp.json()
     if (code === 0) {

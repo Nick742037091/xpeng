@@ -199,7 +199,7 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
     setVisible(true)
     if (id) {
       setLoading(true)
-      const resp = await api.homeSliders[':id'].$get({
+      const resp = await api.admin.homeSliders[':id'].$get({
         param: { id: id + '' }
       })
       const { data, code } = await resp.json()
@@ -235,11 +235,11 @@ export default forwardRef<EditDialogRef>(function EditDialog(props, ref) {
 
   const handleAction = async () => {
     const req = id
-      ? api.homeSliders[':id'].$post({
+      ? api.admin.homeSliders[':id'].$post({
           param: { id: id + '' },
           json: detail
         })
-      : api.homeSliders.$put({ json: detail })
+      : api.admin.homeSliders.$put({ json: detail })
     const resp = await req
     const { message, code } = await resp.json()
     if (code === 0) {
