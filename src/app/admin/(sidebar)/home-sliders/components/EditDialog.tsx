@@ -25,7 +25,7 @@ import Loading from '@/components/admin/Loading'
 import { useFormStatus } from 'react-dom'
 import { Switch } from '@/components/ui/switch'
 import { api } from '@/server/api/client'
-import type { ButtonItem } from '@/server/api/routes/homeSliders'
+import type { ButtonItem } from '@/server/api/routes/admin/homeSliders'
 
 import { refreshHomeSliderPage } from '@/server/action/homeSliders'
 import ImageUpload from '@/components/admin/ImageUpload'

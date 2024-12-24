@@ -1,7 +1,7 @@
 'use server'
 import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
-import { ButtonItem } from '@/server/api/routes/homeSliders'
+import { ButtonItem } from '@/server/api/routes/admin/homeSliders'
 
 export type HomeSliderList = Awaited<ReturnType<typeof getHomeSliders>>
 

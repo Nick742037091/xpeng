@@ -26,7 +26,7 @@ export const upload = async (file: File | null, path: string) => {
   const bucket = process.env.NEXT_PUBLIC_UPLOAD_BUCKET!
   const region = process.env.NEXT_PUBLIC_UPLOAD_REGION!
   const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
-  const result = await cos.putObject({
+  const result = await cos.uploadFile({
     Bucket: bucket,
     Region: region,
     Key: `${env}/${path}/${key}.${ext}`,

@@ -103,7 +103,7 @@ export default function Table({ data }: { data: HomeSliderListItem[] }) {
       description: '确定要删除该轮播图吗？'
     })
     if (!isConfirm) return
-    const resp = await api.homeSliders[':id'].$delete({
+    const resp = await api.admin.homeSliders[':id'].$delete({
       param: { id: id.toString() }
     })
     const { code, message } = await resp.json()

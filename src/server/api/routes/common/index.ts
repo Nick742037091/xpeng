@@ -18,20 +18,28 @@ const pageErrorSchema = z.object({
 const app = new Hono()
   .basePath('/common')
   .get('/qcloudCredential', async (c) => {
-    const scope = [
-      {
-        action: 'name/cos:PutObject',
-        bucket: process.env.NEXT_PUBLIC_UPLOAD_BUCKET!,
-        region: process.env.NEXT_PUBLIC_UPLOAD_REGION!,
-        prefix: '*'
-      }
+    const actions = [
+      'PutObject',
+      'InitiateMultipartUpload',
+      'ListMultipartUploads',
+      'ListParts',
+      'UploadPart',
+      'CompleteMultipartUpload',
+      'AbortMultipartUpload'
     ]
     try {
       const credential = await getCosCredentialCache()
       if (credential) {
         return c.json(responseSuccess(JSON.parse(credential)))
       }
-      const policy = sts.getPolicy(scope)
+      const policy = sts.getPolicy([
+        {
+          action: actions.map((item: string) => `name/cos:${item}`),
+          bucket: process.env.NEXT_PUBLIC_UPLOAD_BUCKET!,
+          region: process.env.NEXT_PUBLIC_UPLOAD_REGION!,
+          prefix: '*'
+        }
+      ])
       const res = await sts.getCredential({
         secretId: process.env.COS_SECRET_ID!,
         secretKey: process.env.COS_SECRET_KEY!,

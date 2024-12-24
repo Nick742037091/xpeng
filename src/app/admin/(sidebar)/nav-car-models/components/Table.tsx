@@ -94,7 +94,7 @@ export default function Table({ data }: { data: ListNavCarModelItem[] }) {
       description: '确定要删除该车型吗？'
     })
     if (!isConfirm) return
-    const resp = await api.navCarModels[':id'].$delete({
+    const resp = await api.admin.navCarModels[':id'].$delete({
       param: {
         id: id + ''
       }
