@@ -20,7 +20,7 @@ export const initCos = async () => {
 export const upload = async (
   file: File | null,
   path: string,
-  options: Omit<COS.UploadFileParams, 'Bucket' | 'Region' | 'Key' | 'Body'>
+  options?: Omit<COS.UploadFileParams, 'Bucket' | 'Region' | 'Key' | 'Body'>
 ) => {
   if (!file) return
   await initCos()
