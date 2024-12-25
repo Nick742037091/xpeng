@@ -1,5 +1,9 @@
 import Redis from 'ioredis'
-import { COS_CREDENTIAL_KEY, SITE_LOGIN_VERIFY_CODE_KEY } from './keys'
+import {
+  COS_CREDENTIAL_KEY,
+  HOME_VIDEO_KEY,
+  SITE_LOGIN_VERIFY_CODE_KEY
+} from './keys'
 
 const redis = new Redis(process.env.REDIS_URL!)
 
@@ -54,4 +58,13 @@ export const setSiteLoginVerifyCodeCache = async (
 export const getSiteLoginVerifyCodeCache = async (phone: string) => {
   const verifyCode = await redis.get(`${SITE_LOGIN_VERIFY_CODE_KEY}:${phone}`)
   return verifyCode
+}
+
+export const setHomeVideoCache = async (url: string) => {
+  await redis.set(HOME_VIDEO_KEY, url)
+}
+
+export const getHomeVideoCache = async () => {
+  const url = await redis.get(HOME_VIDEO_KEY)
+  return url
 }

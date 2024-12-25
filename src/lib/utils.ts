@@ -19,3 +19,24 @@ export function error(message: string, duration = 2000) {
 export function isClient() {
   return typeof window !== 'undefined'
 }
+
+export function readFile(file: File) {
+  return new Promise<ArrayBuffer>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      resolve(e.target?.result as ArrayBuffer)
+    }
+    reader.onerror = reject
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+// // 字符串转ArrayBuffer，因为FileReader.readAsBinaryString()返回的是字符串
+// function str2ab(str: string) {
+//   const buf = new ArrayBuffer(str.length)
+//   const bufView = new Uint8Array(buf)
+//   for (let i = 0, strLen = str.length; i < strLen; i++) {
+//     bufView[i] = str.charCodeAt(i)
+//   }
+//   return buf
+// }

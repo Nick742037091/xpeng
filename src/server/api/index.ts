@@ -4,6 +4,7 @@ import authRoute from './routes/auth'
 import adminRoute from './routes/admin/index'
 import homeSlidersRoute from './routes/admin/homeSliders'
 import navCarModelsRoute from './routes/admin/navCarModels'
+import homeVideoRoute from './routes/admin/homeVideo'
 import { apiLog } from './middlewares/apiLog'
 import { handleError } from './middlewares/error'
 const app = new Hono().basePath('/api')
@@ -17,7 +18,7 @@ export const routes = app
   .route('/', homeSlidersRoute)
   .route('/', adminRoute)
   .route('/', navCarModelsRoute)
-
+  .route('/', homeVideoRoute)
 export default app
 
 export type AppType = typeof routes
